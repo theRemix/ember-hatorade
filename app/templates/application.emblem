@@ -1,10 +1,13 @@
 .container-fluid.col-lg-8.col-lg-offset-2.col-md-8.col-md-offset-2
   .fun
     h2#title Hatora.de
-    ul style='display: inline-block'
-      li
-        = link-to 'home' home
-      li
-        = link-to 'tweets' tweets
-
-    = outlet
+  ul.nav.nav-pills.pull-left
+    li
+      =link-to "home"
+    li
+      =link-to "hashtags"
+    li
+      =link-to "blog"
+    li
+      =link-to "about"
+  = outlet

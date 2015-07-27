@@ -1,5 +1,3 @@
-h1 stuff
-
 ul
   each tweet in model
     li.media.row.list-group-item.col-lg-12
