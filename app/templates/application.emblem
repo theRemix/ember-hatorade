@@ -4,11 +4,13 @@
     button new tweet
   ul.nav.nav-pills.pull-left
     li
-      =link-to "home"
+      =link-to "home" | home
     li
-      =link-to "hashtags"
+      = link-to 'stream' | stream
     li
-      =link-to "blog"
+      =link-to "hashtags" | hashtags
     li
-      =link-to "about"
+      a href="http://blog.hatora.de" blog
+    li
+      =link-to "about" | about
   = outlet

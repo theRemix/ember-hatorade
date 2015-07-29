@@ -9,6 +9,8 @@ Router.map(function() {
   this.route('tweets');
   this.route('home');
   this.route('stream');
+  this.route('hashtags');
+  this.route('about');
 });
 
 export default Router;
