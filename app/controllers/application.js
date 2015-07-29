@@ -1,16 +1,21 @@
 export default Ember.Controller.extend({
   init: function() {
-  },
+    this._super();
+    self = this
+    var client = new Faye.Client('http://hatora.de:8080/faye');
+    var  subscription = client.subscribe('/messages', function(message) {
+        var data = {tweet: message}
+        console.log(data.tweet);
+        self.myMessageHandler(data);
+      });
+ },
 
   myMessageHandler: function(event) {
     console.log('Message: ' + event.data);
-    this.set('message',event.data);
   },
 
   actions: {
     sendButtonPressed: function() {
-      var socket = this.get('websockets').socketFor('ws://localhost:7000/');
-      socket.send('Hello Websocket World');
     }
   }
 });
