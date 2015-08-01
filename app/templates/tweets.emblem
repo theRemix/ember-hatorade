@@ -5,5 +5,7 @@ ul
       = tweet.screen_name
       = link-to 'tweets'
         =  tweet.text
+      = tweet.created_at
+      = tweet.url
 
 = outlet
