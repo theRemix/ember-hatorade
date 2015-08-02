@@ -11,5 +11,5 @@ export default Ember.Route.extend({
       funtimes = this.store.createRecord('tweet', fun.tweet)
       this.currentModel.pushObject(funtimes)
     }
-  }
+  },
 });

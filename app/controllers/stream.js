@@ -10,14 +10,22 @@ export default Ember.Controller.extend({
         var data = {tweet: message}
         console.log(data.tweet);
         var serializer = self.store.serializerFor('tweet')
-        tweet = serializer.normalize(data.tweet)
-        self.myMessageHandler(data);
+        self.myMessageHandler(message);
       });
   },
-
   myMessageHandler: function(data) {
-    jQuery('body').append(data.tweet);
-    this.get('model').pushObject(data);
-  },
+                      console.log(data);
+    var tweet = { 
+       id: data.id_str,
+       text: data.text,
+       screen_name: data.user.screen_name,
+       favorite_count: data.favorite_count,
+       url: data.url,
+       profile_image: data.user.profile_image_url
+    }
+    var funtimes = this.store.push('tweet', tweet)
+    // self.model.unshiftObject(funtimes)
+  }
+
 
 });

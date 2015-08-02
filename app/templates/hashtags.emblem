@@ -4,5 +4,7 @@ br
 ul
   each hashtag in model
     li.media.row.list-group-item.col-lg-4
-      =hashtag.hashtag
+      / = link-to 'hashtags.show.index' hashtag
+      a href="hashtags/#{hashtag.text}"
+        hashtag.text
 = outlet

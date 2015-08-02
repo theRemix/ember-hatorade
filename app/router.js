@@ -9,7 +9,12 @@ Router.map(function() {
   this.route('tweets');
   this.route('home');
   this.route('stream');
-  this.route('hashtags');
+  this.route('hashtags', function() {
+    this.route('show', {path: '/:text'}, function() {
+    });
+  });
+  this.route('hashtagTweets', { path: 'hashtags/:text' }, function() {
+  });
   this.route('about');
 });
 
