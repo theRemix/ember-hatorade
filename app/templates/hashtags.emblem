@@ -7,4 +7,6 @@ ul
       / = link-to 'hashtags.show.index' hashtag
       a href="hashtags/#{hashtag.text}"
         hashtag.text
+  li.media.row.list-group-item.col-lg-4
+    = infinity-loader infinityModel=model
 = outlet
