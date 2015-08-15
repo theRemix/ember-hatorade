@@ -29,6 +29,7 @@ RUN bundle
 
 ADD ./ /opt/hatorade
 
+EXPOSE 5055
 WORKDIR /opt/hatorade
 
 CMD ruby sinatra_ember.rb
