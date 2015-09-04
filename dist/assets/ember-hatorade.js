@@ -79,18 +79,20 @@ define('ember-hatorade/controllers/stream', ['exports', 'ember'], function (expo
     myMessageHandler: function myMessageHandler(data) {
       console.log(data);
       var tweet = {
-        id: data.id_str,
-        text: data.text,
-        screen_name: data.user.screen_name,
-        favorite_count: data.favorite_count,
-        url: data.url,
-        profile_image: data.user.profile_image_url
+        tweet: {
+          id: data.id,
+          text: data.text,
+          screen_name: data.user.screen_name,
+          favorite_count: data.favorite_count,
+          url: 'nope',
+          created_at: 'nope',
+          profile_image: data.user.profile_image_url
+        }
       };
-      self.store.push('tweet', tweet);
+      self.model.unshiftObject(tweet.tweet);
     }
 
   });
-  // self.model.unshiftObject(funtimes)
 
 });
 define('ember-hatorade/initializers/app-version', ['exports', 'ember-hatorade/config/environment', 'ember'], function (exports, config, Ember) {
@@ -260,12 +262,17 @@ define('ember-hatorade/routes/stream', ['exports', 'ember', 'ember-infinity/mixi
     model: function model() {
       return this.infinityModel('tweet', { perPage: 50, startingPage: 1 });
     },
+    infinityModelUpdated: function infinityModelUpdated(totalPages) {
+      Ember['default'].Logger.debug('updated with more items');
+    },
+    infinityModelLoaded: function infinityModelLoaded(lastPageLoaded, totalPages, infinityModel) {
+      Ember['default'].Logger.info('no more items to load');
+    },
     actions: {
       newTweet: function newTweet() {
         var fun = { tweet: { id: 420, text: 'fun times', screen_name: 'voodoologic', favorite_count: 99, url: 'http://hatora.de', profile_image: 'http://placekitten.com/90/90' } };
-        console.log(this.currentModel);
-        funtimes = this.store.createRecord('tweet', fun.tweet);
-        this.currentModel.unshiftObject(funtimes);
+        var updatedInfinityModel = this.updateInfinityModel(Ember['default'].A([fun.tweet]));
+        console.log(updatedInfinityModel);
       }
     }
   });
@@ -525,7 +532,11 @@ define('ember-hatorade/templates/application', ['exports'], function (exports) {
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("button");
-        var el4 = dom.createTextNode("new tweet");
+        var el4 = dom.createTextNode("open controls");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("button");
+        var el4 = dom.createTextNode("Log in");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         dom.appendChild(el1, el2);
@@ -581,14 +592,17 @@ define('ember-hatorade/templates/application', ['exports'], function (exports) {
           fragment = this.build(dom);
         }
         var element0 = dom.childAt(fragment, [0]);
-        var element1 = dom.childAt(element0, [0, 1]);
-        var element2 = dom.childAt(element0, [1]);
-        var morph0 = dom.createMorphAt(dom.childAt(element2, [0]),0,0);
-        var morph1 = dom.createMorphAt(dom.childAt(element2, [1]),0,0);
-        var morph2 = dom.createMorphAt(dom.childAt(element2, [2]),0,0);
-        var morph3 = dom.createMorphAt(dom.childAt(element2, [4]),0,0);
+        var element1 = dom.childAt(element0, [0]);
+        var element2 = dom.childAt(element1, [1]);
+        var element3 = dom.childAt(element1, [2]);
+        var element4 = dom.childAt(element0, [1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element4, [0]),0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element4, [1]),0,0);
+        var morph2 = dom.createMorphAt(dom.childAt(element4, [2]),0,0);
+        var morph3 = dom.createMorphAt(dom.childAt(element4, [4]),0,0);
         var morph4 = dom.createMorphAt(element0,2,2);
-        element(env, element1, context, "action", ["newTweet"], {});
+        element(env, element2, context, "action", ["newTweet"], {});
+        element(env, element3, context, "action", ["logIn"], {});
         block(env, morph0, context, "link-to", ["home"], {}, child0, null);
         block(env, morph1, context, "link-to", ["stream"], {}, child1, null);
         block(env, morph2, context, "link-to", ["hashtags"], {}, child2, null);
@@ -1048,7 +1062,7 @@ define('ember-hatorade/tests/controllers/stream.jshint', function () {
 
   module('JSHint - controllers');
   test('controllers/stream.js should pass jshint', function() { 
-    ok(false, 'controllers/stream.js should pass jshint.\ncontrollers/stream.js: line 7, col 16, Missing semicolon.\ncontrollers/stream.js: line 26, col 36, Missing semicolon.\ncontrollers/stream.js: line 7, col 5, \'self\' is not defined.\ncontrollers/stream.js: line 9, col 22, \'Faye\' is not defined.\ncontrollers/stream.js: line 12, col 26, \'self\' is not defined.\ncontrollers/stream.js: line 13, col 9, \'self\' is not defined.\ncontrollers/stream.js: line 26, col 5, \'self\' is not defined.\ncontrollers/stream.js: line 10, col 10, \'subscription\' is defined but never used.\ncontrollers/stream.js: line 11, col 13, \'data\' is defined but never used.\ncontrollers/stream.js: line 12, col 13, \'serializer\' is defined but never used.\n\n10 errors'); 
+    ok(false, 'controllers/stream.js should pass jshint.\ncontrollers/stream.js: line 7, col 16, Missing semicolon.\ncontrollers/stream.js: line 29, col 42, Missing semicolon.\ncontrollers/stream.js: line 7, col 5, \'self\' is not defined.\ncontrollers/stream.js: line 9, col 22, \'Faye\' is not defined.\ncontrollers/stream.js: line 12, col 26, \'self\' is not defined.\ncontrollers/stream.js: line 13, col 9, \'self\' is not defined.\ncontrollers/stream.js: line 29, col 5, \'self\' is not defined.\ncontrollers/stream.js: line 10, col 10, \'subscription\' is defined but never used.\ncontrollers/stream.js: line 11, col 13, \'data\' is defined but never used.\ncontrollers/stream.js: line 12, col 13, \'serializer\' is defined but never used.\n\n10 errors'); 
   });
 
 });
@@ -1185,7 +1199,7 @@ define('ember-hatorade/tests/routes/stream.jshint', function () {
 
   module('JSHint - routes');
   test('routes/stream.js should pass jshint', function() { 
-    ok(false, 'routes/stream.js should pass jshint.\nroutes/stream.js: line 10, col 178, Missing semicolon.\nroutes/stream.js: line 11, col 37, Missing semicolon.\nroutes/stream.js: line 12, col 61, Missing semicolon.\nroutes/stream.js: line 13, col 48, Missing semicolon.\nroutes/stream.js: line 12, col 7, \'funtimes\' is not defined.\nroutes/stream.js: line 13, col 39, \'funtimes\' is not defined.\n\n6 errors'); 
+    ok(false, 'routes/stream.js should pass jshint.\nroutes/stream.js: line 16, col 178, Missing semicolon.\nroutes/stream.js: line 8, col 34, \'totalPages\' is defined but never used.\nroutes/stream.js: line 11, col 61, \'infinityModel\' is defined but never used.\nroutes/stream.js: line 11, col 49, \'totalPages\' is defined but never used.\nroutes/stream.js: line 11, col 33, \'lastPageLoaded\' is defined but never used.\n\n5 errors'); 
   });
 
 });
@@ -1499,7 +1513,7 @@ catch(err) {
 if (runningTests) {
   require("ember-hatorade/tests/test-helper");
 } else {
-  require("ember-hatorade/app")["default"].create({"name":"ember-hatorade","version":"0.0.0.a16fba18"});
+  require("ember-hatorade/app")["default"].create({"name":"ember-hatorade","version":"0.0.0.7b684f34"});
 }
 
 /* jshint ignore:end */

@@ -16,15 +16,17 @@ export default Ember.Controller.extend({
   myMessageHandler: function(data) {
     console.log(data);
     var tweet = {
-       id: data.id_str,
-       text: data.text,
-       screen_name: data.user.screen_name,
-       favorite_count: data.favorite_count,
-       url: data.url,
-       profile_image: data.user.profile_image_url
+      tweet: {
+        id: data.id,
+        text: data.text,
+        screen_name: data.user.screen_name,
+        favorite_count: data.favorite_count,
+        url: "nope",
+        created_at: "nope",
+        profile_image: data.user.profile_image_url
+      }
     };
-    self.store.push('tweet', tweet)
-    // self.model.unshiftObject(funtimes)
+    self.model.unshiftObject(tweet.tweet)
   }
 
 

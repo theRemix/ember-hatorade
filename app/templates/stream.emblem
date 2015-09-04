@@ -38,4 +38,5 @@ ul
           = tweet.created_at
 h1 style='clear:both'
 = infinity-loader infinityModel=model
+
 = outlet
