@@ -1499,7 +1499,7 @@ catch(err) {
 if (runningTests) {
   require("ember-hatorade/tests/test-helper");
 } else {
-  require("ember-hatorade/app")["default"].create({"name":"ember-hatorade","version":"0.0.0.c33507f0"});
+  require("ember-hatorade/app")["default"].create({"name":"ember-hatorade","version":"0.0.0.a16fba18"});
 }
 
 /* jshint ignore:end */
