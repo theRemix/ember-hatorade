@@ -6,14 +6,12 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('tweets');
+  this.resource('tweets');
   this.route('home');
   this.route('stream');
-  this.route('hashtags', function() {
-    this.route('show', {path: '/:text'}, function() {
-    });
+  this.resource('hashtags', {path: '/hashtags'}, function() {
   });
-  this.route('hashtagTweets', { path: 'hashtags/:text' }, function() {
+  this.resource('hashtag', {path: 'hashtag/:text'}, function() {
   });
   this.route('about');
 });

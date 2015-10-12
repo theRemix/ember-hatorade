@@ -21,8 +21,8 @@ export default Ember.Controller.extend({
         text: data.text,
         screen_name: data.user.screen_name,
         favorite_count: data.favorite_count,
-        url: "nope",
-        created_at: "nope",
+        url: data.url,
+        created_at: data.created_at,
         profile_image: data.user.profile_image_url
       }
     };

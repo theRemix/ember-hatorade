@@ -8,7 +8,7 @@ define('ember-hatorade/adapters/application', ['exports', 'ember-data'], functio
 
   exports['default'] = DS['default'].RESTAdapter.extend({
     namespace: 'api/v1',
-    host: 'http://api.hatora.de'
+    host: 'http://lvh.me:3000'
   });
 
 });
@@ -52,6 +52,20 @@ define('ember-hatorade/controllers/array', ['exports', 'ember'], function (expor
 	exports['default'] = Ember['default'].Controller;
 
 });
+define('ember-hatorade/controllers/hashtag/tweets', ['exports', 'ember'], function (exports, Ember) {
+
+	'use strict';
+
+	exports['default'] = Ember['default'].Controller.extend({});
+
+});
+define('ember-hatorade/controllers/hashtags/show', ['exports'], function (exports) {
+
+	'use strict';
+
+	exports['default'] = Ember.Controller.extend({});
+
+});
 define('ember-hatorade/controllers/object', ['exports', 'ember'], function (exports, Ember) {
 
 	'use strict';
@@ -84,8 +98,8 @@ define('ember-hatorade/controllers/stream', ['exports', 'ember'], function (expo
           text: data.text,
           screen_name: data.user.screen_name,
           favorite_count: data.favorite_count,
-          url: 'nope',
-          created_at: 'nope',
+          url: data.url,
+          created_at: data.created_at,
           profile_image: data.user.profile_image_url
         }
       };
@@ -181,7 +195,8 @@ define('ember-hatorade/models/hashtag', ['exports', 'ember-data'], function (exp
   'use strict';
 
   exports['default'] = DS['default'].Model.extend({
-    text: DS['default'].attr()
+    text: DS['default'].attr(),
+    tweets: DS['default'].hasMany('tweet')
   });
 
 });
@@ -195,16 +210,9 @@ define('ember-hatorade/models/tweet', ['exports', 'ember-data'], function (expor
     created_at: DS['default'].attr(),
     favorite_count: DS['default'].attr,
     url: DS['default'].attr(),
-    profile_image: DS['default'].attr()
-
+    profile_image: DS['default'].attr(),
+    hashtags: DS['default'].hasMany('hashtag')
   });
-
-});
-define('ember-hatorade/models/tweets', ['exports', 'ember-data'], function (exports, DS) {
-
-	'use strict';
-
-	exports['default'] = DS['default'].Model.extend({});
 
 });
 define('ember-hatorade/router', ['exports', 'ember', 'ember-hatorade/config/environment'], function (exports, Ember, config) {
@@ -216,13 +224,11 @@ define('ember-hatorade/router', ['exports', 'ember', 'ember-hatorade/config/envi
   });
 
   Router.map(function () {
-    this.route('tweets');
+    this.resource('tweets');
     this.route('home');
     this.route('stream');
-    this.route('hashtags', function () {
-      this.route('show', { path: '/:text' }, function () {});
-    });
-    this.route('hashtagTweets', { path: 'hashtags/:text' }, function () {});
+    this.resource('hashtags', { path: '/hashtags' }, function () {});
+    this.resource('hashtag', { path: 'hashtag/:text' }, function () {});
     this.route('about');
   });
 
@@ -234,6 +240,17 @@ define('ember-hatorade/routes/about', ['exports', 'ember'], function (exports, E
 	'use strict';
 
 	exports['default'] = Ember['default'].Route.extend({});
+
+});
+define('ember-hatorade/routes/hashtag', ['exports', 'ember', 'ember-infinity/mixins/route'], function (exports, Ember, InfinityRoute) {
+
+  'use strict';
+
+  exports['default'] = Ember['default'].Route.extend(InfinityRoute['default'], {
+    model: function model(params) {
+      return this.infinityModel('hashtag', { perPage: 50, startingPage: 1 });
+    }
+  });
 
 });
 define('ember-hatorade/routes/hashtags', ['exports', 'ember', 'ember-infinity/mixins/route'], function (exports, Ember, InfinityRoute) {
@@ -605,7 +622,7 @@ define('ember-hatorade/templates/application', ['exports'], function (exports) {
         element(env, element3, context, "action", ["logIn"], {});
         block(env, morph0, context, "link-to", ["home"], {}, child0, null);
         block(env, morph1, context, "link-to", ["stream"], {}, child1, null);
-        block(env, morph2, context, "link-to", ["hashtags"], {}, child2, null);
+        block(env, morph2, context, "link-to", ["hashtags.index"], {}, child2, null);
         block(env, morph3, context, "link-to", ["about"], {}, child3, null);
         content(env, morph4, context, "outlet");
         return fragment;
@@ -614,12 +631,149 @@ define('ember-hatorade/templates/application', ['exports'], function (exports) {
   }()));
 
 });
-define('ember-hatorade/templates/hashtags', ['exports'], function (exports) {
+define('ember-hatorade/templates/hashtag/index', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      isHTMLBars: true,
+      revision: "Ember@1.12.0",
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("p");
+        var el2 = dom.createTextNode("hastag/index.emblem");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('ember-hatorade/templates/hashtag/tweets', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      isHTMLBars: true,
+      revision: "Ember@1.12.0",
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("p");
+        var el2 = dom.createTextNode("tweet.emblem");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('ember-hatorade/templates/hashtags/index', ['exports'], function (exports) {
 
   'use strict';
 
   exports['default'] = Ember.HTMLBars.template((function() {
     var child0 = (function() {
+      var child0 = (function() {
+        return {
+          isHTMLBars: true,
+          revision: "Ember@1.12.0",
+          blockParams: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          build: function build(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createComment("");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          render: function render(context, env, contextualElement) {
+            var dom = env.dom;
+            var hooks = env.hooks, content = hooks.content;
+            dom.detectNamespace(contextualElement);
+            var fragment;
+            if (env.useFragmentCache && dom.canClone) {
+              if (this.cachedFragment === null) {
+                fragment = this.build(dom);
+                if (this.hasRendered) {
+                  this.cachedFragment = fragment;
+                } else {
+                  this.hasRendered = true;
+                }
+              }
+              if (this.cachedFragment) {
+                fragment = dom.cloneNode(this.cachedFragment, true);
+              }
+            } else {
+              fragment = this.build(dom);
+            }
+            var morph0 = dom.createMorphAt(fragment,0,0,contextualElement);
+            dom.insertBoundary(fragment, null);
+            dom.insertBoundary(fragment, 0);
+            content(env, morph0, context, "hashtag.text");
+            return fragment;
+          }
+        };
+      }());
       return {
         isHTMLBars: true,
         revision: "Ember@1.12.0",
@@ -630,16 +784,14 @@ define('ember-hatorade/templates/hashtags', ['exports'], function (exports) {
           var el0 = dom.createDocumentFragment();
           var el1 = dom.createElement("li");
           dom.setAttribute(el1,"class","media row list-group-item col-lg-4");
-          var el2 = dom.createElement("a");
-          var el3 = dom.createComment("");
-          dom.appendChild(el2, el3);
+          var el2 = dom.createComment("");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           return el0;
         },
         render: function render(context, env, contextualElement) {
           var dom = env.dom;
-          var hooks = env.hooks, get = hooks.get, concat = hooks.concat, attribute = hooks.attribute, content = hooks.content;
+          var hooks = env.hooks, get = hooks.get, block = hooks.block;
           dom.detectNamespace(contextualElement);
           var fragment;
           if (env.useFragmentCache && dom.canClone) {
@@ -657,11 +809,8 @@ define('ember-hatorade/templates/hashtags', ['exports'], function (exports) {
           } else {
             fragment = this.build(dom);
           }
-          var element0 = dom.childAt(fragment, [0, 0]);
-          var morph0 = dom.createMorphAt(element0,0,0);
-          var attrMorph0 = dom.createAttrMorph(element0, 'href');
-          attribute(env, attrMorph0, element0, "href", concat(env, ["hashtags/", get(env, context, "hashtag.text")]));
-          content(env, morph0, context, "hashtag.text");
+          var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),0,0);
+          block(env, morph0, context, "link-to", ["hashtag.index", get(env, context, "hashtag")], {}, child0, null);
           return fragment;
         }
       };
@@ -713,14 +862,158 @@ define('ember-hatorade/templates/hashtags', ['exports'], function (exports) {
         } else {
           fragment = this.build(dom);
         }
-        var element1 = dom.childAt(fragment, [3]);
-        var morph0 = dom.createMorphAt(element1,0,0);
-        var morph1 = dom.createMorphAt(dom.childAt(element1, [1]),0,0);
+        var element0 = dom.childAt(fragment, [3]);
+        var morph0 = dom.createMorphAt(element0,0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element0, [1]),0,0);
         var morph2 = dom.createMorphAt(fragment,4,4,contextualElement);
         dom.insertBoundary(fragment, null);
         block(env, morph0, context, "each", [get(env, context, "model")], {"keyword": "hashtag"}, child0, null);
         inline(env, morph1, context, "infinity-loader", [], {"infinityModel": get(env, context, "model")});
         content(env, morph2, context, "outlet");
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('ember-hatorade/templates/hashtags/show/index', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      isHTMLBars: true,
+      revision: "Ember@1.12.0",
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("p");
+        var el2 = dom.createTextNode("from templates hashtags/show/index");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        var hooks = env.hooks, content = hooks.content;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        var morph0 = dom.createMorphAt(fragment,4,4,contextualElement);
+        dom.insertBoundary(fragment, null);
+        content(env, morph0, context, "outlet");
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('ember-hatorade/templates/hashtags/tweets', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      isHTMLBars: true,
+      revision: "Ember@1.12.0",
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("p");
+        var el2 = dom.createTextNode("this is twitter index");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('ember-hatorade/templates/hashtags/tweets/index', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      isHTMLBars: true,
+      revision: "Ember@1.12.0",
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("p");
+        var el2 = dom.createTextNode("funtimes from tweets");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
         return fragment;
       }
     };
@@ -775,6 +1068,57 @@ define('ember-hatorade/templates/home', ['exports'], function (exports) {
         var morph0 = dom.createMorphAt(fragment,3,3,contextualElement);
         dom.insertBoundary(fragment, null);
         content(env, morph0, context, "outlet");
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('ember-hatorade/templates/loading', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      isHTMLBars: true,
+      revision: "Ember@1.12.0",
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1,"id","container");
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2,"id","glass");
+        var el3 = dom.createTextNode(" ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"id","water");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
         return fragment;
       }
     };
@@ -1056,6 +1400,26 @@ define('ember-hatorade/tests/controllers/application.jshint', function () {
   });
 
 });
+define('ember-hatorade/tests/controllers/hashtag/tweets.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - controllers/hashtag');
+  test('controllers/hashtag/tweets.js should pass jshint', function() { 
+    ok(true, 'controllers/hashtag/tweets.js should pass jshint.'); 
+  });
+
+});
+define('ember-hatorade/tests/controllers/hashtags/show.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - controllers/hashtags');
+  test('controllers/hashtags/show.js should pass jshint', function() { 
+    ok(false, 'controllers/hashtags/show.js should pass jshint.\ncontrollers/hashtags/show.js: line 1, col 16, \'Ember\' is not defined.\n\n1 error'); 
+  });
+
+});
 define('ember-hatorade/tests/controllers/stream.jshint', function () {
 
   'use strict';
@@ -1143,16 +1507,6 @@ define('ember-hatorade/tests/models/tweet.jshint', function () {
   });
 
 });
-define('ember-hatorade/tests/models/tweets.jshint', function () {
-
-  'use strict';
-
-  module('JSHint - models');
-  test('models/tweets.js should pass jshint', function() { 
-    ok(true, 'models/tweets.js should pass jshint.'); 
-  });
-
-});
 define('ember-hatorade/tests/router.jshint', function () {
 
   'use strict';
@@ -1170,6 +1524,16 @@ define('ember-hatorade/tests/routes/about.jshint', function () {
   module('JSHint - routes');
   test('routes/about.js should pass jshint', function() { 
     ok(true, 'routes/about.js should pass jshint.'); 
+  });
+
+});
+define('ember-hatorade/tests/routes/hashtag.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - routes');
+  test('routes/hashtag.js should pass jshint', function() { 
+    ok(false, 'routes/hashtag.js should pass jshint.\nroutes/hashtag.js: line 6, col 9, \'params\' is defined but never used.\n\n1 error'); 
   });
 
 });
@@ -1513,7 +1877,7 @@ catch(err) {
 if (runningTests) {
   require("ember-hatorade/tests/test-helper");
 } else {
-  require("ember-hatorade/app")["default"].create({"name":"ember-hatorade","version":"0.0.0.7b684f34"});
+  require("ember-hatorade/app")["default"].create({"name":"ember-hatorade","version":"0.0.0.7a5c067d"});
 }
 
 /* jshint ignore:end */
