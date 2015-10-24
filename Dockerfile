@@ -6,15 +6,15 @@ RUN apt-get install -y git-core && apt-get clean
 
 ENV CONFIGURE_OPTS --disable-install-rdoc
 
-# Install ruby 2.2.2
-RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz && \
-    tar -zxvf ruby-2.2.2.tar.gz && \
-    cd ruby-2.2.2 && \
+# Install ruby 2.2.3
+RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.3.tar.gz && \
+    tar -zxvf ruby-2.2.3.tar.gz && \
+    cd ruby-2.2.3 && \
     ./configure --disable-install-doc --enable-shared && \
     make && \
     make install && \
     cd .. && \
-    rm -r ruby-2.2.2 ruby-2.2.2.tar.gz && \
+    rm -r ruby-2.2.3 ruby-2.2.3.tar.gz && \
     echo 'gem: --no-document' > /usr/local/etc/gemrcdoc
 
 # Clean up downloaded packages
