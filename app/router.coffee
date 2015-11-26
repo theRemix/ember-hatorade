@@ -8,7 +8,7 @@ Router.map ->
   @resource 'tweets'
   @route 'home'
   @route 'stream'
-  @route 'hashtags', {path: '/hashtags'}
+  @route 'hashtags'
   @route 'about'
 
 `export default Router`
