@@ -1,1 +1,10 @@
-h1 fun times
+br
+br
+br
+ul
+  each model as |hashtag|
+    li.media.row.list-group-item.col-lg-4
+      = hashtag.text
+  li.media.row.list-group-item.col-lg-4
+    = infinity-loader infinityModel=model
+= outlet
