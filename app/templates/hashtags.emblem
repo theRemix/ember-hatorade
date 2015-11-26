@@ -1,8 +1,1 @@
-br
-br
-br
-ul
-  each hashtag in model
-    li.media.row.list-group-item.col-lg-4
-      =hashtag.hashtag
-= outlet
+=outlet
