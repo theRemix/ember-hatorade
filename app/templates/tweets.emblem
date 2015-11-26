@@ -1,12 +1,1 @@
-ul
-  each tweet in model
-    li.media.row.list-group-item.col-lg-12
-      img src=tweet.profile_image
-      h4
-        = tweet.screen_name
-      p
-        =  tweet.text
-      a href=tweet.url
-        = tweet.created_at
-
 = outlet
