@@ -1,1 +1,54 @@
+/ %li.media.row.list-group-item.col-lg-12
+/   .data.col-lg-8.col-md-8.col-sm-8
+/     =link_to "http://twitter.com/#{tweet.screen_name}" , class: "pull-left" do
+/       =image_tag tweet.profile_image
+/     %h4.media-heading
+/       = link_to tweet.screen_name, root_url(subdomain: tweet.screen_name)
+/     %p
+/       = tweet.text
+/   .votes.pull-right.btn-group.col-lg-3.col-md-3.col-sm-3
+/     %button.btn.btn-default
+/       =link_to "", tweet_down_vote_path(tweet.uid), :method => 'POST', class: ['vote', 'glyphicon', 'glyphicon-minus'], remote: true
+/     %button.btn.btn-default
+/       =tweet.votes_for
+/     %button.btn.btn-default
+/       =link_to "", tweet_up_vote_path(tweet.uid), :method => "POST", class: ['vote', 'glyphicon', 'glyphicon-plus'], remote: true
+/   .col-lg-8.col-sm-8.col-md-8.commands
+/     .col-lg-2.col-md-3.col-sm-3
+/       = link_to time_ago_in_words(tweet.posted_at.strftime("%c")) + " ago", tweet.url
+/     .col-lg-1.col-md-2.col-sm-2
+/       %a.retweet
+/         retweet
+/     .col-lg-1.col-md-2.col-sm-2
+/       %a.favorite
+/         favorite
+/     .col-lg-1.col-md-2.col-sm-2
+/       %a.reply
+/         reply
+/button{action 'showStreamControls'} open controls
+ul
+  each modal as |tweet|
+    li.media.row.list-group-item.col-lg-12
+      img src=tweet.profile_image
+      h4
+          = tweet.screen_name
+      .data.col-lg-8.col-md-8.col-sm-8
+        p
+          =  tweet.text
+        a href=tweet.url
+          = tweet.created_at
+h1 style='clear:both'
+= infinity-loader infinityModel=model
+
 = outlet
+#control-modal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button type='button' data-dismiss="modal" aria-label="close" X
+        h4.modal-title Stream keywords
+      .modal-body
+        input.stream-input data-role="tagsinput"
+      .modal-footer
+        button.btn.btn-default type='button' data-dismiss="modal" Close
+        button.btn.btn-primary{action 'commitStreamChange'} type='button' data-dismiss="modal" aria-label="close" Save Changes
