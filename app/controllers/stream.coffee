@@ -14,8 +14,6 @@ StreamController = Ember.Controller.extend
         serializer = self.store.serializerFor('tweet')
         self.myMessageHandler(message)
       websocket = this.get('websocket')
-    self.get('websocket').client.subscribe 'notification', (message) ->
-      console.log(message)
   myMessageHandler: (data) ->
     # console.log(data)
     tweet =
