@@ -5,7 +5,7 @@ Router = Ember.Router.extend
   location: config.locationType
 
 Router.map ->
-  @resource 'tweets'
+  @route 'tweets'
   @route 'home'
   @route 'stream'
   @route 'hashtags'

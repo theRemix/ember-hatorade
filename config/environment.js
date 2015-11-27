@@ -19,9 +19,9 @@ module.exports = function(environment) {
     },
     contentSecurityPolicy: {
       'default-src': "'none'",
-      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' 'http://hatora.de/'",
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' 'http://api.hatora.de/'",
       'font-src': "'self'",
-      'connect-src': "'self'",
+      'connect-src': "'self' http://api.hatora.de",
       'img-src': "'self'",
       'report-uri':"'localhost'",
       'style-src': "'self' 'unsafe-inline'",
