@@ -1,7 +1,8 @@
 `import Ember from 'ember'`
 
 StreamController = Ember.Controller.extend
-  sortBy: 'id',
+  sortProperties: ['id:dsc']
+  # sortedModel: Ember.computed.sort('model', 'sortProperties')
   showStreamControlButton: true,
   websocket: Ember.inject.service(),
   init: () ->
@@ -33,6 +34,7 @@ StreamController = Ember.Controller.extend
       created_at: data.created_at,
       profile_image: data.user.profile_image_url
     @store.pushPayload({tweets: [tweet]})
-    @store.filter('tweet')
+    # @store.push('tweet', {data: {tweet: tweet}})
+    @.set('model', @store.peekAll('tweet').sortBy('id'))
 
 `export default StreamController`
