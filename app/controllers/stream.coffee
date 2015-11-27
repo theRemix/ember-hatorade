@@ -35,6 +35,6 @@ StreamController = Ember.Controller.extend
       profile_image: data.user.profile_image_url
     @store.pushPayload({tweets: [tweet]})
     # @store.push('tweet', {data: {tweet: tweet}})
-    @.set('model', @store.peekAll('tweet').sortBy('id'))
+    @.set('model', @store.peekAll('tweet').sortBy('id').reverse())
 
 `export default StreamController`
