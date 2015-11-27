@@ -1,4 +1,3 @@
-/button{action 'showStreamControls'} open controls
 br
 
 ul

@@ -16,15 +16,8 @@ StreamController = Ember.Controller.extend
       websocket = this.get('websocket')
     self.get('websocket').client.subscribe 'notification', (message) ->
       console.log(message)
-  actions: 
-    showStreamControls: ()->
-      $('#control-modal').modal("show")
-      # client.publish('/commands', {commands: 'status', status: 'report status'})
-      $('.stream-input').tagsinput({trimValue: true})
-    commitStreamChange: ()->
-      client.publish( '/commands', {command: "search",  terms: $('input.stream-input').val()});
   myMessageHandler: (data) ->
-    console.log(data)
+    # console.log(data)
     tweet =
       id: data.id,
       text: data.text,

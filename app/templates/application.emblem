@@ -2,6 +2,7 @@
   .fun
     h2#title Hatora.de
     button{action 'logIn'} Log in
+    button{action 'showStreamControls'} open controls
   ul.nav.nav-pills.pull-left
     li
       =link-to "home" | home
