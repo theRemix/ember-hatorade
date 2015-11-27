@@ -3,6 +3,6 @@
 
 HashtagsRoute = Ember.Route.extend InfinityRoute,
   model: ->
-    @infinityModel 'hashtag',{ perPage: 50, startingPage: 1 }
+    @infinityModel 'hashtag', { perPage: 50, startingPage: 1 }
 
 `export default HashtagsRoute`
