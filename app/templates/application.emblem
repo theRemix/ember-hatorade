@@ -18,3 +18,14 @@
     li
       =link-to "about" | about
   = outlet
+#control-modal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button type='button' data-dismiss="modal" aria-label="close" X
+        h4.modal-title Stream keywords
+      .modal-body
+        input.stream-input data-role="tagsinput"
+      .modal-footer
+        button.btn.btn-default type='button' data-dismiss="modal" Close
+        button.btn.btn-primary{action 'commitStreamChange'} type='button' data-dismiss="modal" aria-label="close" Save Changes
