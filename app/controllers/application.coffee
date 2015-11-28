@@ -15,10 +15,11 @@ ApplicationController = Ember.Controller.extend
     status: () ->
       @.get('websocket').client.publish '/commands', {command: 'status'}
     showStreamControls: ()->
-      $('#control-modal').modal("show")
       # client.publish('/commands', {commands: 'status', status: 'report status'})
       @.get('stream_criteria').forEach (search_term) ->
-        $('.stream-input').tagsinput('add', search_term, {trimValue: true})
+        $('.stream-input').tagsinput('add', search_term.replace('"',''), {trimValue: true})
+        $('.stream-input').tagsinput('refresh')
+      $('#control-modal').modal("show")
     commitStreamChange: ()->
       @.get('websocket').client.publish( '/commands', {command: "restart_and_search",  restart_and_search: $('input.stream-input').val()})
 
