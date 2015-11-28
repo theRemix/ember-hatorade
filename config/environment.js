@@ -21,8 +21,8 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' 'http://api.hatora.de/'",
       'font-src': "'self'",
-      'connect-src': "'self' http://api.hatora.de",
-      'img-src': "'self' 'http://pbs.twimg.com'",
+      'connect-src': "'self' http://api.hatora.de/",
+      'img-src': "'self' 'http://pbs.twimg.com/'",
       'report-uri':"'localhost'",
       'style-src': "'self' 'unsafe-inline'",
       'frame-src': "'none'"
