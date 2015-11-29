@@ -36,11 +36,9 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node
 RUN npm install -g
 # RUN git config --global url."https://".insteadOf git://
 RUN npm install -g bower
-RUN git init
+RUN git --version
 # RUN bower install http://github.com/ember-cli/ember-load-initializers.git --allow-root
-RUN cd /opt/hatorade && bower install -f --allow-root
-
-RUN git config --global url."https://".insteadOf git:// && cd /opt/hatorade && ember build
+RUN bower install -f --allow-root
 
 EXPOSE 5055
 WORKDIR /opt/hatorade
