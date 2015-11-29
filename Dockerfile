@@ -33,14 +33,15 @@ ADD ./ /opt/hatorade
 
 WORKDIR /opt/hatorade
 RUN ln -s /usr/bin/nodejs /usr/bin/node
-RUN npm install -g
-# RUN git config --global url."https://".insteadOf git://
-RUN npm install -g bower
-RUN git --version
-# RUN bower install http://github.com/ember-cli/ember-load-initializers.git --allow-root
-RUN bower install -f --allow-root
+RUN npm install install -g
+RUN npm install -g ember-cli --save
+RUN npm install -g bower --save
+RUN bower install -F --allow-root
+RUN npm install -g --save
+RUN ember update
+RUN ember build
 
 EXPOSE 5055
-WORKDIR /opt/hatorade
 
 CMD ruby sinatra_ember.rb -o 0.0.0.0
+
