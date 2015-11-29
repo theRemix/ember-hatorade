@@ -1,8 +1,8 @@
 FROM ubuntu:14.04
 
-RUN apt-get update && apt-get install -y build-essential libssl-dev libreadline-dev nodejs wget curl && apt-get clean
+RUN apt-get update && apt-get install -y build-essential libssl-dev libreadline-dev nodejs npm curl && apt-get clean
 
-RUN apt-get install -y git-core && apt-get clean
+RUN apt-get install -y git && apt-get clean
 
 ENV CONFIGURE_OPTS --disable-install-rdoc
 
@@ -18,6 +18,8 @@ RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.3.tar.gz && \
     echo 'gem: --no-document' > /usr/local/etc/gemrcdoc
 
 # Clean up downloaded packages
+RUN npm install -g ember-cli
+
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN gem install bundler
@@ -28,6 +30,17 @@ ADD ./Gemfile.lock Gemfile.lock
 RUN bundle
 
 ADD ./ /opt/hatorade
+
+WORKDIR /opt/hatorade
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+RUN npm install -g
+# RUN git config --global url."https://".insteadOf git://
+RUN npm install -g bower
+RUN git init
+# RUN bower install http://github.com/ember-cli/ember-load-initializers.git --allow-root
+RUN cd /opt/hatorade && bower install -f --allow-root
+
+RUN git config --global url."https://".insteadOf git:// && cd /opt/hatorade && ember build
 
 EXPOSE 5055
 WORKDIR /opt/hatorade
