@@ -37,10 +37,11 @@ RUN npm install install -g
 RUN npm install -g ember-cli --save
 RUN npm install -g bower --save
 RUN bower install -F --allow-root
-RUN npm install -g --save
-RUN ember update
-RUN ember build
-
+# RUN npm install -g --save npm-install-missing
+# RUN npm-install-missing
+# RUN ember update
+# RUN ember build
+#
 EXPOSE 5055
 
 CMD ruby sinatra_ember.rb -o 0.0.0.0
