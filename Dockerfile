@@ -18,8 +18,6 @@ RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.3.tar.gz && \
     echo 'gem: --no-document' > /usr/local/etc/gemrcdoc
 
 # Clean up downloaded packages
-RUN npm install -g ember-cli
-
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN gem install bundler
