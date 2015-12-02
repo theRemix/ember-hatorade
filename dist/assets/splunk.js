@@ -649,7 +649,7 @@ define('splunk/templates/about', ['exports'], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 416
+            "column": 415
           }
         },
         "moduleName": "splunk/templates/about.hbs"
@@ -679,7 +679,7 @@ define('splunk/templates/about', ['exports'], function (exports) {
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
         var el1 = dom.createElement("p");
-        var el2 = dom.createTextNode("Simply log in via twitter, visit your user name (i.e. rsherman_25.hatora.de) and haters visiting the site will be alerted that you need haters. ");
+        var el2 = dom.createTextNode("Simply log in via twitter, visit your user name (i.e. rsherman_25.hatora.de) and haters visiting the site will be alerted that you need haters.");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
         var el1 = dom.createElement("iframe");
@@ -701,7 +701,7 @@ define('splunk/templates/about', ['exports'], function (exports) {
         return morphs;
       },
       statements: [
-        ["content","outlet",["loc",[null,[1,406],[1,416]]]]
+        ["content","outlet",["loc",[null,[1,405],[1,415]]]]
       ],
       locals: [],
       templates: []
@@ -5826,7 +5826,7 @@ catch(err) {
 if (runningTests) {
   require("splunk/tests/test-helper");
 } else {
-  require("splunk/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"splunk","version":"0.0.0+57432938"});
+  require("splunk/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"splunk","version":"0.0.0+7fa9912a"});
 }
 
 /* jshint ignore:end */
