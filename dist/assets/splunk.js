@@ -524,7 +524,8 @@ define('splunk/router', ['exports', 'ember', 'splunk/config/environment'], funct
     this.route('home');
     this.route('stream');
     this.route('hashtags');
-    return this.route('about');
+    this.route('about');
+    return this.route('users');
   });
 
   exports['default'] = Router;
@@ -604,6 +605,17 @@ define('splunk/routes/tweets', ['exports', 'ember', 'ember-infinity/mixins/route
   });
 
   exports['default'] = TweetsRoute;
+
+});
+define('splunk/routes/users', ['exports', 'ember'], function (exports, Ember) {
+
+	'use strict';
+
+	var UsersRoute;
+
+	UsersRoute = Ember['default'].Route.extend();
+
+	exports['default'] = UsersRoute;
 
 });
 define('splunk/services/flash-messages', ['exports', 'ember-cli-flash/services/flash-messages'], function (exports, FlashMessagesService) {
@@ -5499,6 +5511,60 @@ define('splunk/templates/tweets', ['exports'], function (exports) {
   }()));
 
 });
+define('splunk/templates/users', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      meta: {
+        "fragmentReason": {
+          "name": "missing-wrapper",
+          "problems": [
+            "wrong-type"
+          ]
+        },
+        "revision": "Ember@2.2.0",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 0
+          }
+        },
+        "moduleName": "splunk/templates/users.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment,0,0,contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [
+        ["content","outlet",["loc",[null,[1,0],[1,10]]]]
+      ],
+      locals: [],
+      templates: []
+    };
+  }()));
+
+});
 define('splunk/tests/app.jshint', function () {
 
   'use strict';
@@ -5736,6 +5802,19 @@ define('splunk/tests/unit/routes/tweets-test', ['ember-qunit'], function (ember_
   });
 
 });
+define('splunk/tests/unit/routes/users-test', ['ember-qunit'], function (ember_qunit) {
+
+  'use strict';
+
+  ember_qunit.moduleFor('route:users', 'Unit | Route | users', {});
+
+  ember_qunit.test('it exists', function (assert) {
+    var route;
+    route = this.subject();
+    return assert.ok(route);
+  });
+
+});
 define('splunk/tests/unit/services/websocket-test', ['ember-qunit'], function (ember_qunit) {
 
   'use strict';
@@ -5826,7 +5905,7 @@ catch(err) {
 if (runningTests) {
   require("splunk/tests/test-helper");
 } else {
-  require("splunk/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"splunk","version":"0.0.0+7fa9912a"});
+  require("splunk/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"splunk","version":"0.0.0+"});
 }
 
 /* jshint ignore:end */

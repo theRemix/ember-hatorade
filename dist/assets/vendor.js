@@ -81012,9 +81012,6 @@ return reviver.call(e,t,s)}var j;if(text+="",cx.lastIndex=0,cx.test(text)&&(text
     maxTags: undefined,
     maxChars: undefined,
     confirmKeys: [13, 44],
-    delimiter: ',',
-    delimiterRegex: null,
-    cancelConfirmKeysOnEmpty: false,
     onTagExists: function(item, $tag) {
       $tag.hide().fadeIn();
     },
@@ -81026,7 +81023,6 @@ return reviver.call(e,t,s)}var j;if(text+="",cx.lastIndex=0,cx.test(text)&&(text
    * Constructor function
    */
   function TagsInput(element, options) {
-    this.isInit = true;
     this.itemsArray = [];
 
     this.$element = $(element);
@@ -81044,7 +81040,6 @@ return reviver.call(e,t,s)}var j;if(text+="",cx.lastIndex=0,cx.test(text)&&(text
     this.$element.before(this.$container);
 
     this.build(options);
-    this.isInit = false;
   }
 
   TagsInput.prototype = {
@@ -81082,8 +81077,7 @@ return reviver.call(e,t,s)}var j;if(text+="",cx.lastIndex=0,cx.test(text)&&(text
         self.remove(self.itemsArray[0]);
 
       if (typeof item === "string" && this.$element[0].tagName === 'INPUT') {
-        var delimiter = (self.options.delimiterRegex) ? self.options.delimiterRegex : self.options.delimiter;
-        var items = item.split(delimiter);
+        var items = item.split(',');
         if (items.length > 1) {
           for (var i = 0; i < items.length; i++) {
             this.add(items[i], true);
@@ -81131,14 +81125,8 @@ return reviver.call(e,t,s)}var j;if(text+="",cx.lastIndex=0,cx.test(text)&&(text
       self.findInputWrapper().before($tag);
       $tag.after(' ');
 
-      // Check to see if the tag exists in its raw or uri-encoded form
-      var optionExists = (
-        $('option[value="' + encodeURIComponent(itemValue) + '"]', self.$element).length ||
-        $('option[value="' + htmlEncode(itemValue) + '"]', self.$element).length
-      );
-
       // add <option /> if item represents a value not present in one of the <select />'s options
-      if (self.isSelect && !optionExists) {
+      if (self.isSelect && !$('option[value="' + encodeURIComponent(itemValue) + '"]',self.$element)[0]) {
         var $option = $('<option selected>' + htmlEncode(itemText) + '</option>');
         $option.data('item', item);
         $option.attr('value', itemValue);
@@ -81152,16 +81140,7 @@ return reviver.call(e,t,s)}var j;if(text+="",cx.lastIndex=0,cx.test(text)&&(text
       if (self.options.maxTags === self.itemsArray.length || self.items().toString().length === self.options.maxInputLength)
         self.$container.addClass('bootstrap-tagsinput-max');
 
-      // If using typeahead, once the tag has been added, clear the typeahead value so it does not stick around in the input.
-      if ($('.typeahead, .twitter-typeahead', self.$container).length) {
-        self.$input.typeahead('val', '');
-      }
-
-      if (this.isInit) {
-        self.$element.trigger($.Event('itemAddedOnInit', { item: item, options: options }));
-      } else {
-        self.$element.trigger($.Event('itemAdded', { item: item, options: options }));
-      }
+      self.$element.trigger($.Event('itemAdded', { item: item, options: options }));
     },
 
     /**
@@ -81387,7 +81366,7 @@ return reviver.call(e,t,s)}var j;if(text+="",cx.lastIndex=0,cx.test(text)&&(text
           case 8:
             if (doGetCaretPosition($input[0]) === 0) {
               var prev = $inputWrapper.prev();
-              if (prev.length) {
+              if (prev) {
                 self.remove(prev.data('item'));
               }
             }
@@ -81397,7 +81376,7 @@ return reviver.call(e,t,s)}var j;if(text+="",cx.lastIndex=0,cx.test(text)&&(text
           case 46:
             if (doGetCaretPosition($input[0]) === 0) {
               var next = $inputWrapper.next();
-              if (next.length) {
+              if (next) {
                 self.remove(next.data('item'));
               }
             }
@@ -81443,16 +81422,9 @@ return reviver.call(e,t,s)}var j;if(text+="",cx.lastIndex=0,cx.test(text)&&(text
          var text = $input.val(),
          maxLengthReached = self.options.maxChars && text.length >= self.options.maxChars;
          if (self.options.freeInput && (keyCombinationInList(event, self.options.confirmKeys) || maxLengthReached)) {
-            // Only attempt to add a tag if there is data in the field
-            if (text.length !== 0) {
-               self.add(maxLengthReached ? text.substr(0, self.options.maxChars) : text);
-               $input.val('');
-            }
-
-            // If the field is empty, let the event triggered fire as usual
-            if (self.options.cancelConfirmKeysOnEmpty === false) {
-                event.preventDefault();
-            }
+            self.add(maxLengthReached ? text.substr(0, self.options.maxChars) : text);
+            $input.val('');
+            event.preventDefault();
          }
 
          // Reset internal input's size

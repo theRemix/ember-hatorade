@@ -10,5 +10,6 @@ Router.map ->
   @route 'stream'
   @route 'hashtags'
   @route 'about'
+  @route 'users'
 
 `export default Router`
