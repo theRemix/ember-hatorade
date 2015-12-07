@@ -13,6 +13,7 @@ Router.map ->
     path: 'hashtags/:text'
   @route 'about'
   @route 'users'
-  @route 'user'
+  @route 'user',
+    path: 'users/:screen_name'
 
 `export default Router`

@@ -511,13 +511,18 @@ define('splunk/models/tweet', ['exports', 'ember-data'], function (exports, DS) 
 });
 define('splunk/models/user', ['exports', 'ember-data'], function (exports, DS) {
 
-	'use strict';
+  'use strict';
 
-	var User;
+  var User;
 
-	User = DS['default'].Model.extend({});
+  User = DS['default'].Model.extend({
+    screen_name: DS['default'].attr(),
+    profile_image: DS['default'].attr(),
+    tweets: DS['default'].hasMany('tweet'),
+    hashtags: DS['default'].hasMany('hashtag')
+  });
 
-	exports['default'] = User;
+  exports['default'] = User;
 
 });
 define('splunk/router', ['exports', 'ember', 'splunk/config/environment'], function (exports, Ember, config) {
@@ -540,7 +545,9 @@ define('splunk/router', ['exports', 'ember', 'splunk/config/environment'], funct
     });
     this.route('about');
     this.route('users');
-    return this.route('user');
+    return this.route('user', {
+      path: 'users/:screen_name'
+    });
   });
 
   exports['default'] = Router;
@@ -641,15 +648,23 @@ define('splunk/routes/tweets', ['exports', 'ember', 'ember-infinity/mixins/route
   exports['default'] = TweetsRoute;
 
 });
-define('splunk/routes/user', ['exports', 'ember'], function (exports, Ember) {
+define('splunk/routes/user', ['exports', 'ember', 'ember-infinity/mixins/route'], function (exports, Ember, InfinityRoute) {
 
-	'use strict';
+  'use strict';
 
-	var UserRoute;
+  var UserRoute;
 
-	UserRoute = Ember['default'].Route.extend();
+  UserRoute = Ember['default'].Route.extend(InfinityRoute['default'], {
+    model: function model(params) {
+      return this.infinityModel('tweet', {
+        perPage: 50,
+        startPage: 1,
+        user: params.text
+      });
+    }
+  });
 
-	exports['default'] = UserRoute;
+  exports['default'] = UserRoute;
 
 });
 define('splunk/routes/users', ['exports', 'ember', 'ember-infinity/mixins/route'], function (exports, Ember, InfinityRoute) {
@@ -5847,6 +5862,114 @@ define('splunk/templates/users', ['exports'], function (exports) {
   'use strict';
 
   exports['default'] = Ember.HTMLBars.template((function() {
+    var child0 = (function() {
+      var child0 = (function() {
+        return {
+          meta: {
+            "fragmentReason": false,
+            "revision": "Ember@2.2.0",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 1,
+                "column": 41
+              },
+              "end": {
+                "line": 1,
+                "column": 450
+              }
+            },
+            "moduleName": "splunk/templates/users.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createElement("div");
+            dom.setAttribute(el1,"class","pull-left col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-0");
+            var el2 = dom.createElement("div");
+            dom.setAttribute(el2,"class","panel panel-info");
+            var el3 = dom.createElement("div");
+            dom.setAttribute(el3,"class","panel-body");
+            var el4 = dom.createElement("div");
+            dom.setAttribute(el4,"class","row");
+            var el5 = dom.createElement("img");
+            dom.setAttribute(el5,"alt","User Pic");
+            dom.setAttribute(el5,"class","img-circle img-repsonsive");
+            dom.appendChild(el4, el5);
+            dom.appendChild(el3, el4);
+            dom.appendChild(el2, el3);
+            var el3 = dom.createElement("div");
+            dom.setAttribute(el3,"class","panel-heading");
+            var el4 = dom.createElement("div");
+            dom.setAttribute(el4,"class","panel-title");
+            var el5 = dom.createComment("");
+            dom.appendChild(el4, el5);
+            dom.appendChild(el3, el4);
+            dom.appendChild(el2, el3);
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var element0 = dom.childAt(fragment, [0, 0]);
+            var element1 = dom.childAt(element0, [0, 0, 0]);
+            var morphs = new Array(2);
+            morphs[0] = dom.createAttrMorph(element1, 'src');
+            morphs[1] = dom.createMorphAt(dom.childAt(element0, [1, 0]),0,0);
+            return morphs;
+          },
+          statements: [
+            ["attribute","src",["get","user.profile_image",["loc",[null,[1,287],[1,305]]]]],
+            ["content","user.screen_name",["loc",[null,[1,406],[1,426]]]]
+          ],
+          locals: [],
+          templates: []
+        };
+      }());
+      return {
+        meta: {
+          "fragmentReason": false,
+          "revision": "Ember@2.2.0",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 1,
+              "column": 16
+            },
+            "end": {
+              "line": 1,
+              "column": 462
+            }
+          },
+          "moduleName": "splunk/templates/users.hbs"
+        },
+        isEmpty: false,
+        arity: 1,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment,0,0,contextualElement);
+          dom.insertBoundary(fragment, 0);
+          dom.insertBoundary(fragment, null);
+          return morphs;
+        },
+        statements: [
+          ["block","link-to",["user",["get","user",["loc",[null,[1,59],[1,63]]]]],[],0,null,["loc",[null,[1,41],[1,462]]]]
+        ],
+        locals: ["user"],
+        templates: [child0]
+      };
+    }());
     return {
       meta: {
         "fragmentReason": {
@@ -5865,7 +5988,7 @@ define('splunk/templates/users', ['exports'], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 23
+            "column": 481
           }
         },
         "moduleName": "splunk/templates/users.hbs"
@@ -5876,25 +5999,33 @@ define('splunk/templates/users', ['exports'], function (exports) {
       hasRendered: false,
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createElement("h1");
-        var el2 = dom.createTextNode("user");
-        dom.appendChild(el1, el2);
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("br");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
         var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var morphs = new Array(1);
-        morphs[0] = dom.createMorphAt(fragment,1,1,contextualElement);
+        var morphs = new Array(2);
+        morphs[0] = dom.createMorphAt(fragment,4,4,contextualElement);
+        morphs[1] = dom.createMorphAt(fragment,5,5,contextualElement);
         dom.insertBoundary(fragment, null);
         return morphs;
       },
       statements: [
-        ["content","outlet",["loc",[null,[1,13],[1,23]]]]
+        ["block","each",[["get","model",["loc",[null,[1,24],[1,29]]]]],[],0,null,["loc",[null,[1,16],[1,471]]]],
+        ["content","outlet",["loc",[null,[1,471],[1,481]]]]
       ],
       locals: [],
-      templates: []
+      templates: [child0]
     };
   }()));
 
