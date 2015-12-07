@@ -13,4 +13,5 @@ each model as |user|
           .panel-title
             = user.screen_name
 
+= infinity-loader infinityModel=model
 = outlet

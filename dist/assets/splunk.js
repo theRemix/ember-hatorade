@@ -5988,7 +5988,7 @@ define('splunk/templates/users', ['exports'], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 481
+            "column": 520
           }
         },
         "moduleName": "splunk/templates/users.hbs"
@@ -6011,18 +6011,22 @@ define('splunk/templates/users', ['exports'], function (exports) {
         dom.appendChild(el0, el1);
         var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var morphs = new Array(2);
+        var morphs = new Array(3);
         morphs[0] = dom.createMorphAt(fragment,4,4,contextualElement);
         morphs[1] = dom.createMorphAt(fragment,5,5,contextualElement);
+        morphs[2] = dom.createMorphAt(fragment,6,6,contextualElement);
         dom.insertBoundary(fragment, null);
         return morphs;
       },
       statements: [
         ["block","each",[["get","model",["loc",[null,[1,24],[1,29]]]]],[],0,null,["loc",[null,[1,16],[1,471]]]],
-        ["content","outlet",["loc",[null,[1,471],[1,481]]]]
+        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,503],[1,508]]]]],[],[]]],["loc",[null,[1,471],[1,510]]]],
+        ["content","outlet",["loc",[null,[1,510],[1,520]]]]
       ],
       locals: [],
       templates: [child0]
