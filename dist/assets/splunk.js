@@ -524,6 +524,9 @@ define('splunk/router', ['exports', 'ember', 'splunk/config/environment'], funct
     this.route('home');
     this.route('stream');
     this.route('hashtags');
+    this.route('hashtag', {
+      path: 'hashtags/:text'
+    });
     this.route('about');
     return this.route('users');
   });
@@ -540,6 +543,25 @@ define('splunk/routes/about', ['exports', 'ember'], function (exports, Ember) {
 	AboutRoute = Ember['default'].Route.extend();
 
 	exports['default'] = AboutRoute;
+
+});
+define('splunk/routes/hashtag', ['exports', 'ember', 'ember-infinity/mixins/route'], function (exports, Ember, InfinityRoute) {
+
+  'use strict';
+
+  var HashtagRoute;
+
+  HashtagRoute = Ember['default'].Route.extend(InfinityRoute['default'], {
+    model: function model(params) {
+      return this.infinityModel('tweet', {
+        perPage: 50,
+        startPage: 1,
+        hashtag: params.text
+      });
+    }
+  });
+
+  exports['default'] = HashtagRoute;
 
 });
 define('splunk/routes/hashtags', ['exports', 'ember', 'ember-infinity/mixins/route'], function (exports, Ember, InfinityRoute) {
@@ -5070,12 +5092,108 @@ define('splunk/templates/components/infinity-loader', ['exports'], function (exp
   }()));
 
 });
+define('splunk/templates/hashtag', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      meta: {
+        "fragmentReason": {
+          "name": "missing-wrapper",
+          "problems": [
+            "wrong-type"
+          ]
+        },
+        "revision": "Ember@2.2.0",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 0
+          }
+        },
+        "moduleName": "splunk/templates/hashtag.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment,0,0,contextualElement);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [
+        ["content","outlet",["loc",[null,[1,0],[1,10]]]]
+      ],
+      locals: [],
+      templates: []
+    };
+  }()));
+
+});
 define('splunk/templates/hashtags', ['exports'], function (exports) {
 
   'use strict';
 
   exports['default'] = Ember.HTMLBars.template((function() {
     var child0 = (function() {
+      var child0 = (function() {
+        return {
+          meta: {
+            "fragmentReason": false,
+            "revision": "Ember@2.2.0",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 1,
+                "column": 91
+              },
+              "end": {
+                "line": 1,
+                "column": 143
+              }
+            },
+            "moduleName": "splunk/templates/hashtags.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createComment("");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(fragment,0,0,contextualElement);
+            dom.insertBoundary(fragment, 0);
+            dom.insertBoundary(fragment, null);
+            return morphs;
+          },
+          statements: [
+            ["content","hashtag.text",["loc",[null,[1,127],[1,143]]]]
+          ],
+          locals: [],
+          templates: []
+        };
+      }());
       return {
         meta: {
           "fragmentReason": false,
@@ -5088,7 +5206,7 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
             },
             "end": {
               "line": 1,
-              "column": 112
+              "column": 160
             }
           },
           "moduleName": "splunk/templates/hashtags.hbs"
@@ -5112,10 +5230,10 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
           return morphs;
         },
         statements: [
-          ["content","hashtag.text",["loc",[null,[1,91],[1,107]]]]
+          ["block","link-to",["hashtags-show",["get","hashtag",["loc",[null,[1,118],[1,125]]]]],[],0,null,["loc",[null,[1,91],[1,155]]]]
         ],
         locals: ["hashtag"],
-        templates: []
+        templates: [child0]
       };
     }());
     return {
@@ -5136,7 +5254,7 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 227
+            "column": 275
           }
         },
         "moduleName": "splunk/templates/hashtags.hbs"
@@ -5176,9 +5294,9 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
         return morphs;
       },
       statements: [
-        ["block","each",[["get","model",["loc",[null,[1,24],[1,29]]]]],[],0,null,["loc",[null,[1,16],[1,121]]]],
-        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,200],[1,205]]]]],[],[]]],["loc",[null,[1,168],[1,207]]]],
-        ["content","outlet",["loc",[null,[1,217],[1,227]]]]
+        ["block","each",[["get","model",["loc",[null,[1,24],[1,29]]]]],[],0,null,["loc",[null,[1,16],[1,169]]]],
+        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,248],[1,253]]]]],[],[]]],["loc",[null,[1,216],[1,255]]]],
+        ["content","outlet",["loc",[null,[1,265],[1,275]]]]
       ],
       locals: [],
       templates: [child0]
@@ -5742,6 +5860,19 @@ define('splunk/tests/unit/routes/about-test', ['ember-qunit'], function (ember_q
   'use strict';
 
   ember_qunit.moduleFor('route:about', 'Unit | Route | about', {});
+
+  ember_qunit.test('it exists', function (assert) {
+    var route;
+    route = this.subject();
+    return assert.ok(route);
+  });
+
+});
+define('splunk/tests/unit/routes/hashtag-test', ['ember-qunit'], function (ember_qunit) {
+
+  'use strict';
+
+  ember_qunit.moduleFor('route:hashtag', 'Unit | Route | hashtag', {});
 
   ember_qunit.test('it exists', function (assert) {
     var route;

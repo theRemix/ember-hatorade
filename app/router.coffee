@@ -9,6 +9,8 @@ Router.map ->
   @route 'home'
   @route 'stream'
   @route 'hashtags'
+  @route 'hashtag',
+    path: 'hashtags/:text'
   @route 'about'
   @route 'users'
 
