@@ -509,6 +509,17 @@ define('splunk/models/tweet', ['exports', 'ember-data'], function (exports, DS) 
   exports['default'] = Tweet;
 
 });
+define('splunk/models/user', ['exports', 'ember-data'], function (exports, DS) {
+
+	'use strict';
+
+	var User;
+
+	User = DS['default'].Model.extend({});
+
+	exports['default'] = User;
+
+});
 define('splunk/router', ['exports', 'ember', 'splunk/config/environment'], function (exports, Ember, config) {
 
   'use strict';
@@ -528,7 +539,8 @@ define('splunk/router', ['exports', 'ember', 'splunk/config/environment'], funct
       path: 'hashtags/:text'
     });
     this.route('about');
-    return this.route('users');
+    this.route('users');
+    return this.route('user');
   });
 
   exports['default'] = Router;
@@ -629,15 +641,34 @@ define('splunk/routes/tweets', ['exports', 'ember', 'ember-infinity/mixins/route
   exports['default'] = TweetsRoute;
 
 });
-define('splunk/routes/users', ['exports', 'ember'], function (exports, Ember) {
+define('splunk/routes/user', ['exports', 'ember'], function (exports, Ember) {
 
 	'use strict';
 
-	var UsersRoute;
+	var UserRoute;
 
-	UsersRoute = Ember['default'].Route.extend();
+	UserRoute = Ember['default'].Route.extend();
 
-	exports['default'] = UsersRoute;
+	exports['default'] = UserRoute;
+
+});
+define('splunk/routes/users', ['exports', 'ember', 'ember-infinity/mixins/route'], function (exports, Ember, InfinityRoute) {
+
+  'use strict';
+
+  var UsersRoute;
+
+  UsersRoute = Ember['default'].Route.extend(InfinityRoute['default'], {
+    model: function model(params) {
+      return this.infinityModel('user', {
+        perPage: 50,
+        startPage: 1,
+        user: params.text
+      });
+    }
+  });
+
+  exports['default'] = UsersRoute;
 
 });
 define('splunk/services/flash-messages', ['exports', 'ember-cli-flash/services/flash-messages'], function (exports, FlashMessagesService) {
@@ -907,11 +938,47 @@ define('splunk/templates/application', ['exports'], function (exports) {
             "source": null,
             "start": {
               "line": 1,
-              "column": 600
+              "column": 551
             },
             "end": {
               "line": 1,
-              "column": 625
+              "column": 576
+            }
+          },
+          "moduleName": "splunk/templates/application.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("users");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes() { return []; },
+        statements: [
+
+        ],
+        locals: [],
+        templates: []
+      };
+    }());
+    var child5 = (function() {
+      return {
+        meta: {
+          "fragmentReason": false,
+          "revision": "Ember@2.2.0",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 1,
+              "column": 646
+            },
+            "end": {
+              "line": 1,
+              "column": 671
             }
           },
           "moduleName": "splunk/templates/application.hbs"
@@ -951,7 +1018,7 @@ define('splunk/templates/application', ['exports'], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 1257
+            "column": 1303
           }
         },
         "moduleName": "splunk/templates/application.hbs"
@@ -988,6 +1055,10 @@ define('splunk/templates/application', ['exports'], function (exports) {
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("ul");
         dom.setAttribute(el2,"class","nav nav-pills pull-left");
+        var el3 = dom.createElement("li");
+        var el4 = dom.createComment("");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
         var el3 = dom.createElement("li");
         var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
@@ -1075,7 +1146,7 @@ define('splunk/templates/application', ['exports'], function (exports) {
         var element4 = dom.childAt(element1, [3]);
         var element5 = dom.childAt(element0, [2]);
         var element6 = dom.childAt(fragment, [1, 0, 0, 2, 1]);
-        var morphs = new Array(10);
+        var morphs = new Array(11);
         morphs[0] = dom.createMorphAt(element0,0,0);
         morphs[1] = dom.createElementMorph(element2);
         morphs[2] = dom.createElementMorph(element3);
@@ -1083,9 +1154,10 @@ define('splunk/templates/application', ['exports'], function (exports) {
         morphs[4] = dom.createMorphAt(dom.childAt(element5, [0]),0,0);
         morphs[5] = dom.createMorphAt(dom.childAt(element5, [1]),0,0);
         morphs[6] = dom.createMorphAt(dom.childAt(element5, [2]),0,0);
-        morphs[7] = dom.createMorphAt(dom.childAt(element5, [4]),0,0);
-        morphs[8] = dom.createMorphAt(element0,3,3);
-        morphs[9] = dom.createElementMorph(element6);
+        morphs[7] = dom.createMorphAt(dom.childAt(element5, [3]),0,0);
+        morphs[8] = dom.createMorphAt(dom.childAt(element5, [5]),0,0);
+        morphs[9] = dom.createMorphAt(element0,3,3);
+        morphs[10] = dom.createElementMorph(element6);
         return morphs;
       },
       statements: [
@@ -1096,12 +1168,13 @@ define('splunk/templates/application', ['exports'], function (exports) {
         ["block","link-to",["home"],[],1,null,["loc",[null,[1,407],[1,442]]]],
         ["block","link-to",["stream"],[],2,null,["loc",[null,[1,451],[1,490]]]],
         ["block","link-to",["hashtags"],[],3,null,["loc",[null,[1,499],[1,542]]]],
-        ["block","link-to",["about"],[],4,null,["loc",[null,[1,600],[1,637]]]],
-        ["content","outlet",["loc",[null,[1,647],[1,657]]]],
-        ["element","action",["commitStreamChange"],[],["loc",[null,[1,1102],[1,1133]]]]
+        ["block","link-to",["users"],[],4,null,["loc",[null,[1,551],[1,588]]]],
+        ["block","link-to",["about"],[],5,null,["loc",[null,[1,646],[1,683]]]],
+        ["content","outlet",["loc",[null,[1,693],[1,703]]]],
+        ["element","action",["commitStreamChange"],[],["loc",[null,[1,1148],[1,1179]]]]
       ],
       locals: [],
-      templates: [child0, child1, child2, child3, child4]
+      templates: [child0, child1, child2, child3, child4, child5]
     };
   }()));
 
@@ -5097,11 +5170,83 @@ define('splunk/templates/hashtag', ['exports'], function (exports) {
   'use strict';
 
   exports['default'] = Ember.HTMLBars.template((function() {
+    var child0 = (function() {
+      return {
+        meta: {
+          "fragmentReason": false,
+          "revision": "Ember@2.2.0",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 1,
+              "column": 4
+            },
+            "end": {
+              "line": 1,
+              "column": 242
+            }
+          },
+          "moduleName": "splunk/templates/hashtag.hbs"
+        },
+        isEmpty: false,
+        arity: 1,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("li");
+          dom.setAttribute(el1,"class","media row list-group-item col-lg-12");
+          var el2 = dom.createElement("img");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("h4");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("p");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("img");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("a");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var element0 = dom.childAt(fragment, [0]);
+          var element1 = dom.childAt(element0, [0]);
+          var element2 = dom.childAt(element0, [3]);
+          var element3 = dom.childAt(element0, [4]);
+          var morphs = new Array(6);
+          morphs[0] = dom.createAttrMorph(element1, 'src');
+          morphs[1] = dom.createMorphAt(dom.childAt(element0, [1]),0,0);
+          morphs[2] = dom.createMorphAt(dom.childAt(element0, [2]),0,0);
+          morphs[3] = dom.createAttrMorph(element2, 'src');
+          morphs[4] = dom.createAttrMorph(element3, 'href');
+          morphs[5] = dom.createMorphAt(element3,0,0);
+          return morphs;
+        },
+        statements: [
+          ["attribute","src",["get","tweet.profile_image",["loc",[null,[1,89],[1,108]]]]],
+          ["content","tweet.screen_name",["loc",[null,[1,115],[1,136]]]],
+          ["content","tweet.text",["loc",[null,[1,144],[1,158]]]],
+          ["attribute","src",["get","tweet.media_url",["loc",[null,[1,173],[1,188]]]]],
+          ["attribute","href",["get","tweet.url",["loc",[null,[1,201],[1,210]]]]],
+          ["content","tweet.created_at",["loc",[null,[1,213],[1,233]]]]
+        ],
+        locals: ["tweet"],
+        templates: []
+      };
+    }());
     return {
       meta: {
         "fragmentReason": {
           "name": "missing-wrapper",
           "problems": [
+            "multiple-nodes",
             "wrong-type"
           ]
         },
@@ -5113,8 +5258,8 @@ define('splunk/templates/hashtag', ['exports'], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 2,
-            "column": 0
+            "line": 1,
+            "column": 333
           }
         },
         "moduleName": "splunk/templates/hashtag.hbs"
@@ -5125,23 +5270,34 @@ define('splunk/templates/hashtag', ['exports'], function (exports) {
       hasRendered: false,
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createComment("");
+        var el1 = dom.createElement("ul");
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n");
+        var el1 = dom.createElement("h1");
+        dom.setAttribute(el1,"style","clear:both");
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var morphs = new Array(1);
-        morphs[0] = dom.createMorphAt(fragment,0,0,contextualElement);
-        dom.insertBoundary(fragment, 0);
+        var morphs = new Array(3);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0]),0,0);
+        morphs[1] = dom.createMorphAt(dom.childAt(fragment, [1]),0,0);
+        morphs[2] = dom.createMorphAt(fragment,2,2,contextualElement);
+        dom.insertBoundary(fragment, null);
         return morphs;
       },
       statements: [
-        ["content","outlet",["loc",[null,[1,0],[1,10]]]]
+        ["block","each",[["get","model",["loc",[null,[1,12],[1,17]]]]],[],0,null,["loc",[null,[1,4],[1,251]]]],
+        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,311],[1,316]]]]],[],[]]],["loc",[null,[1,279],[1,318]]]],
+        ["content","outlet",["loc",[null,[1,323],[1,333]]]]
       ],
       locals: [],
-      templates: []
+      templates: [child0]
     };
   }()));
 
@@ -5165,7 +5321,7 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
               },
               "end": {
                 "line": 1,
-                "column": 143
+                "column": 137
               }
             },
             "moduleName": "splunk/templates/hashtags.hbs"
@@ -5188,7 +5344,7 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
             return morphs;
           },
           statements: [
-            ["content","hashtag.text",["loc",[null,[1,127],[1,143]]]]
+            ["content","hashtag.text",["loc",[null,[1,121],[1,137]]]]
           ],
           locals: [],
           templates: []
@@ -5206,7 +5362,7 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
             },
             "end": {
               "line": 1,
-              "column": 160
+              "column": 154
             }
           },
           "moduleName": "splunk/templates/hashtags.hbs"
@@ -5230,7 +5386,7 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
           return morphs;
         },
         statements: [
-          ["block","link-to",["hashtags-show",["get","hashtag",["loc",[null,[1,118],[1,125]]]]],[],0,null,["loc",[null,[1,91],[1,155]]]]
+          ["block","link-to",["hashtag",["get","hashtag",["loc",[null,[1,112],[1,119]]]]],[],0,null,["loc",[null,[1,91],[1,149]]]]
         ],
         locals: ["hashtag"],
         templates: [child0]
@@ -5254,7 +5410,7 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 275
+            "column": 269
           }
         },
         "moduleName": "splunk/templates/hashtags.hbs"
@@ -5294,9 +5450,9 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
         return morphs;
       },
       statements: [
-        ["block","each",[["get","model",["loc",[null,[1,24],[1,29]]]]],[],0,null,["loc",[null,[1,16],[1,169]]]],
-        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,248],[1,253]]]]],[],[]]],["loc",[null,[1,216],[1,255]]]],
-        ["content","outlet",["loc",[null,[1,265],[1,275]]]]
+        ["block","each",[["get","model",["loc",[null,[1,24],[1,29]]]]],[],0,null,["loc",[null,[1,16],[1,163]]]],
+        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,242],[1,247]]]]],[],[]]],["loc",[null,[1,210],[1,249]]]],
+        ["content","outlet",["loc",[null,[1,259],[1,269]]]]
       ],
       locals: [],
       templates: [child0]
@@ -5629,7 +5785,7 @@ define('splunk/templates/tweets', ['exports'], function (exports) {
   }()));
 
 });
-define('splunk/templates/users', ['exports'], function (exports) {
+define('splunk/templates/user', ['exports'], function (exports) {
 
   'use strict';
 
@@ -5639,6 +5795,7 @@ define('splunk/templates/users', ['exports'], function (exports) {
         "fragmentReason": {
           "name": "missing-wrapper",
           "problems": [
+            "multiple-nodes",
             "wrong-type"
           ]
         },
@@ -5650,8 +5807,65 @@ define('splunk/templates/users', ['exports'], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 2,
+            "line": 1,
+            "column": 28
+          }
+        },
+        "moduleName": "splunk/templates/user.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("h1");
+        var el2 = dom.createTextNode("user show");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(fragment,1,1,contextualElement);
+        dom.insertBoundary(fragment, null);
+        return morphs;
+      },
+      statements: [
+        ["content","outlet",["loc",[null,[1,18],[1,28]]]]
+      ],
+      locals: [],
+      templates: []
+    };
+  }()));
+
+});
+define('splunk/templates/users', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      meta: {
+        "fragmentReason": {
+          "name": "missing-wrapper",
+          "problems": [
+            "multiple-nodes",
+            "wrong-type"
+          ]
+        },
+        "revision": "Ember@2.2.0",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
             "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 23
           }
         },
         "moduleName": "splunk/templates/users.hbs"
@@ -5662,20 +5876,22 @@ define('splunk/templates/users', ['exports'], function (exports) {
       hasRendered: false,
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createComment("");
+        var el1 = dom.createElement("h1");
+        var el2 = dom.createTextNode("user");
+        dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n");
+        var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
         var morphs = new Array(1);
-        morphs[0] = dom.createMorphAt(fragment,0,0,contextualElement);
-        dom.insertBoundary(fragment, 0);
+        morphs[0] = dom.createMorphAt(fragment,1,1,contextualElement);
+        dom.insertBoundary(fragment, null);
         return morphs;
       },
       statements: [
-        ["content","outlet",["loc",[null,[1,0],[1,10]]]]
+        ["content","outlet",["loc",[null,[1,13],[1,23]]]]
       ],
       locals: [],
       templates: []
@@ -5855,6 +6071,21 @@ define('splunk/tests/unit/models/tweet-test', ['ember-qunit'], function (ember_q
   });
 
 });
+define('splunk/tests/unit/models/user-test', ['ember-qunit'], function (ember_qunit) {
+
+  'use strict';
+
+  ember_qunit.moduleForModel('user', 'Unit | Model | user', {
+    needs: []
+  });
+
+  ember_qunit.test('it exists', function (assert) {
+    var model;
+    model = this.subject();
+    return assert.ok(!!model);
+  });
+
+});
 define('splunk/tests/unit/routes/about-test', ['ember-qunit'], function (ember_qunit) {
 
   'use strict';
@@ -5925,6 +6156,19 @@ define('splunk/tests/unit/routes/tweets-test', ['ember-qunit'], function (ember_
   'use strict';
 
   ember_qunit.moduleFor('route:tweets', 'Unit | Route | tweets', {});
+
+  ember_qunit.test('it exists', function (assert) {
+    var route;
+    route = this.subject();
+    return assert.ok(route);
+  });
+
+});
+define('splunk/tests/unit/routes/user-test', ['ember-qunit'], function (ember_qunit) {
+
+  'use strict';
+
+  ember_qunit.moduleFor('route:user', 'Unit | Route | user', {});
 
   ember_qunit.test('it exists', function (assert) {
     var route;

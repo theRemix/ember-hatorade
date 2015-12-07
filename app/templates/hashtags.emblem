@@ -4,7 +4,7 @@ br
 ul
   each model as |hashtag|
     li.media.row.list-group-item.col-lg-4
-      = link-to 'hashtags-show' hashtag
+      = link-to 'hashtag' hashtag
         = hashtag.text
   li.media.row.list-group-item.col-lg-4
     = infinity-loader infinityModel=model
