@@ -16,6 +16,8 @@
     li
       =link-to "users" | users
     li
+      =link-to "tweets" | tweets
+    li
       a href="http://blog.hatora.de" blog
     li
       =link-to "about" | about

@@ -3,6 +3,6 @@
 
 UserRoute = Ember.Route.extend InfinityRoute,
   model: (params) ->
-    @infinityModel 'tweet', {perPage: 50, startPage: 1, user: params.text}
+    @infinityModel 'tweet', {perPage: 50, startPage: 1, user: params.screen_name}
 
 `export default UserRoute`
