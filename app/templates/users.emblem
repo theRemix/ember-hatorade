@@ -13,5 +13,12 @@ each model as |user|
           .panel-title
             = user.screen_name
 
-= infinity-loader infinityModel=model
+.pull-left.col-xs-12.col-sm-12.col-md-6.col-lg-3.col-xs-offset-0.col-sm-offset-0.col-md-offset-3.col-lg-offset-0
+  .panel.panel-info
+    .panel-body
+      .row
+        img.img-circle.img-repsonsive alt='User Pic' src=user.profile_image
+    .panel-heading
+      .panel-title
+        = infinity-loader infinityModel=model
 = outlet

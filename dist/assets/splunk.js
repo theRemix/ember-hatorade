@@ -369,7 +369,14 @@ define('splunk/controllers/tweets', ['exports', 'ember'], function (exports, Emb
   var TweetsController;
 
   TweetsController = Ember['default'].Controller.extend({
-    queryParams: ['hashtag', 'user'],
+    queryParams: {
+      hashtag: {
+        refreshModel: true
+      },
+      user: {
+        refreshModel: true
+      }
+    },
     hashtag: '',
     user: '',
     filteredArticles: Ember['default'].computed('hashtag', 'model', function () {
@@ -6170,7 +6177,7 @@ define('splunk/templates/users', ['exports'], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 520
+            "column": 885
           }
         },
         "moduleName": "splunk/templates/users.hbs"
@@ -6191,24 +6198,50 @@ define('splunk/templates/users', ['exports'], function (exports) {
         dom.appendChild(el0, el1);
         var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
-        var el1 = dom.createComment("");
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1,"class","pull-left col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-0");
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2,"class","panel panel-info");
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","panel-body");
+        var el4 = dom.createElement("div");
+        dom.setAttribute(el4,"class","row");
+        var el5 = dom.createElement("img");
+        dom.setAttribute(el5,"alt","User Pic");
+        dom.setAttribute(el5,"class","img-circle img-repsonsive");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","panel-heading");
+        var el4 = dom.createElement("div");
+        dom.setAttribute(el4,"class","panel-title");
+        var el5 = dom.createComment("");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
         var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var morphs = new Array(3);
+        var element2 = dom.childAt(fragment, [5, 0]);
+        var element3 = dom.childAt(element2, [0, 0, 0]);
+        var morphs = new Array(4);
         morphs[0] = dom.createMorphAt(fragment,4,4,contextualElement);
-        morphs[1] = dom.createMorphAt(fragment,5,5,contextualElement);
-        morphs[2] = dom.createMorphAt(fragment,6,6,contextualElement);
+        morphs[1] = dom.createAttrMorph(element3, 'src');
+        morphs[2] = dom.createMorphAt(dom.childAt(element2, [1, 0]),0,0);
+        morphs[3] = dom.createMorphAt(fragment,6,6,contextualElement);
         dom.insertBoundary(fragment, null);
         return morphs;
       },
       statements: [
         ["block","each",[["get","model",["loc",[null,[1,24],[1,29]]]]],[],0,null,["loc",[null,[1,16],[1,471]]]],
-        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,503],[1,508]]]]],[],[]]],["loc",[null,[1,471],[1,510]]]],
-        ["content","outlet",["loc",[null,[1,510],[1,520]]]]
+        ["attribute","src",["get","user.profile_image",["loc",[null,[1,693],[1,711]]]]],
+        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,844],[1,849]]]]],[],[]]],["loc",[null,[1,812],[1,851]]]],
+        ["content","outlet",["loc",[null,[1,875],[1,885]]]]
       ],
       locals: [],
       templates: [child0]

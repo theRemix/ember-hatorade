@@ -1,7 +1,11 @@
 `import Ember from 'ember'`
 
 TweetsController = Ember.Controller.extend
-  queryParams: ['hashtag', 'user']
+  queryParams:
+    hashtag:
+      refreshModel: true
+    user:
+      refreshModel: true
   hashtag: ''
   user: ''
   filteredArticles: Ember.computed 'hashtag', 'model', ->
