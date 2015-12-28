@@ -1,7 +1,8 @@
 FROM ubuntu:14.04
 
 RUN apt-get update && apt-get install -y build-essential libssl-dev libreadline-dev nodejs npm curl && apt-get clean
-
+RUN npm -g install n
+RUN n latest
 RUN apt-get install -y git && apt-get clean
 
 ENV CONFIGURE_OPTS --disable-install-rdoc
@@ -35,10 +36,7 @@ RUN npm install install -g
 RUN npm install -g ember-cli --save
 RUN npm install -g bower --save
 RUN bower install -F --allow-root
-# RUN npm install -g --save npm-install-missing
-# RUN npm-install-missing
-# RUN ember update
-# RUN ember build
+RUN ember build
 #
 EXPOSE 5055
 
