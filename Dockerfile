@@ -35,8 +35,8 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node
 RUN npm install install -g
 RUN npm install -g ember-cli --save
 RUN npm install -g bower --save
-RUN bower install -F --allow-root
-RUN ember build
+# RUN bower install -F --allow-root
+# RUN ember build
 #
 EXPOSE 5055
 
