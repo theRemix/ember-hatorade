@@ -6,6 +6,8 @@ HashtagRoute = Ember.Route.extend InfinityRoute,
     refresh:
       refreshModel: true
   model: (params) ->
-    @infinityModel 'tweet', { perPage: 50 , startPage: 1 , hashtag: params.text}
+    @store.queryRecord('hashtag', text: params.text)
+  afterModel: (model, transition) ->
+    this.set('tweets', Ember.RSVP.hash(tweets: model.get('tweets')))
 
 `export default HashtagRoute`

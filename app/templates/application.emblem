@@ -16,7 +16,7 @@
     li
       =link-to "users" | users
     li
-      =link-to "tweets" | tweets
+      =link-to "tweets" (query-params hashtag=null) | tweets
     li
       a href="http://blog.hatora.de" blog
     li

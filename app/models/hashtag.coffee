@@ -2,6 +2,6 @@
 
 Hashtag = DS.Model.extend
   text: DS.attr()
-  tweets: DS.hasMany('tweet')
+  tweets: DS.hasMany('tweet', async: true)
 
 `export default Hashtag`

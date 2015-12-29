@@ -2,9 +2,7 @@
 `import InfinityRoute from "ember-infinity/mixins/route"`
 
 HashtagController = Ember.Controller.extend
-  wat: ->
-    Math.floow(Math.rondom() * 10000000).propert().volatile()
-  tweets: Ember.computed ->
+  init: ->
   hashtag: ''
   fitered_tweets: Ember.computed 'tweet.@each.hashtags', 'target', ->
     if @get('hashtag') == ''

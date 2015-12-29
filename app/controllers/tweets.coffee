@@ -6,15 +6,12 @@ TweetsController = Ember.Controller.extend
       refreshModel: true
     user:
       refreshModel: true
-  hashtag: ''
-  user: ''
-  filteredArticles: Ember.computed 'hashtag', 'model', ->
+  hashtag: null
+  user: null
+  filteredTweets: Ember.computed 'hashtag', 'model', ->
     hashtag = @get('hashtag')
     tweets  = @get('model')
-    if hashtag
-      @modelFor('hashtag').get('tweets')
-    else
-      tweets
+    tweets
 
 
 `export default TweetsController`

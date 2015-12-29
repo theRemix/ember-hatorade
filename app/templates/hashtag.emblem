@@ -1,5 +1,10 @@
+= model.text
 ul
-  each model as |tweet|
+  each model as |hashtag|
+    p = hashtag.text
+    
+ul
+  each model.tweets as |tweet|
     li.media.row.list-group-item.col-lg-12
       img src=tweet.profile_image
       h4
@@ -11,5 +16,5 @@ ul
         = tweet.created_at
 
 h1 style='clear:both'
- = infinity-loader infinityModel=model
+/  = infinity-loader infinityModel=tweets
 = outlet

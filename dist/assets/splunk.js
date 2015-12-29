@@ -294,10 +294,7 @@ define('splunk/controllers/hashtag', ['exports', 'ember', 'ember-infinity/mixins
   var HashtagController;
 
   HashtagController = Ember['default'].Controller.extend({
-    wat: function wat() {
-      return Math.floow(Math.rondom() * 10000000).propert().volatile();
-    },
-    tweets: Ember['default'].computed(function () {}),
+    init: function init() {},
     hashtag: '',
     fitered_tweets: Ember['default'].computed('tweet.@each.hashtags', 'target', function () {
       if (this.get('hashtag') === '') {
@@ -377,17 +374,13 @@ define('splunk/controllers/tweets', ['exports', 'ember'], function (exports, Emb
         refreshModel: true
       }
     },
-    hashtag: '',
-    user: '',
-    filteredArticles: Ember['default'].computed('hashtag', 'model', function () {
+    hashtag: null,
+    user: null,
+    filteredTweets: Ember['default'].computed('hashtag', 'model', function () {
       var hashtag, tweets;
       hashtag = this.get('hashtag');
       tweets = this.get('model');
-      if (hashtag) {
-        return this.modelFor('hashtag').get('tweets');
-      } else {
-        return tweets;
-      }
+      return tweets;
     })
   });
 
@@ -539,7 +532,9 @@ define('splunk/models/hashtag', ['exports', 'ember-data'], function (exports, DS
 
   Hashtag = DS['default'].Model.extend({
     text: DS['default'].attr(),
-    tweets: DS['default'].hasMany('tweet')
+    tweets: DS['default'].hasMany('tweet', {
+      async: true
+    })
   });
 
   exports['default'] = Hashtag;
@@ -634,11 +629,14 @@ define('splunk/routes/hashtag', ['exports', 'ember', 'ember-infinity/mixins/rout
       }
     },
     model: function model(params) {
-      return this.infinityModel('tweet', {
-        perPage: 50,
-        startPage: 1,
-        hashtag: params.text
+      return this.store.queryRecord('hashtag', {
+        text: params.text
       });
+    },
+    afterModel: function afterModel(model, transition) {
+      return this.set('tweets', Ember['default'].RSVP.hash({
+        tweets: model.get('tweets')
+      }));
     }
   });
 
@@ -704,11 +702,32 @@ define('splunk/routes/tweets', ['exports', 'ember', 'ember-infinity/mixins/route
   var TweetsRoute;
 
   TweetsRoute = Ember['default'].Route.extend(InfinityRoute['default'], {
-    model: function model() {
-      return this.infinityModel('tweet', {
-        perPage: 50,
-        startingPage: 1
-      });
+    model: function model(params) {
+      if (params.hastag != null && params.user != null) {
+        return this.infinityModel('tweet', {
+          perPage: 50,
+          startingPage: 1,
+          hashtag: params.hashtag,
+          user: params.user
+        });
+      } else if (params.hashtag != null) {
+        return this.infinityModel('tweet', {
+          perPage: 50,
+          startingPage: 1,
+          hashtag: params.hashtag
+        });
+      } else if (params.user != null) {
+        return this.infinityModel('tweet', {
+          perPage: 50,
+          startingPage: 1,
+          user: params.user
+        });
+      } else {
+        return this.infinityModel('tweet', {
+          perPage: 50,
+          startingPage: 1
+        });
+      }
     }
   });
 
@@ -1060,7 +1079,7 @@ define('splunk/templates/application', ['exports'], function (exports) {
             },
             "end": {
               "line": 1,
-              "column": 624
+              "column": 652
             }
           },
           "moduleName": "splunk/templates/application.hbs"
@@ -1092,11 +1111,11 @@ define('splunk/templates/application', ['exports'], function (exports) {
             "source": null,
             "start": {
               "line": 1,
-              "column": 694
+              "column": 722
             },
             "end": {
               "line": 1,
-              "column": 719
+              "column": 747
             }
           },
           "moduleName": "splunk/templates/application.hbs"
@@ -1136,7 +1155,7 @@ define('splunk/templates/application', ['exports'], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 1351
+            "column": 1379
           }
         },
         "moduleName": "splunk/templates/application.hbs"
@@ -1292,10 +1311,10 @@ define('splunk/templates/application', ['exports'], function (exports) {
         ["block","link-to",["stream"],[],2,null,["loc",[null,[1,451],[1,490]]]],
         ["block","link-to",["hashtags"],[],3,null,["loc",[null,[1,499],[1,542]]]],
         ["block","link-to",["users"],[],4,null,["loc",[null,[1,551],[1,588]]]],
-        ["block","link-to",["tweets"],[],5,null,["loc",[null,[1,597],[1,636]]]],
-        ["block","link-to",["about"],[],6,null,["loc",[null,[1,694],[1,731]]]],
-        ["content","outlet",["loc",[null,[1,741],[1,751]]]],
-        ["element","action",["commitStreamChange"],[],["loc",[null,[1,1196],[1,1227]]]]
+        ["block","link-to",["tweets",["subexpr","query-params",[],["hashtag",null],["loc",[null,[1,617],[1,644]]]]],[],5,null,["loc",[null,[1,597],[1,664]]]],
+        ["block","link-to",["about"],[],6,null,["loc",[null,[1,722],[1,759]]]],
+        ["content","outlet",["loc",[null,[1,769],[1,779]]]],
+        ["element","action",["commitStreamChange"],[],["loc",[null,[1,1224],[1,1255]]]]
       ],
       locals: [],
       templates: [child0, child1, child2, child3, child4, child5, child6]
@@ -5303,11 +5322,53 @@ define('splunk/templates/hashtag', ['exports'], function (exports) {
             "source": null,
             "start": {
               "line": 1,
-              "column": 4
+              "column": 18
             },
             "end": {
               "line": 1,
-              "column": 242
+              "column": 69
+            }
+          },
+          "moduleName": "splunk/templates/hashtag.hbs"
+        },
+        isEmpty: false,
+        arity: 1,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("p");
+          var el2 = dom.createComment("");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0]),0,0);
+          return morphs;
+        },
+        statements: [
+          ["content","hashtag.text",["loc",[null,[1,49],[1,65]]]]
+        ],
+        locals: ["hashtag"],
+        templates: []
+      };
+    }());
+    var child1 = (function() {
+      return {
+        meta: {
+          "fragmentReason": false,
+          "revision": "Ember@2.2.0",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 1,
+              "column": 87
+            },
+            "end": {
+              "line": 1,
+              "column": 332
             }
           },
           "moduleName": "splunk/templates/hashtag.hbs"
@@ -5354,12 +5415,12 @@ define('splunk/templates/hashtag', ['exports'], function (exports) {
           return morphs;
         },
         statements: [
-          ["attribute","src",["get","tweet.profile_image",["loc",[null,[1,89],[1,108]]]]],
-          ["content","tweet.screen_name",["loc",[null,[1,115],[1,136]]]],
-          ["content","tweet.text",["loc",[null,[1,144],[1,158]]]],
-          ["attribute","src",["get","tweet.media_url",["loc",[null,[1,173],[1,188]]]]],
-          ["attribute","href",["get","tweet.url",["loc",[null,[1,201],[1,210]]]]],
-          ["content","tweet.created_at",["loc",[null,[1,213],[1,233]]]]
+          ["attribute","src",["get","tweet.profile_image",["loc",[null,[1,179],[1,198]]]]],
+          ["content","tweet.screen_name",["loc",[null,[1,205],[1,226]]]],
+          ["content","tweet.text",["loc",[null,[1,234],[1,248]]]],
+          ["attribute","src",["get","tweet.media_url",["loc",[null,[1,263],[1,278]]]]],
+          ["attribute","href",["get","tweet.url",["loc",[null,[1,291],[1,300]]]]],
+          ["content","tweet.created_at",["loc",[null,[1,303],[1,323]]]]
         ],
         locals: ["tweet"],
         templates: []
@@ -5370,8 +5431,8 @@ define('splunk/templates/hashtag', ['exports'], function (exports) {
         "fragmentReason": {
           "name": "missing-wrapper",
           "problems": [
-            "multiple-nodes",
-            "wrong-type"
+            "wrong-type",
+            "multiple-nodes"
           ]
         },
         "revision": "Ember@2.2.0",
@@ -5383,7 +5444,7 @@ define('splunk/templates/hashtag', ['exports'], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 333
+            "column": 384
           }
         },
         "moduleName": "splunk/templates/hashtag.hbs"
@@ -5394,34 +5455,41 @@ define('splunk/templates/hashtag', ['exports'], function (exports) {
       hasRendered: false,
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("ul");
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
         var el1 = dom.createElement("ul");
         var el2 = dom.createComment("");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
         var el1 = dom.createElement("h1");
         dom.setAttribute(el1,"style","clear:both");
-        var el2 = dom.createComment("");
-        dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
         var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var morphs = new Array(3);
-        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0]),0,0);
+        var morphs = new Array(4);
+        morphs[0] = dom.createMorphAt(fragment,0,0,contextualElement);
         morphs[1] = dom.createMorphAt(dom.childAt(fragment, [1]),0,0);
-        morphs[2] = dom.createMorphAt(fragment,2,2,contextualElement);
+        morphs[2] = dom.createMorphAt(dom.childAt(fragment, [2]),0,0);
+        morphs[3] = dom.createMorphAt(fragment,4,4,contextualElement);
+        dom.insertBoundary(fragment, 0);
         dom.insertBoundary(fragment, null);
         return morphs;
       },
       statements: [
-        ["block","each",[["get","model",["loc",[null,[1,12],[1,17]]]]],[],0,null,["loc",[null,[1,4],[1,251]]]],
-        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,311],[1,316]]]]],[],[]]],["loc",[null,[1,279],[1,318]]]],
-        ["content","outlet",["loc",[null,[1,323],[1,333]]]]
+        ["content","model.text",["loc",[null,[1,0],[1,14]]]],
+        ["block","each",[["get","model",["loc",[null,[1,26],[1,31]]]]],[],0,null,["loc",[null,[1,18],[1,78]]]],
+        ["block","each",[["get","model.tweets",["loc",[null,[1,95],[1,107]]]]],[],1,null,["loc",[null,[1,87],[1,341]]]],
+        ["content","outlet",["loc",[null,[1,374],[1,384]]]]
       ],
       locals: [],
-      templates: [child0]
+      templates: [child0, child1]
     };
   }()));
 
@@ -5445,7 +5513,7 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
               },
               "end": {
                 "line": 1,
-                "column": 137
+                "column": 164
               }
             },
             "moduleName": "splunk/templates/hashtags.hbs"
@@ -5468,7 +5536,7 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
             return morphs;
           },
           statements: [
-            ["content","hashtag.text",["loc",[null,[1,121],[1,137]]]]
+            ["content","hashtag.text",["loc",[null,[1,148],[1,164]]]]
           ],
           locals: [],
           templates: []
@@ -5486,7 +5554,7 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
             },
             "end": {
               "line": 1,
-              "column": 154
+              "column": 181
             }
           },
           "moduleName": "splunk/templates/hashtags.hbs"
@@ -5510,7 +5578,7 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
           return morphs;
         },
         statements: [
-          ["block","link-to",["hashtag",["get","hashtag",["loc",[null,[1,112],[1,119]]]]],[],0,null,["loc",[null,[1,91],[1,149]]]]
+          ["block","link-to",["tweets",["subexpr","query-params",[],["hashtag",["get","hashtag.text",["loc",[null,[1,133],[1,145]]]]],["loc",[null,[1,111],[1,146]]]]],[],0,null,["loc",[null,[1,91],[1,176]]]]
         ],
         locals: ["hashtag"],
         templates: [child0]
@@ -5534,7 +5602,7 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 269
+            "column": 296
           }
         },
         "moduleName": "splunk/templates/hashtags.hbs"
@@ -5574,9 +5642,9 @@ define('splunk/templates/hashtags', ['exports'], function (exports) {
         return morphs;
       },
       statements: [
-        ["block","each",[["get","model",["loc",[null,[1,24],[1,29]]]]],[],0,null,["loc",[null,[1,16],[1,163]]]],
-        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,242],[1,247]]]]],[],[]]],["loc",[null,[1,210],[1,249]]]],
-        ["content","outlet",["loc",[null,[1,259],[1,269]]]]
+        ["block","each",[["get","model",["loc",[null,[1,24],[1,29]]]]],[],0,null,["loc",[null,[1,16],[1,190]]]],
+        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,269],[1,274]]]]],[],[]]],["loc",[null,[1,237],[1,276]]]],
+        ["content","outlet",["loc",[null,[1,286],[1,296]]]]
       ],
       locals: [],
       templates: [child0]
@@ -5790,7 +5858,7 @@ define('splunk/templates/tweets', ['exports'], function (exports) {
             },
             "end": {
               "line": 1,
-              "column": 242
+              "column": 251
             }
           },
           "moduleName": "splunk/templates/tweets.hbs"
@@ -5837,12 +5905,12 @@ define('splunk/templates/tweets', ['exports'], function (exports) {
           return morphs;
         },
         statements: [
-          ["attribute","src",["get","tweet.profile_image",["loc",[null,[1,89],[1,108]]]]],
-          ["content","tweet.screen_name",["loc",[null,[1,115],[1,136]]]],
-          ["content","tweet.text",["loc",[null,[1,144],[1,158]]]],
-          ["attribute","src",["get","tweet.media_url",["loc",[null,[1,173],[1,188]]]]],
-          ["attribute","href",["get","tweet.url",["loc",[null,[1,201],[1,210]]]]],
-          ["content","tweet.created_at",["loc",[null,[1,213],[1,233]]]]
+          ["attribute","src",["get","tweet.profile_image",["loc",[null,[1,98],[1,117]]]]],
+          ["content","tweet.screen_name",["loc",[null,[1,124],[1,145]]]],
+          ["content","tweet.text",["loc",[null,[1,153],[1,167]]]],
+          ["attribute","src",["get","tweet.media_url",["loc",[null,[1,182],[1,197]]]]],
+          ["attribute","href",["get","tweet.url",["loc",[null,[1,210],[1,219]]]]],
+          ["content","tweet.created_at",["loc",[null,[1,222],[1,242]]]]
         ],
         locals: ["tweet"],
         templates: []
@@ -5866,7 +5934,7 @@ define('splunk/templates/tweets', ['exports'], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 333
+            "column": 342
           }
         },
         "moduleName": "splunk/templates/tweets.hbs"
@@ -5899,9 +5967,9 @@ define('splunk/templates/tweets', ['exports'], function (exports) {
         return morphs;
       },
       statements: [
-        ["block","each",[["get","model",["loc",[null,[1,12],[1,17]]]]],[],0,null,["loc",[null,[1,4],[1,251]]]],
-        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,311],[1,316]]]]],[],[]]],["loc",[null,[1,279],[1,318]]]],
-        ["content","outlet",["loc",[null,[1,323],[1,333]]]]
+        ["block","each",[["get","filteredTweets",["loc",[null,[1,12],[1,26]]]]],[],0,null,["loc",[null,[1,4],[1,260]]]],
+        ["inline","infinity-loader",[],["infinityModel",["subexpr","@mut",[["get","model",["loc",[null,[1,320],[1,325]]]]],[],[]]],["loc",[null,[1,288],[1,327]]]],
+        ["content","outlet",["loc",[null,[1,332],[1,342]]]]
       ],
       locals: [],
       templates: [child0]
