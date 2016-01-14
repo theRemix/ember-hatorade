@@ -1,2 +1,6 @@
 source 'https://rubygems.org'
 gem 'sinatra'
+gem 'redis-objects'
+gem 'connection_pool'
+gem 'pry'
+gem 'haml'
