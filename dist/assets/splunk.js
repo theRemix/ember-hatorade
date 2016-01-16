@@ -1079,7 +1079,7 @@ define('splunk/templates/application', ['exports'], function (exports) {
             },
             "end": {
               "line": 1,
-              "column": 652
+              "column": 651
             }
           },
           "moduleName": "splunk/templates/application.hbs"
@@ -1111,11 +1111,11 @@ define('splunk/templates/application', ['exports'], function (exports) {
             "source": null,
             "start": {
               "line": 1,
-              "column": 722
+              "column": 721
             },
             "end": {
               "line": 1,
-              "column": 747
+              "column": 746
             }
           },
           "moduleName": "splunk/templates/application.hbs"
@@ -1155,7 +1155,7 @@ define('splunk/templates/application', ['exports'], function (exports) {
           },
           "end": {
             "line": 1,
-            "column": 1379
+            "column": 1378
           }
         },
         "moduleName": "splunk/templates/application.hbs"
@@ -1311,10 +1311,10 @@ define('splunk/templates/application', ['exports'], function (exports) {
         ["block","link-to",["stream"],[],2,null,["loc",[null,[1,451],[1,490]]]],
         ["block","link-to",["hashtags"],[],3,null,["loc",[null,[1,499],[1,542]]]],
         ["block","link-to",["users"],[],4,null,["loc",[null,[1,551],[1,588]]]],
-        ["block","link-to",["tweets",["subexpr","query-params",[],["hashtag",null],["loc",[null,[1,617],[1,644]]]]],[],5,null,["loc",[null,[1,597],[1,664]]]],
-        ["block","link-to",["about"],[],6,null,["loc",[null,[1,722],[1,759]]]],
-        ["content","outlet",["loc",[null,[1,769],[1,779]]]],
-        ["element","action",["commitStreamChange"],[],["loc",[null,[1,1224],[1,1255]]]]
+        ["block","link-to",["tweets",["subexpr","query-params",[],["hashtag","_"],["loc",[null,[1,617],[1,643]]]]],[],5,null,["loc",[null,[1,597],[1,663]]]],
+        ["block","link-to",["about"],[],6,null,["loc",[null,[1,721],[1,758]]]],
+        ["content","outlet",["loc",[null,[1,768],[1,778]]]],
+        ["element","action",["commitStreamChange"],[],["loc",[null,[1,1223],[1,1254]]]]
       ],
       locals: [],
       templates: [child0, child1, child2, child3, child4, child5, child6]
