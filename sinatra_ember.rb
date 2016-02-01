@@ -19,6 +19,8 @@ end
 post '/setup_submission' do
   redis['api_key']      = params['api_key']
   redis['api_secret']   = params['api_secret']
+  redis['oauth_token']  = params['oauth_token']
+  redis['access_secret']= params['access_secret']
   redis['domain_name']  = params['domain_name']
   redis['search_terms'] = params['search_terms']
   redirect '/'
@@ -36,6 +38,6 @@ end
 private 
 
 def keys_absent?
-  redis['api_key'].nil? || redis['api_secret'].nil? || redis['domain_name'].nil? ||
-  redis['api_key'].empty? || redis['api_secret'].empty? || redis['domain_name'].empty?
+  redis['api_key'].nil? || redis['api_secret'].nil? || redis['domain_name'].nil? || redis['oauth_token'].nil? || redis['access_secret'].nil? ||
+    redis['api_key'].empty? || redis['api_secret'].empty? || redis['domain_name'].empty? || redis['oauth_token'].empty? || redis['access_secret'].empty?
 end
