@@ -10,7 +10,7 @@ configure do
   set :root, File.realpath(File.dirname(__FILE__))
   set :public_folder, File.expand_path('dist')
 end
-Redis::Objects.redis = ConnectionPool.new(size: 5, timeout: 5) { Redis.new(:host => '127.0.0.1', :port => 6379) }
+Redis::Objects.redis = ConnectionPool.new(size: 5, timeout: 5) { Redis.new(:host => 'hatorade_redis', :port => 6379) }
 
 def redis
   redis ||= Redis::Objects.redis
@@ -25,10 +25,17 @@ post '/setup_submission' do
 end
 
 get '*' do
-  pass if redis['app_key'].empty? || redis['secret_key'].empty? || redis['domain_name'].empty?
+  pass if keys_absent?
   send_file 'dist/index.html'
 end
 
 get '*' do #hack way to prevent headers from loading ember
   haml :setup, format: :html5
+end
+
+private 
+
+def keys_absent?
+  redis['api_key'].nil? || redis['api_secret'].nil? || redis['domain_name'].nil? ||
+  redis['api_key'].empty? || redis['api_secret'].empty? || redis['domain_name'].empty?
 end
