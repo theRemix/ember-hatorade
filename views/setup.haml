@@ -1,0 +1,32 @@
+!!! 5
+%body
+  %h1
+    hello world
+  %form{name: 'setup', action: '/setup_submission', method: "POST"}
+    %ul
+      %li
+        %label{for: 'api_key'} Api Key:
+        %input{type: 'text', name: 'api_key'}
+        %br
+      %li
+        %label{for: 'api_secret'} Api Secret:
+        %input{type: 'text', name: 'api_secret'}
+        %br
+      %li
+        %label{for: 'oauth_token'} Access Token (optional):
+        %input{type: 'text', name: 'oauth_token'}
+        %br
+      %li
+        %label{for: 'access_secret'} Access Secret (optional):
+        %input{type: 'text', name: 'access_secret'}
+        %br
+      %li
+        %label{for: 'domain_name'} Domain Name:
+        %input{type: 'text', name: 'domain_name', value: 'hatora.de'}
+        %br
+      %li
+        %label{for: 'search_terms'} Initial Search Term:
+        %input{type: 'text', name: 'search_terms', value: '#hatorade, #hatersgonnahate, #meantweets, #haters, @hatora_de'}
+        %br
+      %li
+        %input{type: 'submit'}
