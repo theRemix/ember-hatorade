@@ -12,7 +12,7 @@
     "jquery": "1.11.3",
     "loader.js": "ember-cli/loader.js#3.4.0",
     "qunit": "~1.20.0",
-    "bootstrap": "^3.3.6",
+    "bootstrap": "~3.3.5",
     "bootstrap-tagsinput": "^0.7.1",
     "faye": "^1.1.0"
   },
