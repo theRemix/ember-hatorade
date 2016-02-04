@@ -6,21 +6,7 @@
     button{action 'logIn'} Log in
     button{action 'showStreamControls'} open controls
     button{action 'status'} get search status
-  ul.nav.nav-pills.pull-left
-    li
-      =link-to "home" | home
-    li
-      = link-to 'stream' | stream
-    li
-      =link-to "hashtags" | hashtags
-    li
-      =link-to "users" | users
-    li
-      =link-to "tweets" (query-params hashtag="_") | tweets
-    li
-      a href="http://blog.hatora.de" blog
-    li
-      =link-to "about" | about
+  app-navigation
   = outlet
 #control-modal.modal.fade
   .modal-dialog

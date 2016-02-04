@@ -13,8 +13,12 @@ Router.map ->
     path: 'hashtags/:text'
     queryParams: ['refresh']
   @route 'about'
-  @route 'users'
+  @route 'users', ->
   @route 'user',
-    path: 'users/:screen_name'
+    path: 'users/:screen_name',
+    @route 'users/mentions',
+      path: 'users/:screen_name/mentions'
+    @route 'users/authored',
+      path: 'users/:screen_name/authored'
 
 `export default Router`

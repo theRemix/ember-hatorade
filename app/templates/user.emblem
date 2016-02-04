@@ -1,15 +1,13 @@
+.clearfix
+ul.nav.nav-pills.pull-left
+  li
+    = link-to 'users/authored' | authored
+  li
+    = link-to 'users/mentions' | mentions
 ul
   each model as |tweet|
-    li.media.row.list-group-item.col-lg-12
-      img src=tweet.profile_image
-      h4
-        = tweet.screen_name
-      p
-        =  tweet.text
-      img src=tweet.media_url
-      a href=tweet.url
-        = tweet.created_at
+    app-tweet tweet=tweet
 
+= outlet
 h1 style='clear:both'
  = infinity-loader infinityModel=model
-= outlet
