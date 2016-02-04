@@ -1,0 +1,11 @@
+li.media.row.list-group-item.col-lg-12
+  .clear style='clear:both'
+    img.pull-left src=tweet.profile_image
+    h4
+      = tweet.screen_name
+    a href=tweet.url
+      = tweet.created_at
+  .clear style='clear:both'
+    p
+      =  tweet.text
+    img src=tweet.media_url

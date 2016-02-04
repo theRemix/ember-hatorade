@@ -1,0 +1,7 @@
+ul
+  each filteredTweets as |tweet|
+    app-tweet tweet=tweet
+
+h1 style='clear:both'
+ = infinity-loader infinityModel=model
+= outlet

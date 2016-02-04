@@ -1,0 +1,35 @@
+.container-fluid.col-lg-8.col-lg-offset-2.col-md-8.col-md-offset-2
+  = each flashMessages.queue as |flash|
+    =flash-message flash=flash
+  .fun
+    h2#title Hatora.de
+    button{action 'logIn'} Log in
+    button{action 'showStreamControls'} open controls
+    button{action 'status'} get search status
+  ul.nav.nav-pills.pull-left
+    li
+      =link-to "home" | home
+    li
+      = link-to 'stream' | stream
+    li
+      =link-to "hashtags" | hashtags
+    li
+      =link-to "users" | users
+    li
+      =link-to "tweets" (query-params hashtag="_") | tweets
+    li
+      a href="http://blog.hatora.de" blog
+    li
+      =link-to "about" | about
+  = outlet
+#control-modal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button type='button' data-dismiss="modal" aria-label="close" X
+        h4.modal-title Stream keywords
+      .modal-body
+        input.stream-input data-role="tagsinput"
+      .modal-footer
+        button.btn.btn-default type='button' data-dismiss="modal" Close
+        button.btn.btn-primary{action 'commitStreamChange'} type='button' data-dismiss="modal" aria-label="close" Save Changes

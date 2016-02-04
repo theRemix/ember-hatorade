@@ -1,0 +1,20 @@
+= model.text
+ul
+  each model as |hashtag|
+    p = hashtag.text
+    
+ul
+  each model.tweets as |tweet|
+    li.media.row.list-group-item.col-lg-12
+      img src=tweet.profile_image
+      h4
+        = tweet.screen_name
+      p
+        =  tweet.text
+      img src=tweet.media_url
+      a href=tweet.url
+        = tweet.created_at
+
+h1 style='clear:both'
+/  = infinity-loader infinityModel=tweets
+= outlet
