@@ -13,3 +13,4 @@ ul.nav.nav-pills.pull-left
     a href="http://blog.hatora.de" blog
   li
     =link-to "about" | about
+.clearfix

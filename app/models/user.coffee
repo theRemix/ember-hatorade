@@ -5,6 +5,7 @@ User = DS.Model.extend {
   profile_image: DS.attr()
   tweets: DS.hasMany('tweet')
   hashtags: DS.hasMany('hashtag')
+  details: DS.attr()
 }
 
 `export default User`

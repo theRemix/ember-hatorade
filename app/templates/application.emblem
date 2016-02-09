@@ -1,11 +1,10 @@
 .container-fluid.col-lg-8.col-lg-offset-2.col-md-8.col-md-offset-2
   = each flashMessages.queue as |flash|
-    =flash-message flash=flash
-  .fun
-    h2#title Hatora.de
-    button{action 'logIn'} Log in
-    button{action 'showStreamControls'} open controls
-    button{action 'status'} get search status
+    = flash-message flash=flash
+  if user
+    user-banner user=user
+  else
+    app-banner
   app-navigation
   = outlet
 #control-modal.modal.fade

@@ -5,9 +5,9 @@ ul.nav.nav-pills.pull-left
   li
     = link-to 'user/mentions' | mentions
 ul
-  each tweets as |tweet|
+  each model as |tweet|
     app-tweet tweet=tweet
 
 = outlet
 h1 style='clear:both'
-  = infinity-loader infinityModel=tweets
+ = infinity-loader infinityModel=model

@@ -2,6 +2,8 @@
 
 ApplicationController = Ember.Controller.extend
   websocket: Ember.inject.service(),
+  userController: Ember.inject.controller('user')
+  user: Ember.computed.reads('userController.user')
   stream_criteria: []
   init: ->
     this._super()
