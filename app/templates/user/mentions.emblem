@@ -1,0 +1,7 @@
+user-navigation user=user
+ul
+  each tweets as |tweet|
+    app-tweet tweet=tweet
+= outlet
+h1 style='clear:both'
+  = infinity-loader infinityModel=tweets

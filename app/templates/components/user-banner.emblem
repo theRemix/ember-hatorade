@@ -1,4 +1,4 @@
-h2#title Hatora.de #{user.screen_name}
-button{action 'logIn'} Log in
-button{action 'showStreamControls'} open controls
-button{action 'status'} get search status
+  h2#title #{user.screen_name}.hatora.de
+  button{action 'logIn'} Log in
+  button{action 'showStreamControls'} open controls
+  button{action 'status'} get search status

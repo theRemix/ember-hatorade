@@ -15,10 +15,10 @@ Router.map ->
   @route 'about'
   @route 'users'
   @route 'user',
-    path: 'user/:screen_name', ->
-    @route 'user/mentions',
-      path: 'user/:screen_name/mentions'
-    @route 'user/authored',
-      path: 'user/:screen_name/authored'
+    path: 'user/:screen_name'
+  @route 'user/mentions',
+    path: 'user/:screen_name/mentions'
+  @route 'user/authored',
+    path: 'user/:screen_name/authored'
 
 `export default Router`

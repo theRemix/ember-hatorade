@@ -1,0 +1,7 @@
+.col-lg-12.col-lg-offset-0.col-md-12.col-md-offset-0 style="background-image: url('#{user.profile_banner_url}'); background-repeat: no-repeat; background-size: 100% 100%"
+  if user
+    user-banner user=user
+  else
+    app-banner
+  app-navigation
+
