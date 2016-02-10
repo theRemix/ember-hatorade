@@ -4,6 +4,8 @@
 UserRoute = Ember.Route.extend InfinityRoute,
   init: ->
     @_super(arguments...)
+  afterModel: ->
+    @transitionTo( 'user/authored' )
   model: (params) ->
     @store.peekAll('user').findBy('screen_name', params.screen_name) || @store.queryRecord('user', screen_name: params.screen_name)
 

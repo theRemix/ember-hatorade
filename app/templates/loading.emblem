@@ -1,0 +1,5 @@
+.clearfix
+.loading.wave
+  p loading
+/ #loading.loading-2.wave.wave-2
+/   .loading-2-text
