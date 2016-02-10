@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-LABEL hatorade-ember
+LABEL container=hatorade-ember
 
 RUN apt-get update && apt-get install -y build-essential libssl-dev libreadline-dev nodejs npm curl && apt-get clean
 RUN npm -g install n
