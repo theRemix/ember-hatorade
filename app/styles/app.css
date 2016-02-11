@@ -2,13 +2,6 @@
 .panel-info {min-height: 10em}
 h2#title {color: white; text-shadow: black 0.1em 0.1em 0.2em}
 
-rt "compass/css3";
-dy {
-  background: #141414;
-  width: 100%;
-  height: 100%;
-}
-
 .loading {
   text-transform: uppercase;
   font-family: 'Cabin Condensed', sans-serif;
