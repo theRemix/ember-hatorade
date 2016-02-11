@@ -1064,6 +1064,9 @@ define('hatorade/routes/user', ['exports', 'ember', 'ember-infinity/mixins/route
     init: function init() {
       return this._super.apply(this, arguments);
     },
+    afterModel: function afterModel() {
+      return this.transitionTo('user/authored');
+    },
     model: function model(params) {
       return this.store.peekAll('user').findBy('screen_name', params.screen_name) || this.store.queryRecord('user', {
         screen_name: params.screen_name
@@ -6220,11 +6223,11 @@ define("hatorade/templates/components/user-navigation", ["exports"], function (e
             "source": null,
             "start": {
               "line": 1,
-              "column": 157
+              "column": 158
             },
             "end": {
               "line": 1,
-              "column": 210
+              "column": 211
             }
           },
           "moduleName": "hatorade/templates/components/user-navigation.hbs"
@@ -6256,11 +6259,11 @@ define("hatorade/templates/components/user-navigation", ["exports"], function (e
             "source": null,
             "start": {
               "line": 1,
-              "column": 231
+              "column": 232
             },
             "end": {
               "line": 1,
-              "column": 284
+              "column": 285
             }
           },
           "moduleName": "hatorade/templates/components/user-navigation.hbs"
@@ -6297,7 +6300,7 @@ define("hatorade/templates/components/user-navigation", ["exports"], function (e
           },
           "end": {
             "line": 1,
-            "column": 318
+            "column": 319
           }
         },
         "moduleName": "hatorade/templates/components/user-navigation.hbs"
@@ -6309,7 +6312,7 @@ define("hatorade/templates/components/user-navigation", ["exports"], function (e
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
         var el1 = dom.createElement("div");
-        dom.setAttribute(el1, "class", "container col-lg-12 col-md-6");
+        dom.setAttribute(el1, "class", "container col-lg-12 col-md-12");
         var el2 = dom.createElement("nav");
         dom.setAttribute(el2, "class", "navbar navbar-default");
         var el3 = dom.createElement("a");
@@ -6343,7 +6346,7 @@ define("hatorade/templates/components/user-navigation", ["exports"], function (e
         morphs[2] = dom.createMorphAt(dom.childAt(element1, [1]), 0, 0);
         return morphs;
       },
-      statements: [["content", "user.screen_name", ["loc", [null, [1, 101], [1, 121]]]], ["block", "link-to", ["user/authored", ["get", "user.screen_name", ["loc", [null, [1, 184], [1, 200]]]]], [], 0, null, ["loc", [null, [1, 157], [1, 222]]]], ["block", "link-to", ["user/mentions", ["get", "user.screen_name", ["loc", [null, [1, 258], [1, 274]]]]], [], 1, null, ["loc", [null, [1, 231], [1, 296]]]]],
+      statements: [["content", "user.screen_name", ["loc", [null, [1, 102], [1, 122]]]], ["block", "link-to", ["user/authored", ["get", "user.screen_name", ["loc", [null, [1, 185], [1, 201]]]]], [], 0, null, ["loc", [null, [1, 158], [1, 223]]]], ["block", "link-to", ["user/mentions", ["get", "user.screen_name", ["loc", [null, [1, 259], [1, 275]]]]], [], 1, null, ["loc", [null, [1, 232], [1, 297]]]]],
       locals: [],
       templates: [child0, child1]
     };
@@ -6656,6 +6659,55 @@ define("hatorade/templates/home", ["exports"], function (exports) {
         return morphs;
       },
       statements: [["content", "outlet", ["loc", [null, [1, 0], [1, 10]]]]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("hatorade/templates/loading", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "fragmentReason": {
+          "name": "missing-wrapper",
+          "problems": ["multiple-nodes"]
+        },
+        "revision": "Ember@2.3.0",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 74
+          }
+        },
+        "moduleName": "hatorade/templates/loading.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "clearfix");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "loading wave");
+        var el2 = dom.createElement("p");
+        var el3 = dom.createTextNode("loading");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes() {
+        return [];
+      },
+      statements: [],
       locals: [],
       templates: []
     };
@@ -7323,7 +7375,7 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("hatorade/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"hatorade","version":"0.0.0+6c2d0943"});
+  require("hatorade/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"hatorade","version":"0.0.0+fdc8fda0"});
 }
 
 /* jshint ignore:end */
