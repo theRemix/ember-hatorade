@@ -4,6 +4,7 @@
 # /dist
 /tmp
 **/*.swp
+**/*.swo
 
 
 # dependencies
