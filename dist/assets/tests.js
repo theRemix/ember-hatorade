@@ -157,7 +157,7 @@ define('hatorade/tests/integration/components/app-banner-test', ['exports', 'emb
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -201,7 +201,7 @@ define('hatorade/tests/integration/components/app-banner-test', ['exports', 'emb
               'name': 'missing-wrapper',
               'problems': ['wrong-type']
             },
-            'revision': 'Ember@2.3.0',
+            'revision': 'Ember@2.3.1',
             'loc': {
               'source': null,
               'start': {
@@ -239,7 +239,7 @@ define('hatorade/tests/integration/components/app-banner-test', ['exports', 'emb
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -291,7 +291,7 @@ define('hatorade/tests/integration/components/app-hashtag-test', ['exports', 'em
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -335,7 +335,7 @@ define('hatorade/tests/integration/components/app-hashtag-test', ['exports', 'em
               'name': 'missing-wrapper',
               'problems': ['wrong-type']
             },
-            'revision': 'Ember@2.3.0',
+            'revision': 'Ember@2.3.1',
             'loc': {
               'source': null,
               'start': {
@@ -373,7 +373,7 @@ define('hatorade/tests/integration/components/app-hashtag-test', ['exports', 'em
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -425,7 +425,7 @@ define('hatorade/tests/integration/components/app-navigation-test', ['exports', 
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -469,7 +469,7 @@ define('hatorade/tests/integration/components/app-navigation-test', ['exports', 
               'name': 'missing-wrapper',
               'problems': ['wrong-type']
             },
-            'revision': 'Ember@2.3.0',
+            'revision': 'Ember@2.3.1',
             'loc': {
               'source': null,
               'start': {
@@ -507,7 +507,7 @@ define('hatorade/tests/integration/components/app-navigation-test', ['exports', 
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -559,7 +559,7 @@ define('hatorade/tests/integration/components/app-tweet-test', ['exports', 'embe
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -603,7 +603,7 @@ define('hatorade/tests/integration/components/app-tweet-test', ['exports', 'embe
               'name': 'missing-wrapper',
               'problems': ['wrong-type']
             },
-            'revision': 'Ember@2.3.0',
+            'revision': 'Ember@2.3.1',
             'loc': {
               'source': null,
               'start': {
@@ -641,7 +641,7 @@ define('hatorade/tests/integration/components/app-tweet-test', ['exports', 'embe
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -693,7 +693,7 @@ define('hatorade/tests/integration/components/app-user-test', ['exports', 'ember
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -737,7 +737,7 @@ define('hatorade/tests/integration/components/app-user-test', ['exports', 'ember
               'name': 'missing-wrapper',
               'problems': ['wrong-type']
             },
-            'revision': 'Ember@2.3.0',
+            'revision': 'Ember@2.3.1',
             'loc': {
               'source': null,
               'start': {
@@ -775,7 +775,7 @@ define('hatorade/tests/integration/components/app-user-test', ['exports', 'ember
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -827,7 +827,7 @@ define('hatorade/tests/integration/components/top-section-test', ['exports', 'em
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -871,7 +871,7 @@ define('hatorade/tests/integration/components/top-section-test', ['exports', 'em
               'name': 'missing-wrapper',
               'problems': ['wrong-type']
             },
-            'revision': 'Ember@2.3.0',
+            'revision': 'Ember@2.3.1',
             'loc': {
               'source': null,
               'start': {
@@ -909,7 +909,7 @@ define('hatorade/tests/integration/components/top-section-test', ['exports', 'em
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -961,7 +961,7 @@ define('hatorade/tests/integration/components/user-banner-test', ['exports', 'em
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -1005,7 +1005,7 @@ define('hatorade/tests/integration/components/user-banner-test', ['exports', 'em
               'name': 'missing-wrapper',
               'problems': ['wrong-type']
             },
-            'revision': 'Ember@2.3.0',
+            'revision': 'Ember@2.3.1',
             'loc': {
               'source': null,
               'start': {
@@ -1043,7 +1043,7 @@ define('hatorade/tests/integration/components/user-banner-test', ['exports', 'em
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -1095,7 +1095,7 @@ define('hatorade/tests/integration/components/user-navigation-test', ['exports',
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -1139,7 +1139,7 @@ define('hatorade/tests/integration/components/user-navigation-test', ['exports',
               'name': 'missing-wrapper',
               'problems': ['wrong-type']
             },
-            'revision': 'Ember@2.3.0',
+            'revision': 'Ember@2.3.1',
             'loc': {
               'source': null,
               'start': {
@@ -1177,7 +1177,7 @@ define('hatorade/tests/integration/components/user-navigation-test', ['exports',
             'name': 'missing-wrapper',
             'problems': ['wrong-type']
           },
-          'revision': 'Ember@2.3.0',
+          'revision': 'Ember@2.3.1',
           'loc': {
             'source': null,
             'start': {
@@ -1322,6 +1322,18 @@ define('hatorade/tests/unit/models/user-test', ['exports', 'ember-qunit'], funct
     var model;
     model = this.subject();
     return assert.ok(!!model);
+  });
+});
+define('hatorade/tests/unit/serializers/tweet-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+  (0, _emberQunit.moduleForModel)('tweet', 'Unit | Serializer | tweet', {
+    needs: ['serializer:tweet']
+  });
+
+  (0, _emberQunit.test)('it serializes records', function (assert) {
+    var record, serializedRecord;
+    record = this.subject();
+    serializedRecord = record.serialize();
+    return assert.ok(serializedRecord);
   });
 });
 /* jshint ignore:start */

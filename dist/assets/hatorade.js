@@ -1094,6 +1094,20 @@ define('hatorade/routes/users', ['exports', 'ember', 'ember-infinity/mixins/rout
 
   exports['default'] = UsersRoute;
 });
+define('hatorade/serializers/tweet', ['exports', 'ember-data'], function (exports, _emberData) {
+  var TweetSerializer;
+
+  TweetSerializer = _emberData['default'].RESTSerializer.extend(_emberData['default'].EmbeddedRecordsMixin, {
+    attrs: {
+      entities: {
+        embedded: 'always',
+        serialize: false
+      }
+    }
+  });
+
+  exports['default'] = TweetSerializer;
+});
 define('hatorade/services/flash-messages', ['exports', 'ember-cli-flash/services/flash-messages'], function (exports, _emberCliFlashServicesFlashMessages) {
   exports['default'] = _emberCliFlashServicesFlashMessages['default'];
 });
@@ -1114,7 +1128,7 @@ define("hatorade/templates/about", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["multiple-nodes", "wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -1186,7 +1200,7 @@ define("hatorade/templates/application", ["exports"], function (exports) {
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -1228,7 +1242,7 @@ define("hatorade/templates/application", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -1340,7 +1354,7 @@ define("hatorade/templates/components/app-banner", ["exports"], function (export
           "name": "missing-wrapper",
           "problems": ["multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -1401,7 +1415,7 @@ define("hatorade/templates/components/app-hashtag", ["exports"], function (expor
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -1442,7 +1456,7 @@ define("hatorade/templates/components/app-hashtag", ["exports"], function (expor
         "fragmentReason": {
           "name": "triple-curlies"
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -1486,7 +1500,7 @@ define("hatorade/templates/components/app-navigation", ["exports"], function (ex
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -1522,7 +1536,7 @@ define("hatorade/templates/components/app-navigation", ["exports"], function (ex
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -1558,7 +1572,7 @@ define("hatorade/templates/components/app-navigation", ["exports"], function (ex
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -1594,7 +1608,7 @@ define("hatorade/templates/components/app-navigation", ["exports"], function (ex
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -1630,7 +1644,7 @@ define("hatorade/templates/components/app-navigation", ["exports"], function (ex
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -1666,7 +1680,7 @@ define("hatorade/templates/components/app-navigation", ["exports"], function (ex
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -1704,7 +1718,7 @@ define("hatorade/templates/components/app-navigation", ["exports"], function (ex
           "name": "missing-wrapper",
           "problems": ["multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -1789,7 +1803,7 @@ define("hatorade/templates/components/app-tweet", ["exports"], function (exports
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -1825,12 +1839,53 @@ define("hatorade/templates/components/app-tweet", ["exports"], function (exports
         templates: []
       };
     })();
+    var child1 = (function () {
+      return {
+        meta: {
+          "fragmentReason": false,
+          "revision": "Ember@2.3.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 1,
+              "column": 173
+            },
+            "end": {
+              "line": 1,
+              "column": 250
+            }
+          },
+          "moduleName": "hatorade/templates/components/app-tweet.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("h4");
+          dom.setAttribute(el1, "class", "media-heading");
+          var el2 = dom.createComment("");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0]), 0, 0);
+          return morphs;
+        },
+        statements: [["content", "tweet.screen_name", ["loc", [null, [1, 224], [1, 245]]]]],
+        locals: [],
+        templates: []
+      };
+    })();
     return {
       meta: {
         "fragmentReason": {
           "name": "triple-curlies"
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -1839,7 +1894,7 @@ define("hatorade/templates/components/app-tweet", ["exports"], function (exports
           },
           "end": {
             "line": 1,
-            "column": 378
+            "column": 415
           }
         },
         "moduleName": "hatorade/templates/components/app-tweet.hbs"
@@ -1856,10 +1911,7 @@ define("hatorade/templates/components/app-tweet", ["exports"], function (exports
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
         dom.setAttribute(el2, "class", "media-body");
-        var el3 = dom.createElement("h4");
-        dom.setAttribute(el3, "class", "media-heading");
-        var el4 = dom.createComment("");
-        dom.appendChild(el3, el4);
+        var el3 = dom.createComment("");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("a");
         var el4 = dom.createComment("");
@@ -1886,16 +1938,16 @@ define("hatorade/templates/components/app-tweet", ["exports"], function (exports
         var element4 = dom.childAt(element1, [2, 0]);
         var morphs = new Array(6);
         morphs[0] = dom.createMorphAt(element1, 0, 0);
-        morphs[1] = dom.createMorphAt(dom.childAt(element2, [0]), 0, 0);
+        morphs[1] = dom.createMorphAt(element2, 0, 0);
         morphs[2] = dom.createAttrMorph(element3, 'href');
         morphs[3] = dom.createMorphAt(element3, 0, 0);
         morphs[4] = dom.createMorphAt(element2, 3, 3);
         morphs[5] = dom.createAttrMorph(element4, 'src');
         return morphs;
       },
-      statements: [["block", "link-to", ["user", ["get", "tweet", ["loc", [null, [1, 66], [1, 71]]]]], [], 0, null, ["loc", [null, [1, 48], [1, 149]]]], ["content", "tweet.screen_name", ["loc", [null, [1, 199], [1, 220]]]], ["attribute", "href", ["get", "tweet.url", ["loc", [null, [1, 235], [1, 244]]]]], ["content", "tweet.created_at", ["loc", [null, [1, 247], [1, 267]]]], ["content", "tweet.text", ["loc", [null, [1, 299], [1, 313]]]], ["attribute", "src", ["get", "tweet.media_url", ["loc", [null, [1, 349], [1, 364]]]]]],
+      statements: [["block", "link-to", ["user", ["get", "tweet", ["loc", [null, [1, 66], [1, 71]]]]], [], 0, null, ["loc", [null, [1, 48], [1, 149]]]], ["block", "link-to", ["user", ["get", "tweet", ["loc", [null, [1, 191], [1, 196]]]]], [], 1, null, ["loc", [null, [1, 173], [1, 262]]]], ["attribute", "href", ["get", "tweet.url", ["loc", [null, [1, 272], [1, 281]]]]], ["content", "tweet.created_at", ["loc", [null, [1, 284], [1, 304]]]], ["content", "tweet.text", ["loc", [null, [1, 336], [1, 350]]]], ["attribute", "src", ["get", "tweet.media_url", ["loc", [null, [1, 386], [1, 401]]]]]],
       locals: [],
-      templates: [child0]
+      templates: [child0, child1]
     };
   })());
 });
@@ -1906,7 +1958,7 @@ define("hatorade/templates/components/app-user", ["exports"], function (exports)
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -1947,7 +1999,7 @@ define("hatorade/templates/components/app-user", ["exports"], function (exports)
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -1987,7 +2039,7 @@ define("hatorade/templates/components/app-user", ["exports"], function (exports)
           "fragmentReason": {
             "name": "triple-curlies"
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -2049,7 +2101,7 @@ define("hatorade/templates/components/app-user", ["exports"], function (exports)
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -2092,7 +2144,7 @@ define("hatorade/templates/components/bs-accordion-item", ["exports"], function 
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -2143,7 +2195,7 @@ define("hatorade/templates/components/bs-accordion-item", ["exports"], function 
           "name": "missing-wrapper",
           "problems": ["multiple-nodes", "wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -2215,7 +2267,7 @@ define("hatorade/templates/components/bs-alert", ["exports"], function (exports)
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -2268,7 +2320,7 @@ define("hatorade/templates/components/bs-alert", ["exports"], function (exports)
             "name": "missing-wrapper",
             "problems": ["wrong-type", "multiple-nodes"]
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -2314,7 +2366,7 @@ define("hatorade/templates/components/bs-alert", ["exports"], function (exports)
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -2359,7 +2411,7 @@ define("hatorade/templates/components/bs-button", ["exports"], function (exports
           "fragmentReason": {
             "name": "triple-curlies"
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -2402,7 +2454,7 @@ define("hatorade/templates/components/bs-button", ["exports"], function (exports
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -2451,7 +2503,7 @@ define("hatorade/templates/components/bs-form-group", ["exports"], function (exp
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -2497,7 +2549,7 @@ define("hatorade/templates/components/bs-form-group", ["exports"], function (exp
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -2547,7 +2599,7 @@ define("hatorade/templates/components/bs-form", ["exports"], function (exports) 
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -2590,7 +2642,7 @@ define("hatorade/templates/components/bs-modal-dialog", ["exports"], function (e
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -2633,7 +2685,7 @@ define("hatorade/templates/components/bs-modal-dialog", ["exports"], function (e
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -2674,7 +2726,7 @@ define("hatorade/templates/components/bs-modal-dialog", ["exports"], function (e
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -2714,7 +2766,7 @@ define("hatorade/templates/components/bs-modal-dialog", ["exports"], function (e
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -2756,7 +2808,7 @@ define("hatorade/templates/components/bs-modal-dialog", ["exports"], function (e
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -2799,7 +2851,7 @@ define("hatorade/templates/components/bs-modal-dialog", ["exports"], function (e
         "fragmentReason": {
           "name": "triple-curlies"
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -2867,7 +2919,7 @@ define("hatorade/templates/components/bs-modal-footer", ["exports"], function (e
             "name": "missing-wrapper",
             "problems": ["wrong-type"]
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -2911,7 +2963,7 @@ define("hatorade/templates/components/bs-modal-footer", ["exports"], function (e
           return {
             meta: {
               "fragmentReason": false,
-              "revision": "Ember@2.3.0",
+              "revision": "Ember@2.3.1",
               "loc": {
                 "source": null,
                 "start": {
@@ -2951,7 +3003,7 @@ define("hatorade/templates/components/bs-modal-footer", ["exports"], function (e
           return {
             meta: {
               "fragmentReason": false,
-              "revision": "Ember@2.3.0",
+              "revision": "Ember@2.3.1",
               "loc": {
                 "source": null,
                 "start": {
@@ -2990,7 +3042,7 @@ define("hatorade/templates/components/bs-modal-footer", ["exports"], function (e
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -3038,7 +3090,7 @@ define("hatorade/templates/components/bs-modal-footer", ["exports"], function (e
           return {
             meta: {
               "fragmentReason": false,
-              "revision": "Ember@2.3.0",
+              "revision": "Ember@2.3.1",
               "loc": {
                 "source": null,
                 "start": {
@@ -3077,7 +3129,7 @@ define("hatorade/templates/components/bs-modal-footer", ["exports"], function (e
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -3118,7 +3170,7 @@ define("hatorade/templates/components/bs-modal-footer", ["exports"], function (e
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -3160,7 +3212,7 @@ define("hatorade/templates/components/bs-modal-footer", ["exports"], function (e
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -3206,7 +3258,7 @@ define("hatorade/templates/components/bs-modal-header", ["exports"], function (e
             "name": "modifiers",
             "modifiers": ["action"]
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -3257,7 +3309,7 @@ define("hatorade/templates/components/bs-modal-header", ["exports"], function (e
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -3299,7 +3351,7 @@ define("hatorade/templates/components/bs-modal-header", ["exports"], function (e
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -3346,7 +3398,7 @@ define("hatorade/templates/components/bs-modal-header", ["exports"], function (e
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -3393,7 +3445,7 @@ define("hatorade/templates/components/bs-modal", ["exports"], function (exports)
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -3435,7 +3487,7 @@ define("hatorade/templates/components/bs-modal", ["exports"], function (exports)
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -3481,7 +3533,7 @@ define("hatorade/templates/components/bs-modal", ["exports"], function (exports)
             "name": "missing-wrapper",
             "problems": ["wrong-type", "multiple-nodes"]
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -3530,7 +3582,7 @@ define("hatorade/templates/components/bs-modal", ["exports"], function (exports)
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -3574,7 +3626,7 @@ define("hatorade/templates/components/bs-progress-bar", ["exports"], function (e
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -3616,7 +3668,7 @@ define("hatorade/templates/components/bs-progress-bar", ["exports"], function (e
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -3657,7 +3709,7 @@ define("hatorade/templates/components/bs-progress-bar", ["exports"], function (e
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -3698,7 +3750,7 @@ define("hatorade/templates/components/bs-progress-bar", ["exports"], function (e
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -3743,7 +3795,7 @@ define("hatorade/templates/components/bs-progress-bar", ["exports"], function (e
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -3789,7 +3841,7 @@ define("hatorade/templates/components/bs-progress-bar", ["exports"], function (e
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -3832,7 +3884,7 @@ define("hatorade/templates/components/bs-progress-bar", ["exports"], function (e
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -3878,7 +3930,7 @@ define("hatorade/templates/components/bs-progress", ["exports"], function (expor
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -3924,7 +3976,7 @@ define("hatorade/templates/components/bs-select", ["exports"], function (exports
           "fragmentReason": {
             "name": "triple-curlies"
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -3975,7 +4027,7 @@ define("hatorade/templates/components/bs-select", ["exports"], function (exports
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -4028,7 +4080,7 @@ define("hatorade/templates/components/bs-select", ["exports"], function (exports
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -4078,7 +4130,7 @@ define("hatorade/templates/components/form-element/errors", ["exports"], functio
           "fragmentReason": {
             "name": "triple-curlies"
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -4125,7 +4177,7 @@ define("hatorade/templates/components/form-element/errors", ["exports"], functio
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -4170,7 +4222,7 @@ define("hatorade/templates/components/form-element/feedback-icon", ["exports"], 
           "fragmentReason": {
             "name": "triple-curlies"
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -4216,7 +4268,7 @@ define("hatorade/templates/components/form-element/feedback-icon", ["exports"], 
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -4260,7 +4312,7 @@ define("hatorade/templates/components/form-element/horizontal/checkbox", ["expor
         "fragmentReason": {
           "name": "triple-curlies"
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -4336,7 +4388,7 @@ define("hatorade/templates/components/form-element/horizontal/default", ["export
             "name": "missing-wrapper",
             "problems": ["multiple-nodes"]
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -4406,7 +4458,7 @@ define("hatorade/templates/components/form-element/horizontal/default", ["export
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -4468,7 +4520,7 @@ define("hatorade/templates/components/form-element/horizontal/default", ["export
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -4514,7 +4566,7 @@ define("hatorade/templates/components/form-element/horizontal/select", ["exports
             "name": "missing-wrapper",
             "problems": ["multiple-nodes"]
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -4584,7 +4636,7 @@ define("hatorade/templates/components/form-element/horizontal/select", ["exports
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -4646,7 +4698,7 @@ define("hatorade/templates/components/form-element/horizontal/select", ["exports
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -4692,7 +4744,7 @@ define("hatorade/templates/components/form-element/horizontal/select2", ["export
             "name": "missing-wrapper",
             "problems": ["multiple-nodes"]
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -4762,7 +4814,7 @@ define("hatorade/templates/components/form-element/horizontal/select2", ["export
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -4824,7 +4876,7 @@ define("hatorade/templates/components/form-element/horizontal/select2", ["export
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -4870,7 +4922,7 @@ define("hatorade/templates/components/form-element/horizontal/textarea", ["expor
             "name": "missing-wrapper",
             "problems": ["multiple-nodes"]
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -4940,7 +4992,7 @@ define("hatorade/templates/components/form-element/horizontal/textarea", ["expor
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -5002,7 +5054,7 @@ define("hatorade/templates/components/form-element/horizontal/textarea", ["expor
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -5046,7 +5098,7 @@ define("hatorade/templates/components/form-element/inline/checkbox", ["exports"]
         "fragmentReason": {
           "name": "triple-curlies"
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -5108,7 +5160,7 @@ define("hatorade/templates/components/form-element/inline/default", ["exports"],
           "fragmentReason": {
             "name": "triple-curlies"
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -5157,7 +5209,7 @@ define("hatorade/templates/components/form-element/inline/default", ["exports"],
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -5211,7 +5263,7 @@ define("hatorade/templates/components/form-element/inline/select", ["exports"], 
           "fragmentReason": {
             "name": "triple-curlies"
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -5260,7 +5312,7 @@ define("hatorade/templates/components/form-element/inline/select", ["exports"], 
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -5314,7 +5366,7 @@ define("hatorade/templates/components/form-element/inline/textarea", ["exports"]
           "fragmentReason": {
             "name": "triple-curlies"
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -5363,7 +5415,7 @@ define("hatorade/templates/components/form-element/inline/textarea", ["exports"]
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -5421,7 +5473,7 @@ define("hatorade/templates/components/form-element/vertical/checkbox", ["exports
           "name": "missing-wrapper",
           "problems": ["multiple-nodes", "wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -5489,7 +5541,7 @@ define("hatorade/templates/components/form-element/vertical/default", ["exports"
           "fragmentReason": {
             "name": "triple-curlies"
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -5538,7 +5590,7 @@ define("hatorade/templates/components/form-element/vertical/default", ["exports"
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -5596,7 +5648,7 @@ define("hatorade/templates/components/form-element/vertical/select", ["exports"]
           "fragmentReason": {
             "name": "triple-curlies"
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -5645,7 +5697,7 @@ define("hatorade/templates/components/form-element/vertical/select", ["exports"]
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -5699,7 +5751,7 @@ define("hatorade/templates/components/form-element/vertical/textarea", ["exports
           "fragmentReason": {
             "name": "triple-curlies"
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -5748,7 +5800,7 @@ define("hatorade/templates/components/form-element/vertical/textarea", ["exports
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -5807,7 +5859,7 @@ define("hatorade/templates/components/infinity-loader", ["exports"], function (e
             "name": "missing-wrapper",
             "problems": ["wrong-type"]
           },
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -5850,7 +5902,7 @@ define("hatorade/templates/components/infinity-loader", ["exports"], function (e
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -5894,7 +5946,7 @@ define("hatorade/templates/components/infinity-loader", ["exports"], function (e
         return {
           meta: {
             "fragmentReason": false,
-            "revision": "Ember@2.3.0",
+            "revision": "Ember@2.3.1",
             "loc": {
               "source": null,
               "start": {
@@ -5937,7 +5989,7 @@ define("hatorade/templates/components/infinity-loader", ["exports"], function (e
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -5979,7 +6031,7 @@ define("hatorade/templates/components/infinity-loader", ["exports"], function (e
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -6022,7 +6074,7 @@ define("hatorade/templates/components/top-section", ["exports"], function (expor
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -6062,7 +6114,7 @@ define("hatorade/templates/components/top-section", ["exports"], function (expor
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -6103,7 +6155,7 @@ define("hatorade/templates/components/top-section", ["exports"], function (expor
         "fragmentReason": {
           "name": "triple-curlies"
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -6154,7 +6206,7 @@ define("hatorade/templates/components/user-banner", ["exports"], function (expor
           "name": "missing-wrapper",
           "problems": ["multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -6218,7 +6270,7 @@ define("hatorade/templates/components/user-navigation", ["exports"], function (e
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -6254,7 +6306,7 @@ define("hatorade/templates/components/user-navigation", ["exports"], function (e
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -6291,7 +6343,7 @@ define("hatorade/templates/components/user-navigation", ["exports"], function (e
         "fragmentReason": {
           "name": "triple-curlies"
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -6358,7 +6410,7 @@ define("hatorade/templates/hashtag", ["exports"], function (exports) {
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -6398,7 +6450,7 @@ define("hatorade/templates/hashtag", ["exports"], function (exports) {
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -6464,7 +6516,7 @@ define("hatorade/templates/hashtag", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -6523,7 +6575,7 @@ define("hatorade/templates/hashtags", ["exports"], function (exports) {
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -6565,7 +6617,7 @@ define("hatorade/templates/hashtags", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["multiple-nodes", "wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -6627,7 +6679,7 @@ define("hatorade/templates/home", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -6672,7 +6724,7 @@ define("hatorade/templates/loading", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -6719,7 +6771,7 @@ define("hatorade/templates/stream", ["exports"], function (exports) {
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -6761,7 +6813,7 @@ define("hatorade/templates/stream", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["multiple-nodes", "wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -6813,7 +6865,7 @@ define("hatorade/templates/tweets", ["exports"], function (exports) {
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -6855,7 +6907,7 @@ define("hatorade/templates/tweets", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["multiple-nodes", "wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -6908,7 +6960,7 @@ define("hatorade/templates/user/authored", ["exports"], function (exports) {
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -6950,7 +7002,7 @@ define("hatorade/templates/user/authored", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -7008,7 +7060,7 @@ define("hatorade/templates/user/index", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -7054,7 +7106,7 @@ define("hatorade/templates/user/mentions", ["exports"], function (exports) {
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -7096,7 +7148,7 @@ define("hatorade/templates/user/mentions", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -7154,7 +7206,7 @@ define("hatorade/templates/user", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["wrong-type", "multiple-nodes"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -7200,7 +7252,7 @@ define("hatorade/templates/users", ["exports"], function (exports) {
       return {
         meta: {
           "fragmentReason": false,
-          "revision": "Ember@2.3.0",
+          "revision": "Ember@2.3.1",
           "loc": {
             "source": null,
             "start": {
@@ -7242,7 +7294,7 @@ define("hatorade/templates/users", ["exports"], function (exports) {
           "name": "missing-wrapper",
           "problems": ["multiple-nodes", "wrong-type"]
         },
-        "revision": "Ember@2.3.0",
+        "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
           "start": {
@@ -7375,7 +7427,7 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("hatorade/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"hatorade","version":"0.0.0+fdc8fda0"});
+  require("hatorade/app")["default"].create({"LOG_RESOLVER":true,"LOG_ACTIVE_GENERATION":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"hatorade","version":"0.0.0+f0a19e89"});
 }
 
 /* jshint ignore:end */
