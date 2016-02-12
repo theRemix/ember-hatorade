@@ -2,8 +2,9 @@ li.media.row.list-group-item.col-lg-12
   = link-to 'user' tweet
     img.pull-left.media-object src=tweet.profile_image
   .media-body
-    h4.media-heading
-      = tweet.screen_name
+    = link-to 'user' tweet
+      h4.media-heading
+        = tweet.screen_name
     a href=tweet.url
       = tweet.created_at
     .clearfix
