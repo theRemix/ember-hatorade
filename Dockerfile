@@ -29,15 +29,17 @@ ADD ./Gemfile Gemfile
 ADD ./Gemfile.lock Gemfile.lock
 RUN bundle
 
-ADD ./ /opt/hatorade
-
-WORKDIR /opt/hatorade
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 RUN npm install install -g
 RUN npm install -g ember-cli --save
 RUN npm install -g bower --save
-# RUN bower install -F --allow-root
-# RUN ember build
+
+ADD ./ /opt/hatorade
+WORKDIR /opt/hatorade
+
+RUN bower install --allow-root
+RUN npm install
+RUN ember build
 #
 EXPOSE 5055
 
