@@ -11,10 +11,10 @@ li.media.row.list-group-item.col-lg-12
     p
       = each tweetTextTokens as |token|
         if token.isUser
-          = link-to 'user' token.userLinkValue
+          = link-to 'user' token.urlText
             = token.text
         else if token.isHashtag
-          = link-to 'tweets' (query-params hashtag=token.hashtagLinkValue)
+          = link-to 'tweets' (query-params hashtag=token.urlText)
             token.text
         else if token.isUrl
           = token.text

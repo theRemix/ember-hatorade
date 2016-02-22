@@ -4,7 +4,8 @@ AppTweetComponent = Ember.Component.extend
   tweet: null
   init: () ->
     @_super(arguments...)
-    @makeTokens(@tweet)
+    @makeTokens()
+    console.log @get('tweet.text')
 
   tweetTextTokens: []
   serializedEntities: []
@@ -16,28 +17,29 @@ AppTweetComponent = Ember.Component.extend
   currentKey: ""
   currentText: null
 
-  makeTokens: (tweet)->
-    if @tweetTextTokens.length < 1
-      @generateTokens()
-      @createTokens(tweet)
+  makeTokens: ->
+    @tweetTextTokens = []
+    @serializedEntities = []
+    @generateTokens() #populates serializedEntities
+    @createTokens() #populates tweetTextTokens with sreializedEntities
 
   generateTokens: () ->
     ['hashtags', 'user_mentions', 'urls'].forEach @normalizeEntity.bind(this)
 
-  createTokens: (tweet)->
-    debugger
+  createTokens: ->
     @sortedEntities().forEach @pushToEndResult.bind(this)
-    if @currentIndex  < tweet.length # pushes last text token into list
+    if @currentIndex  < @get('tweet.text').length
       @pushToken(@currentText)
-    @currentText = null # prevents new instantiations from using old data
+    @currentText = null
+
 
   pushToEndResult: (entity, index) ->
-    _currentText = @currentText || @tweet.get('text')
+    _currentText = @currentText || @get('tweet.text')
     prior_text  = _currentText.substring(0, entity.indices[0] - @currentIndex)
     prior_token = @convertToToken(prior_text)
     @pushToken(prior_token)
     @pushToken(entity)
-    trailingText = @tweet.get('text').substring(entity.indices[1], @get('tweet').get('text').length)
+    trailingText = @get('tweet.text').substring(entity.indices[1], @get('tweet.text').length)
     @currentText = trailingText
     @currentIndex = entity.indices[1]
 
@@ -47,16 +49,14 @@ AppTweetComponent = Ember.Component.extend
   convertToToken: (text) ->
     text: text
     type: 'text'
-    
+
+  convertHashtagEntityToToken: (entity) ->
   compareIndicies: (a, b) ->
     a.indices[0] - b.indices[0]
 
-  entities: () ->
-    entities = @get('tweet').get('entities')
-
   normalizeEntity: (hash_key, index, keys) ->
     @currentKey = hash_key
-    @tweet.get('entities')[hash_key].forEach @processEntityKeyValues.bind(this)
+    @get('tweet.entities')[hash_key].forEach @processEntityKeyValues.bind(this)
 
   processEntityKeyValues: (entity_value, index, value_entities) ->
     @invertKey(entity_value)
@@ -65,10 +65,13 @@ AppTweetComponent = Ember.Component.extend
     switch @currentKey
       when 'hashtags'
         entity['isHashtag'] = true
+        entity['urlText'] = entity['text']
         entity['text'] = "#" + entity['text']
         @serializedEntities.push(entity)
-      when 'user_mention'
+      when 'user_mentions'
         entity['isUser'] = true
+        entity['text'] = "@" + entity['screen_name']
+        entity['urlText'] = entity['screen_name']
         @serializedEntities.push(entity)
       when 'urls'
         entity['isUrl'] = true

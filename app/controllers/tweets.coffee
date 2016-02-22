@@ -11,7 +11,7 @@ TweetsController = Ember.Controller.extend
   filteredTweets: Ember.computed 'hashtag', 'model', ->
     hashtag = @get('hashtag')
     tweets  = @get('model')
-    tweets
+    tweets.uniq()
 
 
 `export default TweetsController`
