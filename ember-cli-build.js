@@ -23,6 +23,7 @@ module.exports = function(defaults) {
   app.import('bower_components/bootstrap/js/modal.js');
   app.import('bower_components/bootstrap-tagsinput/src/bootstrap-tagsinput.js');
   app.import('bower_components/bootstrap-tagsinput/src/bootstrap-tagsinput.css');
+  app.import('bower_components/unicode-string-utils/unicode-string-utils.js');
 
   return app.toTree();
 };

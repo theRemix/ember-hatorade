@@ -35,11 +35,11 @@ AppTweetComponent = Ember.Component.extend
 
   pushToEndResult: (entity, index) ->
     _currentText = @currentText || @get('tweet.text')
-    prior_text  = _currentText.substring(0, entity.indices[0] - @currentIndex)
+    prior_text  = unicodeStringUtils.substring(_currentText, 0, entity.indices[0] - this.currentIndex)
     prior_token = @convertToToken(prior_text)
     @pushToken(prior_token)
     @pushToken(entity)
-    trailingText = @get('tweet.text').substring(entity.indices[1], @get('tweet.text').length)
+    trailingText = unicodeStringUtils.substring(@get('tweet.text'), entity.indices[1], unicodeStringUtils.length(@get('tweet.text')))
     @currentText = trailingText
     @currentIndex = entity.indices[1]
 
