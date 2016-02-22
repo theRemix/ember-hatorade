@@ -74,6 +74,7 @@ AppTweetComponent = Ember.Component.extend
         entity['urlText'] = entity['screen_name']
         @serializedEntities.push(entity)
       when 'urls'
+        entity['text'] = entity['display_url']
         entity['isUrl'] = true
         @serializedEntities.push(entity)
 

@@ -17,7 +17,8 @@ li.media.row.list-group-item.col-lg-12
           = link-to 'tweets' (query-params hashtag=token.urlText)
             token.text
         else if token.isUrl
-          = token.text
+          a href=token.url
+            =token.text
         else
           token.text
   .media
