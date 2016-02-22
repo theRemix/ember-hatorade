@@ -9,16 +9,17 @@ li.media.row.list-group-item.col-lg-12
       = moment-from-now tweet.created_at
     .clearfix
     p
-      = each textTokens as |token|
+      = each tweetTextTokens as |token|
         if token.isUser
           = link-to 'user' token.userLinkValue
             = token.text
+        else if token.isHashtag
+          = link-to 'tweets' (query-params hashtag=token.hashtagLinkValue)
+            token.text
+        else if token.isUrl
+          = token.text
         else
-          if token.isHashtag
-            = link-to 'tweets' (query-params hashtag=token.hashtagLinkValue)
-              token.text
-          else
-            = token.text
+          token.text
   .media
     img src=tweet.media_url
 = tweetText
