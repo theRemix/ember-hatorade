@@ -22,6 +22,7 @@ StreamController = Ember.Controller.extend
       favorite_count: data.favorite_count,
       url: data.url,
       created_at: data.created_at,
+      entities: data.entities
       profile_image: data.user.profile_image_url
     @store.pushPayload({tweets: [tweet]})
     # @store.push('tweet', {data: {tweet: tweet}})
