@@ -7,6 +7,11 @@ ApplicationController = Ember.Controller.extend
   websocket: Ember.inject.service()
   userController: Ember.inject.controller('user')
   subdomain: Ember.computed.alias('urlChecker.subdomain')
+  appTitle: Ember.computed 'subdomain', ()->
+    if @get('subdomain').length > 0
+      @get('subdomain').toUpperCase() + '.HATORA.DE'
+    else
+      'HATORA.DE'
   user: Ember.computed.reads('userController.user')
   stream_criteria: []
   init: ->
