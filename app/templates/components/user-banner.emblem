@@ -1,7 +1,0 @@
-  h2#title #{user.screen_name}.hatora.de
-  if session.isAuthenticated
-    button{action 'logoOut'} Log out
-  else
-    button{action 'authenticateWithTwitter'} Log in
-  button{action 'showStreamControls'} open controls
-  button{action 'status'} get search status
