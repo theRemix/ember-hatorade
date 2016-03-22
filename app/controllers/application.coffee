@@ -1,8 +1,12 @@
 `import Ember from 'ember'`
 
 ApplicationController = Ember.Controller.extend
-  websocket: Ember.inject.service(),
+  session: Ember.inject.service('session')
+  torii: Ember.inject.service()
+  urlChecker: Ember.inject.service()
+  websocket: Ember.inject.service()
   userController: Ember.inject.controller('user')
+  subdomain: Ember.computed.alias('urlChecker.subdomain')
   user: Ember.computed.reads('userController.user')
   stream_criteria: []
   init: ->
@@ -14,10 +18,18 @@ ApplicationController = Ember.Controller.extend
       Ember.get(self, 'flashMessages').success message,
         timeout: 2000
   actions:
+    invalidateSession: ()->
+      @get('session').invalidate()
+    authenticateWithTwitter: ()->
+      route = this
+      @get('session').authenticate('authenticator:torii', 'dougtwitter', subdomain: @get('subdomain'))
+      .then () =>
+        @get('session').authorize('authorizer:twitter')
+    logOut: () ->
+      @get('session').invalidate('authenticator:torii')
     status: () ->
       @.get('websocket').client.publish '/commands', {command: 'status'}
     showStreamControls: ()->
-      # client.publish('/commands', {commands: 'status', status: 'report status'})
       @.get('stream_criteria').forEach (search_term) ->
         $('.stream-input').tagsinput('add', search_term.replace('"',''), {trimValue: true})
         $('.stream-input').tagsinput('refresh')

@@ -24,6 +24,6 @@ module.exports = function(defaults) {
   app.import('bower_components/bootstrap-tagsinput/src/bootstrap-tagsinput.js');
   app.import('bower_components/bootstrap-tagsinput/src/bootstrap-tagsinput.css');
   app.import('bower_components/unicode-string-utils/unicode-string-utils.js');
-
+  app.import('bower_components/js-cookie/src/js.cookie.js');
   return app.toTree();
 };
