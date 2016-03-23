@@ -9,7 +9,7 @@ TwitterAuthorizer = Base.extend
       .then (data) =>
         @get('session.store').restore().then (cookieData) =>
           console.log('data:', data)
-          cookieData.screen_name = data.users.screen_name
+          cookieData.authenticated.screen_name = data.users.screen_name
           console.log('cookieData', cookieData)
           @get('session.store').persist(cookieData)
     , ()=>
