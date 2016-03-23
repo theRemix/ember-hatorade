@@ -11,7 +11,6 @@ Router.map ->
   @route 'hashtags'
   @route 'hashtag',
     path: 'hashtags/:text'
-    queryParams: ['refresh']
   @route 'about'
   @route 'users'
   @route 'user',

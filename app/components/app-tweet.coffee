@@ -5,7 +5,6 @@ AppTweetComponent = Ember.Component.extend
   init: () ->
     @_super(arguments...)
     @makeTokens()
-    console.log @get('tweet.text')
 
   tweetTextTokens: []
   serializedEntities: []

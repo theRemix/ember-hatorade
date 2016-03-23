@@ -23,15 +23,14 @@ ApplicationController = Ember.Controller.extend
       Ember.get(self, 'flashMessages').success message,
         timeout: 2000
   actions:
-    invalidateSession: ()->
-      @get('session').invalidate()
     authenticateWithTwitter: ()->
-      route = this
       @get('session').authenticate('authenticator:torii', 'dougtwitter', subdomain: @get('subdomain'))
       .then () =>
         @get('session').authorize('authorizer:twitter')
+        route.transitionTo('index')
     logOut: () ->
-      @get('session').invalidate('authenticator:torii')
+      @get('session').invalidate('authenticator:torii').then () =>
+        route.transitionTo('index')
     status: () ->
       @.get('websocket').client.publish '/commands', {command: 'status'}
     showStreamControls: ()->
