@@ -3,6 +3,6 @@
 
 HashtagRoute = Ember.Route.extend InfinityRoute,
   model: (params) ->
-    @infinityModel 'tweet', {perPage: 50, startPage: 1, hashtag: params.text}
+    @infinityModel 'tweet', {perPage: 50, startPage: 1, hashtag: params.text, subdomain: @get('subdomain')}
 
 `export default HashtagRoute`
