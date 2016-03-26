@@ -4,4 +4,3 @@ if session.isAuthenticated
 else
   button{action 'authenticateWithTwitter'} Log in
 button{action 'showStreamControls'} open controls
-button{action 'status'} get search status

@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  template: template0
+  host: <%= ENV['HATORADE_POSTGRES_PORT_5432_TCP_ADDR'] || 'localhost'%>
+  port: <%= ENV['HATORADE_POSTGRES_PORT_5432_TCP_PORT'] || 5432 %>
+  username: <%= ENV["HATORADE_DATABASE_USERNAME"] || 'docker' %>
+  password: <%= ENV["HATORADE_DATABASE_PASSWORD"] || 'docker' %>
+  pool: 25
+
+development:
+  <<: *default
+  database: hatorade_development
+test:
+  <<: *default
+  database: hatorade_test
+production:
+  <<: *default
+  adapter: postgresql
+  database: hatorade_production

@@ -38,6 +38,7 @@ end
 private 
 
 def keys_absent?
-  redis['api_key'].nil? || redis['api_secret'].nil? || redis['domain_name'].nil? || redis['oauth_token'].nil? || redis['access_secret'].nil? ||
-    redis['api_key'].empty? || redis['api_secret'].empty? || redis['domain_name'].empty? || redis['oauth_token'].empty? || redis['access_secret'].empty?
+  ['api_key', 'api_secret', 'domain_name', 'oauth_token', 'access_secret'].detect do |key|
+    redis[key].nil? || redis[key].empty?
+  end
 end
