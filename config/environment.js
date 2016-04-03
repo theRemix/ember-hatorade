@@ -47,6 +47,9 @@ module.exports = function(environment) {
     ENV.APP.LOG_TRANSITIONS = false;
     ENV.APP.LOG_TRANSITIONS_INTERNAL = false;
     ENV.APP.LOG_VIEW_LOOKUPS = false;
+    ENV.apiScheme = 'http://'
+    ENV.apiHost   = 'lvh.me';
+    ENV.apiPort   = ':3000';
   }
 
   if (environment === 'test') {
@@ -62,7 +65,9 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.apiScheme = 'http://'
+    ENV.apiHost   = 'hatora.de';
+    ENV.apiPort   = '';
   }
 
   return ENV;

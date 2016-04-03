@@ -1,4 +1,5 @@
 `import Oauth1Provider from 'torii/providers/oauth1';`
+`import config from '../config/environment';`
 
 ToriiProviderApplication = Ember.Object.extend
   subdomain: false
@@ -6,9 +7,9 @@ ToriiProviderApplication = Ember.Object.extend
   session: Ember.inject.service()
   url: ()->
     if @get('subdomain')
-      'http://' + @get('subdomain') + '.lvh.me:3000/users/auth/twitter'
+      config.apiScheme + @get('subdomain') + "." + config.apiHost + config.apiPort + '/users/auth/twitter'
     else
-      'http://' + @get('subdomain') + 'lvh.me:3000/users/auth/twitter'
+      config.apiScheme + config.apiHost + config.apiPort + '/users/auth/twitter'
   open: (data) ->
     new Ember.RSVP.Promise (resolve, reject) =>
       @set('subdomain', data.subdomain)

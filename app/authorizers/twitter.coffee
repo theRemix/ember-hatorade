@@ -1,11 +1,12 @@
 `import Base from 'ember-simple-auth/authorizers/base';`
+`import config from '../config/environment';`
 
 TwitterAuthorizer = Base.extend
   store: Ember.inject.service()
   session: Ember.inject.service()
   authorize: (sessionData, block) ->
     new Ember.RSVP.Promise (resolve, reject) =>
-      Ember.$.ajax url: 'http://lvh.me:3000/api/v1/users/me'
+      Ember.$.ajax url: config.apiScheme + config.apiUrl + config.apiPort + '/api/v1/users/me'
       .then (data) =>
         @get('session.store').restore().then (cookieData) =>
           console.log('data:', data)
