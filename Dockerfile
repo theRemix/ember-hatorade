@@ -1,7 +1,8 @@
 FROM ubuntu:14.04
-LABEL container=hatorade-ember
 
+LABEL container=hatorade-ember
 RUN apt-get update && apt-get install -y build-essential curl
+RUN apt-get upgrade
 
 ENV CONFIGURE_OPTS --disable-install-rdoc
 
