@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 LABEL container=hatorade-ember
 
-RUN apt-get update && apt-get install -y build-essential curl zlib1g-dev
+RUN apt-get update && apt-get install -y build-essential curl
 
 ENV CONFIGURE_OPTS --disable-install-rdoc
 
@@ -16,7 +16,8 @@ RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-${RUBY_VERSION}.tar.gz &&
     rm -r ruby-${RUBY_VERSION} ruby-${RUBY_VERSION}.tar.gz && \
     echo 'gem: --no-document' > /usr/local/etc/gemrcdoc
 
-RUN apt-get install --force-yes git libssl-dev libreadline-dev nodejs npm curl postgresql-client postgresql postgresql-contrib libpq-dev
+RUN apt-get install -y git libssl-dev libreadline-dev nodejs\
+    npm curl postgresql-client postgresql postgresql-contrib libpq-dev zlib1g-dev openssl
 RUN apt-get clean
 RUN npm -g install n
 RUN n latest
