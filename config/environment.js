@@ -31,9 +31,9 @@ module.exports = function(environment) {
     },
     contentSecurityPolicy: {
       'default-src': "'none'",
-      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' 'http://api.hatora.de/'",
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' 'http://api.hatora.de/' 'http://localhost:9292'",
       'font-src': "'self'",
-      'connect-src': "'self' http://api.hatora.de/",
+      'connect-src': "'self' 'http://api.hatora.de/' 'ws://localhost:9292/faye' 'http://localhost:9292/faye'",
       'img-src': "'self' 'http://pbs.twimg.com/'",
       'report-uri':"'localhost'",
       'style-src': "'self' 'unsafe-inline'",
@@ -50,6 +50,7 @@ module.exports = function(environment) {
     ENV.apiScheme = 'http://'
     ENV.apiHost   = 'lvh.me';
     ENV.apiPort   = ':3000';
+    ENV.publisherUrl   = 'http://localhost:9292';
   }
 
   if (environment === 'test') {
@@ -68,6 +69,7 @@ module.exports = function(environment) {
     ENV.apiScheme = 'http://'
     ENV.apiHost   = 'hatora.de';
     ENV.apiPort   = '';
+    ENV.publisherUrl   = 'http://publisher.hatora.de';
   }
 
   return ENV;

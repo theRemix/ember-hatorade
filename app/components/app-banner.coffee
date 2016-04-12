@@ -8,6 +8,8 @@ AppBannerComponent = Ember.Component.extend
       @attrs.authenticateWithTwitter()
     logOut: () ->
       @attrs.logOut()
+    ping: () ->
+      @attrs.ping()
     showStreamControls: ()->
       @get('stream_criteria').forEach (search_term) ->
         $('.stream-input').tagsinput('add', search_term.replace('"',''), {trimValue: true})
