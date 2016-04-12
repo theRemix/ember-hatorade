@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 LABEL container=hatorade-ember
 
-RUN apt-get update && apt-get install -y build-essential curl zlib-devel
+RUN apt-get update && apt-get install -y build-essential curl zlib1g-dev
 
 ENV CONFIGURE_OPTS --disable-install-rdoc
 
