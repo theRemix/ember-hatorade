@@ -19,7 +19,7 @@ RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-${RUBY_VERSION}.tar.gz &&
 
 RUN apt-get install -y git libssl-dev libreadline-dev nodejs\
     npm curl postgresql-client \
-    libpq-dev zlib1g-dev zlib1g openssl
+    libpq-dev zlib1g-dev zlib1g zlibc openssl
 RUN apt-get clean
 RUN npm -g install n
 RUN n latest
