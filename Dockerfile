@@ -17,9 +17,9 @@ RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-${RUBY_VERSION}.tar.gz &&
     rm -r ruby-${RUBY_VERSION} ruby-${RUBY_VERSION}.tar.gz && \
     echo 'gem: --no-document' > /usr/local/etc/gemrcdoc
 
-RUN apt-get install -y git libssl-dev libreadline-dev nodejs\
-    npm curl postgresql-client \
-    libpq-dev openssl
+RUN apt-get install -y git libreadline-dev nodejs\
+    npm postgresql-client libpq-dev\
+
 RUN apt-get clean
 RUN npm -g install n
 RUN n latest
