@@ -2,13 +2,14 @@ FROM ubuntu:14.04
 MAINTAINER Doug Headley <headley.douglas@gmail.com>
 
 LABEL container=hatorade-ember
-RUN apt-get update && apt-get install -y build-essential curl zlib1g-dev zlib1g zlibc openssl libssl-dev libreadline-dev
+RUN apt-get update
 RUN apt-get upgrade -y
+RUN apt-get install -y build-essential curl zlib1g-dev zlib1g zlibc openssl libssl-dev libreadline-dev
 
 ENV CONFIGURE_OPTS --disable-install-rdoc
 
-ENV RUBY_VERSION=2.2.3
-RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-${RUBY_VERSION}.tar.gz && \
+ENV RUBY_VERSION=2.3.0
+RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.3/ruby-${RUBY_VERSION}.tar.gz && \
     tar -zxvf ruby-${RUBY_VERSION}.tar.gz && \
     cd ruby-${RUBY_VERSION} && \
     ./configure --disable-install-doc --enable-shared && \
