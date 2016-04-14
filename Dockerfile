@@ -1,7 +1,8 @@
 FROM ubuntu:14.04
+MAINTAINER Doug Headley <headley.douglas@gmail.com>
 
 LABEL container=hatorade-ember
-RUN apt-get update && apt-get install -y build-essential curl zlib1g-dev zlib1g zlibc openssl libssl-dev
+RUN apt-get update && apt-get install -y build-essential curl zlib1g-dev zlib1g zlibc openssl libssl-dev libreadline-dev
 RUN apt-get upgrade -y
 
 ENV CONFIGURE_OPTS --disable-install-rdoc
