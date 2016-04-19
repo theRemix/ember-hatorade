@@ -105,7 +105,7 @@ DanthesService = Ember.Service.extend
     new Ember.RSVP.Promise (resolve, reject) ->
       Ember.$.ajax
         type: "GET"
-        url: 'http://localhost:3000/api/v1/data'
+        url: config.apiScheme + config.apiHost + config.apiPort + '/api/v1/data'
         dataType: 'json'
         success: (data) ->
           resolve( data )
