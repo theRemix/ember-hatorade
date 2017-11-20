@@ -7,6 +7,21 @@ module.exports = function(environment) {
     environment,
     rootURL: '/',
     locationType: 'auto',
+    subdomainMapping: {
+      '':null,
+      'www': 'www'
+    },
+    faye: {
+      URL: 'http://publisher.hatora.de/faye',
+    },
+    torii: {
+      providers: {
+        'twitter': {
+          appId: 'ehy2oJuRcw3SlUUFJL9CKg',
+          requestTokenUri: 'http://lvh.me:5000/users/auth/twitter' /* we don't use this anymore :) */
+        }
+      }
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
