@@ -1,0 +1,8 @@
+.container.col-lg-12.col-md-12
+  nav.navbar.navbar-default
+    a.navbar-brand #{user.screen_name}:
+    ul.nav.navbar-nav
+      li
+        = link-to 'user/authored' user.screen_name | authored
+      li
+        = link-to 'user/mentions' user.screen_name | mentions
