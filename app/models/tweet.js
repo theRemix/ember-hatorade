@@ -10,6 +10,6 @@ export default DS.Model.extend({
   media_url: DS.attr(),
   entities: DS.attr(),
   mentions: DS.hasMany('user'),
-  author: DS.belongsTo('user')
-
+  author: DS.belongsTo('user'),
+  hashtags: DS.hasMany('hashtag')
 });

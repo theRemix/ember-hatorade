@@ -67,34 +67,35 @@ export default Controller.extend({
       entities: message.entities,
       profile_image: message.user.profile_image_url
     }
-    let hashtags = this.hashtags_from_websocket(message)
-    hashtags.forEach( function(hashtag) {
-      this.store.createRecord('hashtag', hashtag)
-    }, this)
-    let author = this.user_from_websocket(message);
-    this.store.createRecord('user', author);
-    let mentions = message.entities.user_mentions
-    mentions.forEach( function(user) {
-      this.store.createRecord('user', user)
-    }, this)
-    tweet.hashtags = hashtags
-    tweet.author   = author
-    tweet.mentions = mentions
-    this.store.createRecord('tweet', tweet)
+    let model_hashtags   = this.hashtags_from_websocket(message)
+    let model_author     = this.user_from_websocket(message);
+    let model_mentions   = this.users_from_websocket(message);
+    tweet.hashtags       = model_hashtags
+    tweet.author         = model_author
+    tweet.mentions       = model_mentions
+    let model_tweet      = this.store.createRecord('tweet', tweet)
   },
   hashtags_from_websocket(message){
     let hashtags = []
     message.entities.hashtags.forEach( function(hashtag) {
-      hashtags.push(hashtag)
-    })
+      hashtags.push( this.store.createRecord('hashtag', hashtag) )
+    }, this)
     return hashtags
   },
   user_from_websocket(message) {
     let author = {
+      id: message.user.id,
       screen_name: message.user.screen_name,
       profile_image: message.user.profile_image_url
     }
-    return author
+    return this.store.peekRecord('user', author.id) || this.store.createRecord('user', author)
+  },
+  users_from_websocket(message) {
+    let users = []
+    message.entities.user_mentions.forEach( function(user) {
+      users.push( this.store.peekRecord('user', user.id) || this.store.createRecord('user', user) )
+    }, this)
+    return users
   }
 
 });

@@ -5,6 +5,7 @@
 /tmp
 
 *.swp
+*.swo
 # dependencies
 /node_modules
 /bower_components
