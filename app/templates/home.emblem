@@ -1,1 +1,4 @@
+p home
+= each model as |tweet|
+  = app-tweet tweet=tweet
 = yield

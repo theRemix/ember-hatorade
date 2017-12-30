@@ -1,0 +1,27 @@
+li.media.row.list-group-item.col-lg-12
+  img.pull-left.media-object src=tweet.user.profile_image_url
+  p.pull-left
+    = tweet.text
+  .media-body
+    = link-to 'user' tweet.screen_name class='pull-left'
+      h4.media-heading
+        = tweet.user.screen_name
+    a href=tweet.url
+      = moment-from-now tweet.created_at
+    .clearfix
+    p
+      / = each tweetTextTokens as |token|
+      /   if token.isUser
+      /     = link-to 'user' token.urlText
+      /       = token.text
+      /   else if token.isHashtag
+      /     = link-to 'tweets' (query-params hashtag=token.urlText)
+      /       token.text
+      /   else if token.isUrl
+      /     a href=token.url
+      /       =token.text
+      /   else
+      /     token.text
+  .media
+    img src=tweet.media_url
+= tweetText

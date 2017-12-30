@@ -14,7 +14,10 @@ Router.map(function() {
   this.route('hashtag', { path: 'hashtags/:text' });
   this.route('about')
   this.route('users')
-  this.route('user', { path: 'user/:screen_name' });
+  this.route('user', { path: 'user/:screen_name' }, function() {
+    this.route('authored');
+    this.route('mentions');
+  });
   this.route('user/mentionds', { path: 'user/:screen_name/mentions' });
   this.route('user/authored', { path: 'user/:screen_name/authored' });
 });

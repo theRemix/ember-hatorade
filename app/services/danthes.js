@@ -62,7 +62,7 @@ export default Service.extend({
     let channel = options.channel
     if (!this.get('subscription.channel')) {
       this.set(`subscriptions.${channel}`, {})
-      this.set(`subscriptions.${channel}.callback`, options.callback)
+      this.set(`subscriptions.${channel}.callback`, options.callback.bind(this))
       this.get('activeChannel')( channel, this )
     }
   },
