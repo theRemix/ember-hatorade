@@ -1,22 +1,24 @@
+import { Promise as EmberPromise } from 'rsvp';
+import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 
 export default Controller.extend({
   sortProperties: ['id:dsc'],
   showStreamControllButton: true,
-  danthes: Ember.inject.service(),
+  danthes: service(),
   init(args){
     const notification = this.get('notify')
     this.get('danthes').sign(
       {
         channel: 'messages',
         callback(message){
-          return new Ember.RSVP.Promise( function(resolve, reject) {
+          return new EmberPromise( function(resolve, reject) {
             console.log(message);
             resolve(message)
           }).then(function(message) {
             console.log(message);
             notification.info(message)
-          })
+          });
         }
       }
     );
@@ -24,13 +26,13 @@ export default Controller.extend({
       {
         channel: 'notifications',
         callback(message) {
-          return new Ember.RSVP.Promise( function(resolve, reject) {
+          return new EmberPromise( function(resolve, reject) {
             console.log(message);
             resolve(message)
           }).then(function(message) {
             console.log(message);
             notification.info(message)
-          })
+          });
         }
       }
     );

@@ -1,3 +1,4 @@
+import { Promise as EmberPromise } from 'rsvp';
 import Service from '@ember/service';
 import config from '../config/environment';
 
@@ -68,7 +69,7 @@ export default Service.extend({
   },
 
   activeChannel(channel, self){
-    return new Ember.RSVP.Promise(function(resolve, reject) {
+    return new EmberPromise(function(resolve, reject) {
       if (self.get(`subscription.${channel}.activated`)){
         return true
       }
@@ -83,7 +84,7 @@ export default Service.extend({
       }, function(reason) {
         console.log(reason)
       })
-    })
+    });
   },
 
   request_token() {

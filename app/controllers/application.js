@@ -2,8 +2,8 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 
 export default Controller.extend({
-  notify: Ember.inject.service(),
-  danthes: Ember.inject.service(),
+  notify: service(),
+  danthes: service(),
   init(args){
     const notification = this.get('notify');
     $.getJSON('/Users/dougheadley/Sandbox/itest/example_tweet.json', function(data){

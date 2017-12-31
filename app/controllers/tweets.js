@@ -1,3 +1,4 @@
+import { computed } from '@ember/object';
 import Controller from '@ember/controller';
 
 export default Controller.extend({
@@ -11,7 +12,7 @@ export default Controller.extend({
   },
   hashtag: null,
   user: null,
-  filteredTweets: Ember.computed("hashtag", "model", function(){
+  filteredTweets: computed("hashtag", "model", function(){
     return this.get('model')
   })
 });
