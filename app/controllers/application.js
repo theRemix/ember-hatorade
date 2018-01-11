@@ -4,11 +4,8 @@ import { inject as service } from '@ember/service';
 export default Controller.extend({
   notify: service(),
   danthes: service(),
+  showStreamModal: false,
   init(args){
-    const notification = this.get('notify');
-    $.getJSON('/Users/dougheadley/Sandbox/itest/example_tweet.json', function(data){
-      debugger
-    });
     this.get('danthes').sign(
       {
         channel: 'messages',
@@ -22,7 +19,7 @@ export default Controller.extend({
       {
         channel: 'notifications',
         callback: function(message) {
-          notification.info(message)
+          console.log(message)
         }.bind(this)
       }
     );
@@ -30,6 +27,7 @@ export default Controller.extend({
     this._super(args);
   },
   actions: {
+    toggleStreamModal() { debugger },
     authenticateWithTwitter() {
       this.get('session').authenticate('authenticator:torii', 'dougtwitter', this.get('subdomain'))
       .then(function() {
