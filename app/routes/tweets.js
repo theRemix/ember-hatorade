@@ -1,11 +1,7 @@
 import Route from '@ember/routing/route';
-import {
-  InfinityRoute,
-  InfinityModel,
-  EmberInfinity
-} from "ember-infinity/mixins/route"
+import InfinityRoute from "ember-infinity/mixins/route"
 
-export default Route.extend({
+export default Route.extend( InfinityRoute, {
   model(params) {
     if ((params.hashtag != null ) && (params.user != null)) {
       return this.infinityModel('tweet', {
@@ -27,7 +23,6 @@ export default Route.extend({
         user: params.user
       })
     } else {
-      debugger
       return this.infinityModel('tweet', {
         perPage: 50,
         startingPage: 1,
