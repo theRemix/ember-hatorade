@@ -23,6 +23,14 @@ export default Controller.extend({
         }.bind(this)
       }
     );
+    this.get('danthes').sign(
+      {
+        channel: 'commands',
+        callback: function(message) {
+          console.log(message)
+        }.bind(this)
+      }
+    );
 
     this._super(args);
   },
@@ -47,6 +55,7 @@ export default Controller.extend({
     },
 
     commitStreamChange() {
+      debugger
       this.get('danthes.fayeClient').client.publish( '/commands', {
         command: "restart_and_search",
         restart_and_search: $('input.stream-input').val()

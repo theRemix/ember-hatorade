@@ -7,7 +7,6 @@ export default Ember.Component.extend({
       this.set('streamTerms', form)
     },
     commitStreamChange(form) {
-      debugger
       this.attrs.commitStreamChange(this.get('streamTerms').split(','))
     }
   }
