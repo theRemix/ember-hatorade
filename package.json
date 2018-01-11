@@ -51,6 +51,7 @@
     "node": "^4.5 || 6.* || >= 7.*"
   },
   "dependencies": {
-    "faye": "^1.2.4"
+    "faye": "^1.2.4",
+    "GitRepo": "git+ssh://git@github.com/hhff/ember-infinity.git#1-0"
   }
 }

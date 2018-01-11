@@ -1,0 +1,11 @@
+.container-fluid.col-lg-8.col-lg-offset-2.col-md-8.col-md-offset-2
+  = bs-modal as modal open=toggleModal title="streaming keyword" onHidden=(action (mut toggleModal) false)
+    .modal-header
+      h4.modal-title Stream keywords
+      button.pull-right.close type='button' data-dismiss="modal" aria-label="close" &times;
+    .modal-body
+      input.stream-input data-role="tagsinput" value=stream_criteria
+    .modal-footer
+      button.btn.btn-default type='button' data-dismiss="modal" Close
+      button.btn.btn-primary{action 'commitStreamChange'} type='button' data-dismiss="modal" aria-label="close" Save Changes
+

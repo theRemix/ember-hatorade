@@ -1,3 +1,4 @@
+p tweets
 ul
   each filteredTweets as |tweet|
     app-tweet tweet=tweet

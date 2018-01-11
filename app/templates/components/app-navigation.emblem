@@ -1,1 +1,17 @@
-= yield
+.tabable
+  ul.nav
+    li.nav-item 
+      = link-to "home" class="nav-link" | home
+    li.nav-item
+      = link-to 'stream' class="nav-link" | stream
+    li.nav-item
+      =link-to "hashtags" class="nav-link" | hashtags
+    li.nav-item
+      =link-to "users" class="nav-link" | users
+    li.nav-item
+      =link-to "tweets" class="nav-link" | tweets
+    li.nav-item
+      a href="http://blog.hatora.de"  class="nav-link" blog
+    li.nav-item
+      =link-to "about" class="nav-link" | about
+.clearfix
