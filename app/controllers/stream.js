@@ -8,34 +8,6 @@ export default Controller.extend({
   danthes: service(),
   init(args){
     const notification = this.get('notify')
-    this.get('danthes').sign(
-      {
-        channel: 'messages',
-        callback(message){
-          return new EmberPromise( function(resolve, reject) {
-            console.log(message);
-            resolve(message)
-          }).then(function(message) {
-            console.log(message);
-            notification.info(message)
-          });
-        }
-      }
-    );
-    this.get('danthes').sign(
-      {
-        channel: 'notifications',
-        callback(message) {
-          return new EmberPromise( function(resolve, reject) {
-            console.log(message);
-            resolve(message)
-          }).then(function(message) {
-            console.log(message);
-            notification.info(message)
-          });
-        }
-      }
-    );
 
     this._super(args);
   },

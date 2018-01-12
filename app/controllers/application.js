@@ -10,6 +10,7 @@ export default Controller.extend({
       {
         channel: 'messages',
         callback: function(message) {
+          this.get('notify').info('got a tweet')
           this.tweet_from_websocket(message)
           this.set('model', this.store.peekAll('tweet').sortBy('id').reverse())
         }.bind(this)
@@ -19,7 +20,7 @@ export default Controller.extend({
       {
         channel: 'notifications',
         callback: function(message) {
-          console.log(message)
+          this.get('notify').info(message)
         }.bind(this)
       }
     );
@@ -27,7 +28,7 @@ export default Controller.extend({
       {
         channel: 'commands',
         callback: function(message) {
-          console.log(message)
+          this.get('notify').info(message)
         }.bind(this)
       }
     );
@@ -51,7 +52,7 @@ export default Controller.extend({
     },
 
     ping() {
-      this.get('danthes.fayeClient').publish('/messages', "PING")
+      this.get('danthes.fayeClient').publish('/commands', "PING")
     },
 
     commitStreamChange() {
