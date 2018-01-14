@@ -5,6 +5,7 @@ export default Component.extend({
   actions: {
     toggleStreamModal() {
       this.attrs.toggleStreamModal.update(true);
-    }
+    },
+    ping(){ this.attrs.ping() }
   }
 });

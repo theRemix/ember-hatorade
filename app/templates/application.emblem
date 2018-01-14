@@ -1,5 +1,5 @@
 .container-fluid.col-lg-8.col-lg-offset-2.col-md-8.col-md-offset-2
-  = ember-notify
+  = ember-notify closeAfter=4000
   stream_control-modal toggleModal=showStreamModal commitStreamChange=(action 'commitStreamChange')
   top-section toggleStreamModal=(mut showStreamModal) authenticateWithTwitter=(action 'authenticateWithTwitter') logOut=(action 'logOut') ping=( action 'ping' ) appTitle=appTitle
   .tab-content
