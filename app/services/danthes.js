@@ -8,8 +8,9 @@ export default Service.extend({
     console.log(message)
   },
   init() {
-    this._super()
-    this.set('subscriptions', {})
+    this.set('subscriptions', {});
+    this.faye();
+    this._super();
   },
   server: config.publisherUrl,
   mount: '/faye',
@@ -29,31 +30,29 @@ export default Service.extend({
     )
   },
 
-  faye(self) {
-    self.get('fayeClient') || self.connectToFaye(self)
-    // self.get('fayeClient').disable('long-polling')
-    return self.get('fayeClient')
+  faye() {
+    return this.get('fayeClient') || this.connectToFaye()
   },
 
-  fayeExtension(self) {
-    return {
-      incoming(message, callback) { callback(message) },
-      outgoing(message, callback) {
-        if(!message.ext){ message.ext = {} }
-        if (message.channel == '/meta/subscribe') {
-          message.ext.danthes_signature = self.get(`subscriptions.${message.subscription.slice(1)}.opts.signature`)
-          message.ext.danthes_timestamp = self.get(`subscriptions.${message.subscription.slice(1)}.opts.timestamp`)
-          callback(message)
-        } else {
-          callback(message)
-        }
+  fayeExtension: {
+    incoming(message, callback) { callback(message) },
+    outgoing(message, callback) {
+      if(!message.ext){ message.ext = {} }
+      if (message.channel == '/meta/subscribe') {
+        message.ext.danthes_signature = this.get(`subscriptions.${message.subscription.slice(1)}.opts.signature`)
+        message.ext.danthes_timestamp = this.get(`subscriptions.${message.subscription.slice(1)}.opts.timestamp`)
+        callback(message)
+      } else {
+        message.ext.danthes_token = '588d158962940ed4c022ae44526889ee809343fea3cc47b5ce159940cf4c110d0f769517fc7b622c'
+        callback(message)
       }
     }
   },
 
-  connectToFaye(self) {
-    self.set('fayeClient', new Faye.Client(self.get('server') + self.get('mount')));
-    self.get('fayeClient').addExtension(self.get('fayeExtension')(self));
+  connectToFaye() {
+    this.set('fayeClient', new Faye.Client(this.get('server') + this.get('mount')));
+    this.get('fayeClient').addExtension(this.get('fayeExtension'));
+    return this.get('fayeClient')
   },
 
   sign(options) {
@@ -63,7 +62,7 @@ export default Service.extend({
     let channel = options.channel
     if (!this.get('subscription.channel')) {
       this.set(`subscriptions.${channel}`, {})
-      this.set(`subscriptions.${channel}.callback`, options.callback.bind(this))
+      this.set(`subscriptions.${channel}.callback`, options.callback)
       this.get('activeChannel')( channel, this )
     }
   },
@@ -77,7 +76,9 @@ export default Service.extend({
         self.set(`subscriptions.${channel}.opts`, {})
         self.set(`subscriptions.${channel}.opts.signature`, data[channel].signature)
         self.set(`subscriptions.${channel}.opts.timestamp`, data[channel].timestamp)
-        let subscription = self.get('faye')(self).subscribe(`/${channel}`, self.get(`subscriptions.${channel}.callback`))
+        let subscription = self.get('fayeClient')
+        console.log(subscription)
+        subscription.subscribe(`/${channel}`, self.get(`subscriptions.${channel}.callback`))
         subscription.callback(function(){ console.log(`connected ${channel}`)})
         subscription.errback(function(error){ console.log(`failed subscription ${error}`)})
         resolve(data);

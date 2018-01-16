@@ -52,11 +52,12 @@ export default Controller.extend({
     },
 
     ping() {
-      this.get('danthes.fayeClient').publish('/commands', "PING")
+      this.get('notify').alert('hi')
+      let publication = this.get('danthes.fayeClient').publish('/commands', { command: "ping" })
+      publication.then(function() {console.log('success')}, function(error) {console.log('error: ' + error.message)})
     },
 
     commitStreamChange() {
-      debugger
       this.get('danthes.fayeClient').client.publish( '/commands', {
         command: "restart_and_search",
         restart_and_search: $('input.stream-input').val()

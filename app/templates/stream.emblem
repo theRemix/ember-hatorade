@@ -1,0 +1,10 @@
+p stream
+br
+
+ul
+  each model as |tweet|
+    app-tweet tweet=tweet
+h1 style='clear:both'
+  / = infinity-loader infinityModel=model
+
+= yield
