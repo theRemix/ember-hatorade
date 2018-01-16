@@ -34,24 +34,27 @@ export default Service.extend({
     return this.get('fayeClient') || this.connectToFaye()
   },
 
-  fayeExtension: {
-    incoming(message, callback) { callback(message) },
-    outgoing(message, callback) {
-      if(!message.ext){ message.ext = {} }
-      if (message.channel == '/meta/subscribe') {
-        message.ext.danthes_signature = this.get(`subscriptions.${message.subscription.slice(1)}.opts.signature`)
-        message.ext.danthes_timestamp = this.get(`subscriptions.${message.subscription.slice(1)}.opts.timestamp`)
-        callback(message)
-      } else {
-        message.ext.danthes_token = '588d158962940ed4c022ae44526889ee809343fea3cc47b5ce159940cf4c110d0f769517fc7b622c'
-        callback(message)
+  fayeExtension() { 
+    self = this
+    return {
+      incoming(message, callback) { callback(message) },
+      outgoing(message, callback) {
+        if(!message.ext){ message.ext = {} }
+        if (message.channel == '/meta/subscribe') {
+          message.ext.danthes_signature = self.get(`subscriptions.${message.subscription.slice(1)}.opts.signature`)
+          message.ext.danthes_timestamp = self.get(`subscriptions.${message.subscription.slice(1)}.opts.timestamp`)
+          callback(message)
+        } else {
+          message.ext.danthes_token = '588d158962940ed4c022ae44526889ee809343fea3cc47b5ce159940cf4c110d0f769517fc7b622c'
+          callback(message)
+        }
       }
     }
   },
 
   connectToFaye() {
     this.set('fayeClient', new Faye.Client(this.get('server') + this.get('mount')));
-    this.get('fayeClient').addExtension(this.get('fayeExtension'));
+    this.get('fayeClient').addExtension(this.get('fayeExtension').bind(this)());
     return this.get('fayeClient')
   },
 
@@ -81,6 +84,7 @@ export default Service.extend({
         subscription.subscribe(`/${channel}`, self.get(`subscriptions.${channel}.callback`))
         subscription.callback(function(){ console.log(`connected ${channel}`)})
         subscription.errback(function(error){ console.log(`failed subscription ${error}`)})
+        self.set(`subscriptions.${channel}.activated`, true)
         resolve(data);
       }, function(reason) {
         console.log(reason)
