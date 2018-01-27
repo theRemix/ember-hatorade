@@ -7,7 +7,7 @@ li.media.row.list-group-item.col-lg-12
       h4.media-heading
         = tweet.user.screen_name
     a href=tweet.url
-      = moment-from-now tweet.created_at
+      tweet.created_at
     .clearfix
     p
       / = each tweetTextTokens as |token|

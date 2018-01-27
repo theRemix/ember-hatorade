@@ -45,11 +45,13 @@ export default Controller.extend({
       publication.then(function() {console.log('success')}, function(error) {console.log('error: ' + error.message)})
     },
 
-    commitStreamChange() {
-      this.get('danthes.fayeClient').client.publish( '/commands', {
+    commitStreamChange(term_array) {
+      debugger
+      this.get('danthes.fayeClient').publish( '/commands', {
         command: "restart_and_search",
-        restart_and_search: $('input.stream-input').val()
+        restart_and_search: term_array
       })
+      this.set('showStreamModal',false)
     },
 
   },

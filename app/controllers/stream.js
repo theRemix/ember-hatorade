@@ -8,15 +8,12 @@ export default Controller.extend({
   notify: service(),
   danthes: service(),
   init(args){
-    const notification = this.get('notify')
-
     this.get('danthes').sign(
       {
         channel: 'messages',
         callback: function(message) {
           this.get('notify').info('got a tweet')
-          this.get('tweet_from_websocket')(message)
-          this.set('model', this.store.peekAll('tweet').sortBy('id').reverse())
+          this.tweet_from_websocket(message)
         }.bind(this)
       }
     );
@@ -30,7 +27,7 @@ export default Controller.extend({
       screen_name: message.user.screen_name,
       favorite_count: message.favorite_count,
       url: message.url,
-      created_at: message.created_at,
+      created_at: "11/20/2017",
       entities: message.entities,
       profile_image: message.user.profile_image_url
     }
@@ -41,6 +38,7 @@ export default Controller.extend({
     tweet.author         = model_author
     tweet.mentions       = model_mentions
     let model_tweet      = this.store.createRecord('tweet', tweet)
+    this.set('model', this.store.peekAll('tweet').sortBy('id').reverse())
   },
 
   hashtags_from_websocket(message){

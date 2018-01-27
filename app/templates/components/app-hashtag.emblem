@@ -1,0 +1,3 @@
+li.media.row.list-group-item.col-lg-4
+  = link-to 'hashtag' hashtag.text
+    = hashtag.text
