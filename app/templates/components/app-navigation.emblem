@@ -11,6 +11,8 @@
     li.nav-item
       =link-to "tweets" class="nav-link" | tweets
     li.nav-item
+      =link-to "graph" class="nav-link" | graph
+    li.nav-item
       a href="http://blog.hatora.de"  class="nav-link" blog
     li.nav-item
       =link-to "about" class="nav-link" | about
