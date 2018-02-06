@@ -18,6 +18,7 @@
   "devDependencies": {
     "bootstrap": "^4.0.0-beta.2",
     "broccoli-asset-rev": "^2.4.5",
+    "d3": "^4.9.1",
     "ember-ajax": "^3.0.0",
     "ember-bootstrap": "^1.0.0",
     "ember-cli": "~2.16.2",
@@ -35,9 +36,10 @@
     "ember-cli-shims": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^2.0.0",
+    "ember-d3": "^0.4.1",
     "ember-data": "~2.16.2",
     "ember-export-application-global": "^2.0.0",
-    "ember-infinity": "^0.2.8",
+    "ember-infinity": "^1.0.0-alpha.4",
     "ember-load-initializers": "^1.0.0",
     "ember-moment": "^7.5.0",
     "ember-notify": "^5.2.1",
@@ -51,7 +53,6 @@
     "node": "^4.5 || 6.* || >= 7.*"
   },
   "dependencies": {
-    "faye": "^1.2.4",
-    "GitRepo": "git+ssh://git@github.com/hhff/ember-infinity.git#1-0"
+    "faye": "^1.2.4"
   }
 }

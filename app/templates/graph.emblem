@@ -1,2 +1,7 @@
-= force-layout-graph
-= yield
+= stream-graph nodes=nodes links=links as |graph|
+  = each nodes as |node|
+    = d3/d3-circle id=node.id
+  = each links as |line|
+    = d3/d3-line id=line.id
+
+

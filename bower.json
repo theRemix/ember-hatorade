@@ -1,0 +1,6 @@
+{
+  "name": "itest",
+  "dependencies": {
+    "d3": "~3.5.16"
+  }
+}
