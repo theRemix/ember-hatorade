@@ -30,14 +30,10 @@ export default Ember.Component.extend({
     let svg = select('#funtimes')
     svg.style( "border", '1px solid black')
 
-    let circles = svg.selectAll('circle').data(this.get('nodes'), function(d,i){
-      return this.id
-    }).enter().append('circle');
-    let lines = svg.selectAll('line').data(this.get('links'), function(d,i){
-      return this.id
-    }).enter().append('line');
+    let circles = svg.selectAll('circle').data(this.get('nodes'));
+    let lines = svg.selectAll('line').data(this.get('links'))
     lines
-      .attr('x1', function(d) { return 15 })
+      .attr('x1', function(d) { debugger; return 15 })
       .attr('y1', function(d) { return 15 })
       .attr('x2', function(d) { return 45 })
       .attr('y2', function(d) { return 15 })
