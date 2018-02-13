@@ -18,35 +18,24 @@ export default Controller.extend({
   scale(){
     scaleLinear.create({domain: [0,10], range: [10,50]})
   },
-  data: [
-    {
-      x_axis: 5,
-      y_axis: 5,
-      color: 'purple',
-      radius: 15
-    }
-  ],
+  // nodes: [
+  //   {id: "packers", fill: 'green'},
+  //   {id: "vikings",  fill: 'purple'},
+  //   {id: "big_bird", fill: 'yellow'}
+  // ],
   nodes: [
-    {id: "12", cx: 400 , cy: 100 , r: 5, fill: 'green'},
-    {id: "11", cx: 200 , cy: 200 , r: 15, fill: 'purple'},
-    {id: "13", cx: 200 , cy: 100 , r: 20, fill: 'yellow'}
+    {id: "packers", cx: 400 , cy: 100 , r: 5, fill: 'green'},
+    {id: "vikings", cx: 200 , cy: 200 , r: 15, fill: 'purple'},
+    {id: "big_bird", cx: 200 , cy: 100 , r: 20, fill: 'yellow'}
   ],
   links: [
     {
-      id: '1',
-      source: "11",
-      target: "12",
-      value: 8,
-      stroke: 'black',
-      'stroke-width': 8
-    },
-    {
-      id: '2',
-      target: "11",
-      source: "12",
-      value: 8,
-      stroke: 'black',
-      'stroke-width': 8
+      "target": 0,
+      "source": 1,
+      "value": 8,
+      "distance": 40,
+      "stroke": 'black',
+      "stroke-width": 8
     }
   ],
 });
