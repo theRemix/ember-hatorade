@@ -7,6 +7,7 @@ export default Controller.extend({
   showStreamControllButton: true,
   notify: service(),
   danthes: service(),
+  graphdata: service(),
   init(args){
     this.get('danthes').sign(
       {
@@ -14,6 +15,8 @@ export default Controller.extend({
         callback: function(message) {
           this.get('notify').info('got a tweet')
           this.tweet_from_websocket(message)
+          this.get('graphdata.tweetBreak').bind(this.get('graphdata'))(message)
+          // this.get('graphdata.nodes').pushObject(message)
         }.bind(this)
       }
     );

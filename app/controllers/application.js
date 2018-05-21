@@ -5,24 +5,8 @@ export default Controller.extend({
   notify: service(),
   danthes: service(),
   showStreamModal: false,
+  nodes: [],
   init(args){
-    this.get('danthes').sign(
-      {
-        channel: 'notifications',
-        callback: function(message) {
-          this.get('notify').info(message)
-        }.bind(this)
-      }
-    );
-    this.get('danthes').sign(
-      {
-        channel: 'commands',
-        callback: function(message) {
-        }.bind(this)
-      }
-    );
-
-    this._super(args);
   },
   actions: {
     toggleStreamModal() { debugger },
