@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
+import config from '../config/environment';
 
 export default Controller.extend({
   notify: service(),
@@ -8,14 +9,19 @@ export default Controller.extend({
   nodes: [],
   init(args){
   },
+  url: ()=> {
+    if (false){//this.get('subdomain')) {
+      return `${config.apiScheme}${this.get('subdomain')}.${config.apiHost}${config.apiPort}/users/auth/twitter`
+    } else {
+      return `${config.apiScheme}${config.apiHost}${config.apiPort}/users/auth/twitter`
+    }
+  },
   actions: {
     toggleStreamModal() { debugger },
     authenticateWithTwitter() {
-      this.get('session').authenticate('authenticator:torii', 'dougtwitter', this.get('subdomain'))
-      .then(function() {
-        this.get('session').authorize('authorizer:twitter');
+      this.get('session').open('twitter').then(function(data) {
         route.transitionTo('index');
-      })
+      }).catch((error) =>  {  console.log("error: ", error) })
     },
 
     logOut() {
@@ -30,7 +36,6 @@ export default Controller.extend({
     },
 
     commitStreamChange(term_array) {
-      debugger
       this.get('danthes.fayeClient').publish( '/commands', {
         command: "restart_and_search",
         restart_and_search: term_array

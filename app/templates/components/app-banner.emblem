@@ -1,8 +1,11 @@
 h2#title HATORA.DE
-if session.isAuthenticated
-  button{action 'logOut'} Log out
+if session.isWorking
+  button working..
 else
-  button{action 'authenticateWithTwitter'} Log in
+  if session.isAuthenticated
+    button{action 'logOut'} Log out
+  else
+    button{action 'authenticateWithTwitter'} Log in
 = bs-button onClick=(action 'toggleStreamModal') | stream control
 button{action 'ping'} ping
 ember-notify

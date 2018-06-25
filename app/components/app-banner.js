@@ -6,6 +6,9 @@ export default Component.extend({
     toggleStreamModal() {
       this.attrs.toggleStreamModal.update(true);
     },
+    authenticateWithTwitter() {
+      this.attrs.authenticateWithTwitter();
+    },
     ping(){ this.attrs.ping() }
   }
 });

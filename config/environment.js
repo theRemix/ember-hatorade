@@ -15,10 +15,12 @@ module.exports = function(environment) {
       URL: 'http://publisher.hatora.de/faye',
     },
     torii: {
+      sessionServiceName: 'session',
+      allowUnsafeRedirect: true,
       providers: {
         'twitter': {
           appId: 'ehy2oJuRcw3SlUUFJL9CKg',
-          requestTokenUri: 'http://lvh.me:5000/users/auth/twitter' /* we don't use this anymore :) */
+          requestTokenUri: 'http://api.hatora.de/users/auth/twitter' /* we don't use this anymore :) */
         }
       }
     },
@@ -37,7 +39,22 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+    contentSecurityPolicyHeader: 'Content-Security-Policy',
+    contentSecurityPolicy: {
+      'default-src': [ "'none'" ],
+      'script-src':  [ "'self'" , "'unsafe-inline'" , "'unsafe-eval'", "http://api.hatora.de", "http://localhost:9292" ],
+      'font-src':    [ "'self'"],
+      'connect-src': [ "'self'", "*.hatora.de", "ws://localhost:9292/faye", "http://publisher.hatora.de/faye" ],
+      'img-src':     [ "'self'", "http://pbs.twimg.com/" ],
+      'report-uri':  ["'localhost'"],
+      'style-src':   [ "'self'", "'unsafe-inline'" ],
+      'frame-src':   ["'none'"]
+    },
+    apiScheme: 'http://',
+    apiHost: 'api.hatora.de',
+    apiPort: '',
+    publisherUrl: 'http://publisher.hatora.de'
   };
 
   if (environment === 'development') {
