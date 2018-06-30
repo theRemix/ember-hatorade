@@ -20,8 +20,7 @@ export default Controller.extend({
     toggleStreamModal() { debugger },
     authenticateWithTwitter() {
       this.get('session').open('twitter').then(function(data) {
-        route.transitionTo('index');
-      }).catch((error) =>  {  console.log("error: ", error) })
+      }).catch((error) =>  {  debugger; console.log("error: ", error) })
     },
 
     logOut() {

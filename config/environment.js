@@ -37,15 +37,17 @@ module.exports = function(environment) {
     },
 
     APP: {
+      usingCors: true,
+      apiURL: 'http://api.hatora.de'
       // Here you can pass flags/options to your application instance
       // when it is created
     },
     contentSecurityPolicyHeader: 'Content-Security-Policy',
     contentSecurityPolicy: {
       'default-src': [ "'none'" ],
-      'script-src':  [ "'self'" , "'unsafe-inline'" , "'unsafe-eval'", "http://api.hatora.de", "http://localhost:9292" ],
+      'script-src':  [ "'self'" , "http://publisher.hatora.de/faye", "'unsafe-inline'" , "'unsafe-eval'", "http://api.hatora.de", "http://localhost:9292" ],
       'font-src':    [ "'self'"],
-      'connect-src': [ "'self'", "*.hatora.de", "ws://localhost:9292/faye", "http://publisher.hatora.de/faye" ],
+      'connect-src': [ "'self'", "*.hatora.de", "ws://publisher.hatora.de", "http://pbs.twimg.com", "http://publisher.hatora.de/faye" ],
       'img-src':     [ "'self'", "http://pbs.twimg.com/" ],
       'report-uri':  ["'localhost'"],
       'style-src':   [ "'self'", "'unsafe-inline'" ],
