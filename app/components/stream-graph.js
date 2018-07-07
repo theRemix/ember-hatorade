@@ -58,10 +58,10 @@ export default Ember.Component.extend({
       // .id(function(d) { return d.id })
     let sim = forceSimulation(circles.data())
       .force('linkForce',  forceLink(lines.data()).distance(50))
-      .force('radial', forceRadial(() => { return Math.sin(this.get('nodes').length) * 50 }, this.get('width') / 2, this.get('height') / 2))
       .force('charge', forceManyBody().strength(-20))
       .force('collide', forceCollide(20).strength(.07))
       .on('tick', ticked)
+      //.force('radial', forceRadial(() => { return Math.sin(this.get('nodes').length) * 50 }, this.get('width') / 2, this.get('height') / 2))
       //.force('center', forcecenter)
 
     function ticked(){
