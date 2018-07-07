@@ -9,7 +9,7 @@ export default Controller.extend({
   nodes: [],
   init(args){
   },
-  url: ()=> {
+  url() {
     if (false){//this.get('subdomain')) {
       return `${config.apiScheme}${this.get('subdomain')}.${config.apiHost}${config.apiPort}/users/auth/twitter`
     } else {

@@ -45,7 +45,7 @@ WORKDIR /opt/hatorade
 
 RUN bower install --allow-root
 RUN npm install
-RUN ember build --environment production
+RUN ember build --environment ${STACK_ENV}
 #
 EXPOSE 5055
 
