@@ -43,6 +43,7 @@ RUN npm install -g bower --save
 ADD ./ /opt/hatorade
 WORKDIR /opt/hatorade
 
+RUN bower install faye --allow-root
 RUN bower install --allow-root
 RUN npm install
 RUN ember build --environment ${STACK_ENV}
