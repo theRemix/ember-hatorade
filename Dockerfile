@@ -4,7 +4,7 @@ MAINTAINER Doug Headley <headley.douglas@gmail.com>
 LABEL container=hatorade-ember
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y build-essential curl zlib1g-dev zlib1g zlibc openssl libssl-dev libreadline-dev
+RUN apt-get install -y build-essential curl zlib1g-dev zlib1g zlibc openssl libssl-dev libreadline-dev curl
 
 ENV CONFIGURE_OPTS --disable-install-rdoc
 
