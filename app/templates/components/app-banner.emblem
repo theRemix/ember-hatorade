@@ -1,4 +1,4 @@
-h2#title HATORA.DE
+h2#title = appTitle
 if session.isWorking
   button working..
 else

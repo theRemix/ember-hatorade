@@ -9,9 +9,11 @@ export default Service.extend({
   },
   init() {
     this.set('subscriptions', {});
+    this.activeChannel.bind(this);
     this.faye();
     this._super();
   },
+  danthes_token: config.danthes_token,
   server: config.publisherUrl,
   mount: '/faye',
   reset() {
@@ -34,7 +36,7 @@ export default Service.extend({
     return this.get('fayeClient') || this.connectToFaye()
   },
 
-  fayeExtension() { 
+  fayeExtension() {
     self = this
     return {
       incoming(message, callback) { callback(message) },
@@ -45,7 +47,7 @@ export default Service.extend({
           message.ext.danthes_timestamp = self.get(`subscriptions.${message.subscription.slice(1)}.opts.timestamp`)
           callback(message)
         } else {
-          message.ext.danthes_token = '588d158962940ed4c022ae44526889ee809343fea3cc47b5ce159940cf4c110d0f769517fc7b622c'
+          message.ext.danthes_token = self.danthes_token
           callback(message)
         }
       }
@@ -66,10 +68,33 @@ export default Service.extend({
     if (!this.get('subscription.channel')) {
       this.set(`subscriptions.${channel}`, {})
       this.set(`subscriptions.${channel}.callback`, options.callback)
-      this.get('activeChannel')( channel, this )
+      //this.get('activeChannel')( channel, this )
+      this.get('activeChannel').bind(this)( channel )
     }
   },
 
+  activeChannel(channel){
+    self = this
+    return new EmberPromise(function(resolve, reject) {
+      if (self.get(`subscription.${channel}.activated`)){
+        return true
+      }
+      self.request_token().then((data) => {
+        self.set(`subscriptions.${channel}.opts`, {})
+        self.set(`subscriptions.${channel}.opts.signature`, data[channel].signature)
+        self.set(`subscriptions.${channel}.opts.timestamp`, data[channel].timestamp)
+        let subscription = self.get('fayeClient')
+        console.log(subscription)
+        subscription.subscribe(`/${channel}`, self.get(`subscriptions.${channel}.callback`))
+        subscription.callback(function(){ console.log(`connected ${channel}`)})
+        subscription.errback(function(error){ console.log(`failed subscription ${error}`)})
+        self.set(`subscriptions.${channel}.activated`, true)
+        resolve(data);
+      }, function(reason) {
+        console.log(reason)
+      })
+    });
+  /*
   activeChannel(channel, self){
     return new EmberPromise(function(resolve, reject) {
       if (self.get(`subscription.${channel}.activated`)){
@@ -90,6 +115,7 @@ export default Service.extend({
         console.log(reason)
       })
     });
+    */
   },
 
   request_token() {
