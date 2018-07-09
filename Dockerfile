@@ -19,8 +19,8 @@ RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.4/ruby-${RUBY_VERSION}.tar.gz &&
     rm -r ruby-${RUBY_VERSION} ruby-${RUBY_VERSION}.tar.gz && \
     echo 'gem: --no-document' > /usr/local/etc/gemrcdoc
 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get install -y git libreadline-dev nodejs\
     npm postgresql-client libpq-dev yarn
 
