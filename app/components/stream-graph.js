@@ -61,8 +61,8 @@ export default Ember.Component.extend({
       .force('charge', forceManyBody().strength(-20))
       .force('collide', forceCollide(20).strength(.07))
       .on('tick', ticked)
-      //.force('radial', forceRadial(() => { return Math.sin(this.get('nodes').length) * 50 }, this.get('width') / 2, this.get('height') / 2))
-      //.force('center', forcecenter)
+      .force('radial', forceRadial(() => { return Math.sin(this.get('nodes').length) * 50 }, this.get('width') / 2, this.get('height') / 2))
+      .force('center', forcecenter)
 
     function ticked(){
       lines
