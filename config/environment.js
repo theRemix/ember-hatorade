@@ -16,10 +16,10 @@ module.exports = function(environment) {
       URL: 'http://publisher.hatora.de/faye',
     },
     torii: {
-      sessionServiceName: 'session',
+      sessionServiceName: 'appSession',
       allowUnsafeRedirect: true,
       providers: {
-        'twitter': {
+        twitter: {
           appId: 'ehy2oJuRcw3SlUUFJL9CKg',
           requestTokenUri: 'http://api.hatora.de/users/auth/twitter' /* we don't use this anymore :) */
         }
@@ -46,9 +46,9 @@ module.exports = function(environment) {
     contentSecurityPolicyHeader: 'Content-Security-Policy',
     contentSecurityPolicy: {
       'default-src': [ "'none'" ],
-      'script-src':  [ "'self'" , "http://publisher.hatora.de/faye", "'unsafe-inline'" , "'unsafe-eval'", "http://api.hatora.de", "http://localhost:9292" ],
+      'script-src':  [ "'self'" , "http://publisher.hatora.de/faye", "'unsafe-inline'" , "'unsafe-eval'", "http://api.hatora.de", "http://localhost:9292", "http://lvh.me:7020/livereload.js" ],
       'font-src':    [ "'self'"],
-      'connect-src': [ "'self'", "*.hatora.de", "ws://publisher.hatora.de", "http://pbs.twimg.com", "http://publisher.hatora.de/faye" ],
+      'connect-src': [ "'self'", "*.hatora.de", "ws://publisher.hatora.de", "http://pbs.twimg.com", "http://publisher.hatora.de/faye", "ws://lvh.me:7020/livereload" ],
       'img-src':     [ "'self'", "http://pbs.twimg.com/" ],
       'report-uri':  ["'localhost'"],
       'style-src':   [ "'self'", "'unsafe-inline'" ],

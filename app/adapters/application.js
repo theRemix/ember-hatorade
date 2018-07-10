@@ -6,7 +6,6 @@ import { inject as service } from '@ember/service';
 
 export default DS.JSONAPIAdapter.extend({//DataAdapterMixin,{
   namespace: 'api/v1',
-  session: service(),
   host: config.apiScheme + config.apiHost + config.apiPort,
 
   headers: computed('localStorage.token', function() {

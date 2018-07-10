@@ -8,16 +8,14 @@ export default Controller.extend({
   urlChecker: service(),
   subdomain: Ember.computed.alias('urlChecker.subdomain'),
   showStreamModal: false,
+  isLoggedIn: Ember.computed.alias('appSession.isAuthenticated'),
   appTitle: Ember.computed('subdomain', function(){
-    if (this.get('subdomain').length > 0){
-      return this.get('subdomain').toUpperCase() + '.HATORA.DE'
-    } else {
+    if (this.get('subdomain')().length > 0)
+      return this.get('subdomain')().toUpperCase() + '.HATORA.DE'
+    else
       return 'HATORA.DE'
-    }
   }),
   nodes: [],
-  init(args){
-  },
   url() {
     if (false){//this.get('subdomain')) {
       return `${config.apiScheme}${this.get('subdomain')}.${config.apiHost}${config.apiPort}/users/auth/twitter`
@@ -28,12 +26,12 @@ export default Controller.extend({
   actions: {
     toggleStreamModal() { debugger },
     authenticateWithTwitter() {
-      this.get('session').open('twitter').then(function(data) {
+      this.get('appSession').open('twitter').then(function(data) {
       }).catch((error) =>  {  debugger; console.log("error: ", error) })
     },
 
     logOut() {
-      this.get('session').invalidate('authenticator:torii').then(
+      this.get('appSession').invalidate('authenticator:torii').then(
         () => { route.transitionTo('index')  }
       )
     },
@@ -54,15 +52,6 @@ export default Controller.extend({
       this.set('showStreamModal',false)
     },
 
-  },
-
-  splitHostname() {
-      var result = {};
-      var regexParse = new RegExp('([a-z\-0-9]{2,63})\.([a-z\.]{2,5})$');
-      var urlParts = regexParse.exec(window.location.hostname);
-      result.domain = urlParts[1];
-      result.type = urlParts[2];
-      result.subdomain = window.location.hostname.replace(result.domain + '.' + result.type, '').slice(0, -1);;
-      return result.subdomain;
   }
+
 });

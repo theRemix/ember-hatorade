@@ -10,7 +10,7 @@ var rejectPromise = function() {
 
 export default Ember.Object.extend({
   store: Ember.inject.service(),
-  open: function(auth) {
+  open(auth) {
     if (!auth.code) {
       return rejectPromise();
     }
@@ -24,14 +24,11 @@ export default Ember.Object.extend({
     });
   },
 
-  fetch: function() {
+  fetch() {
     if (!localStorage.token) {
       return rejectPromise();
     }
 
-    var adapter = this.container.lookup('adapter:application');
-    adapter.set('headers', { 'Authorization': localStorage.token });
-    
     return this.get('store').find('user', 'me').then(function(user) {
       return {
         currentUser: user
@@ -39,7 +36,7 @@ export default Ember.Object.extend({
     });
   },
 
-  close: function() {
+  close() {
     var authToken = localStorage.token;
 
     localStorage.token = null;
