@@ -2,6 +2,6 @@
   = each links as |line|
     = d3/d3-line
   = each nodes as |node|
-    = d3/d3-circle
+    = d3/d3-circle (html-attributes cx=node.cx cy=node.cy r=node.r)
 
 
