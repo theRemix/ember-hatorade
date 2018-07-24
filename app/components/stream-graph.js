@@ -46,15 +46,12 @@ export default Ember.Component.extend({
           .on('drag', dragged)
           .on('end', dragended))
           .on('mouseover', () => {
-            console.log( select(this).data() )
           })
       } catch (e) { console.log(e) }
     let forcecenter = forceCenter( this.get('width') / 2, this.get('height') / 2 )
-    console.log("links", this.get('links'))
     try{
       lines.data(this.get('links'))
     } catch(e) {
-      console.log("links", this.get('links'))
       console.log(e)
       debugger
     }
