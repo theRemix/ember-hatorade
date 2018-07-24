@@ -10,6 +10,7 @@ export default Controller.extend({
       .pushObjects(this.get('mentions'))
       .pushObjects(this.get('quoted'))
   }),
+
   nodes: computed('tweets.[]', 'users.[]', function(){
     let tweet_objects =  this.get('tweets').map(function(tweet){
       let tweet_object =  JSON.parse(JSON.stringify(tweet));
@@ -23,6 +24,7 @@ export default Controller.extend({
     })
     return tweet_objects.pushObjects(user_objects);
   }),
+
   author: computed('nodes', function(){
     let author_links = this.get('tweets')
       .filter( (tweet) => tweet.get('author.id') != null , this)
@@ -39,6 +41,7 @@ export default Controller.extend({
     }, this)
     return author_links
   }),
+
   mentions: computed('nodes', function(){
     let tweets = this.get('tweets')
     let mention_links = tweets.filter( (tweet) => tweet.get('mentions.length') > 0 )
@@ -59,6 +62,7 @@ export default Controller.extend({
     }, this)
     return moar_fun
   }),
+
   quoted: computed('nodes', function(){
     let tweets = this.get('tweets')
     let quoted_tweets = tweets.filter( (tweet) => tweet.get('quote.id') != null )
@@ -73,6 +77,7 @@ export default Controller.extend({
       }
     })
   }),
+
   retweet: computed('nodes', function() {
     let tweets = this.get('tweets')
     let tweet_with_retweets = tweets.filter( (tweet) => tweet.get('retweet.id') != null )

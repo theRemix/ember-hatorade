@@ -40,9 +40,6 @@ export default Ember.Component.extend({
     let circles = svg.selectAll('circle')
     let lines   = svg.selectAll('line')
     let derp    = circles.data(this.get('nodes'))
-      //.attr("r", 5)
-      //.attr("cx", this.get('width') / 2 )
-      //.attr("cy", this.get('height') / 2 )
       try {
         derp.call(drag()
           .on('start', dragstarted)
@@ -61,16 +58,11 @@ export default Ember.Component.extend({
       console.log(e)
       debugger
     }
-      // .on('mouseover', () => {
-      //   console.log( select(this).data() )
-      // })
-      // .id(function(d) { return d.id })
     let sim = forceSimulation(circles.data())
       .force('linkForce',  forceLink(lines.data()).distance(50))
       .force('charge', forceManyBody().strength(-20))
       .force('collide', forceCollide(20).strength(.07))
       .on('tick', ticked)
-      .force('radial', forceRadial(() => { return Math.sin(this.get('nodes').length) * 50 }, this.get('width') / 2, this.get('height') / 2))
       .force('center', forcecenter)
 
     function ticked(){
