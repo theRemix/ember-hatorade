@@ -43,10 +43,12 @@ RUN npm install -g bower --save
 ADD ./ /opt/hatorade
 WORKDIR /opt/hatorade
 
-RUN bower install faye --allow-root
-RUN bower install --allow-root
 # RUN yarn
-RUN npm install
+ADD package.json /tmp/package.json
+RUN cd /tmp && npm install
+RUN mkdir -p /opt/hatorade && cp -a /tmp/node_modules /opt/hatorade
+# RUN bower install --allow-root
+RUN bower install faye-browser --allow-root
 RUN ember build --environment ${STACK_ENV}
 #
 EXPOSE 5055
