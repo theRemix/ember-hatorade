@@ -51,6 +51,32 @@ export default Controller.extend({
       })
       this.set('showStreamModal',false)
     },
+    connectToMessages(value){
+      this.get('danthes.sign').bind(this.get('danthes'))({
+        channel: 'messages',
+        callback: function(message) {
+          console.log("message", message)
+          this.get('notify').info('got a tweet')
+        }.bind(this),
+        user: 'voodoologic'
+      })
+    },
+    connectToNotifications(){
+      debugger
+      this.get('danthes.sign')({
+        channel: 'notifications',
+        callback(){},
+        user: 'voodoologic'
+      })
+    },
+    connectToCommands(){
+      debugger
+      this.get('danthes.sign')({
+        channel: 'notifications',
+        callback(){},
+        user: 'voodoologic'
+      })
+    }
 
   }
 

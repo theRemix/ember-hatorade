@@ -57,7 +57,7 @@ export default Ember.Component.extend({
     }
     let sim = forceSimulation(circles.data())
       .force('linkForce',  forceLink(lines.data()).distance(50))
-      .force('charge', forceManyBody().strength(-20))
+      .force('charge', forceManyBody().strength(-5))
       .force('collide', forceCollide(20).strength(.07))
       .on('tick', ticked)
       .force('center', forcecenter)

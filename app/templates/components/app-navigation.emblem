@@ -3,7 +3,7 @@
     li.nav-item 
       = link-to "home" class="nav-link" | home
     li.nav-item
-      = link-to 'stream' class="nav-link" | stream
+      = link-to "stream" class="nav-link" | stream
     li.nav-item
       =link-to "hashtags" class="nav-link" | hashtags
     li.nav-item

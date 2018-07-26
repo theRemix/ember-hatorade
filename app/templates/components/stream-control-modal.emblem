@@ -2,10 +2,10 @@
   = bs-modal as modal open=toggleModal title="streaming keyword" onHidden=(action (mut toggleModal) false)
     .modal-header
       h4.modal-title Stream keywords
-      button.pull-right.close type='button' data-dismiss="modal" aria-label="close" &times;
+      button.pull-right.close type='button' data-dismiss="modal" aria-label="close" click="action 'toggleStreamModal'" &times;
     .modal-body
       = input class='stream-input' data-role="tagsinput" value=streamTerms enter='updateStreamCriteria' focus-out='updateStreamCriteria'
     .modal-footer
-      button.btn.btn-default type='button' data-dismiss="modal" Close
-      button.btn.btn-primary{action 'commitStreamChange' this} type='button' data-dismiss="modal" aria-label="close" Save Changes
+      button.btn.btn-default type='button' data-dismiss="modal" click="action 'toggleStreamModal'" Close
+      button.btn.btn-primary  type='button' data-dismiss="modal" aria-label="close" Save Changes
 

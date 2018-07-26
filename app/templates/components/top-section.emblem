@@ -1,4 +1,4 @@
 .col-lg-12.col-lg-offset-0.col-md-12.col-md-offset-0 style="background-image: url('#{user.profile_banner_url}'); background-repeat: no-repeat; background-size: 100% 100%"
-  app-banner toggleStreamModal=attrs.toggleStreamModal authenticateWithTwitter=attrs.authenticateWithTwitter logOut=attrs.logOut ping=attrs.ping appTitle=appTitle
+  app-banner toggleStreamModal=attrs.toggleStreamModal authenticateWithTwitter=attrs.authenticateWithTwitter logOut=attrs.logOut ping=attrs.ping appTitle=appTitle connectToMessages=attrs.connectToMessages connectToNotifications=attrs.connectToNotifications connectToCommands=attrs.connectToCommands
   stream-control-modal
   app-navigation ping=attrs.ping

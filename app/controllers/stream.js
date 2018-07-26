@@ -14,7 +14,8 @@ export default Controller.extend({
         callback: function(message) {
           this.get('notify').info('got a tweet')
           this.tweet_from_websocket(message)
-        }.bind(this)
+        }.bind(this),
+        user: 'voodoologic'
       }
     );
     this._super(args);

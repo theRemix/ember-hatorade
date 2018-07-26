@@ -8,7 +8,7 @@ export default Route.extend({
   model() {
     return Ember.RSVP.hash({
       users: this.get('store').peekAll('user'),
-      tweets: this.get('store').peekAll('tweet')
+      tweets: this.get('store').findAll('tweet')
     })
   }
 });

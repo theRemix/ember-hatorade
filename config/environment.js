@@ -57,7 +57,7 @@ module.exports = function(environment) {
     apiScheme: 'http://',
     apiHost: 'api.hatora.de',
     apiPort: '',
-    publisherUrl: 'http://publisher.hatora.de'
+    publisherUrl: 'publisher.hatora.de'
   };
 
   if (environment === 'development') {

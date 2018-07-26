@@ -9,6 +9,9 @@ export default Component.extend({
     authenticateWithTwitter() {
       this.attrs.authenticateWithTwitter();
     },
-    ping(){ this.attrs.ping() }
+    ping(){ this.attrs.ping() },
+    connectToMessages() { this.attrs.connectToMessages() },
+    connectToNotifications() {this.attrs.connectToNotifications() },
+    connectToCommands() { this.attrs.connectToCommands() }
   }
 });

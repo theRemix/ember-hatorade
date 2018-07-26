@@ -8,6 +8,9 @@ export default Ember.Component.extend({
     },
     commitStreamChange(form) {
       this.attrs.commitStreamChange(this.get('streamTerms').split(','))
-    }
+    },
+    toggleStreamModal() {
+      this.attrs.toggleModal.update(false);
+    },
   }
 });

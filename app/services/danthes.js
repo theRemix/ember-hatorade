@@ -17,7 +17,7 @@ export default Service.extend({
   server: config.publisherUrl,
   mount: '/faye',
   reset() {
-    this.set('connectiong', false)
+    this.set('connection', false)
     this.set('fayeClient', null)
     this.set('fayeCallbacks', [])
     this.set('subscriptions', {})
@@ -64,27 +64,27 @@ export default Service.extend({
     this.get('debugMessage')('sign into faye')
     this.get('server') || this.set('server', options.server)
     this.get('subscriptions') || this.set('subscriptions', {})
-    let channel = options.channel
+    let user = options.user
+    let channel = options.channel + '/' + user
     if (!this.get('subscription.channel')) {
       this.set(`subscriptions.${channel}`, {})
       this.set(`subscriptions.${channel}.callback`, options.callback)
       //this.get('activeChannel')( channel, this )
-      this.get('activeChannel').bind(this)( channel )
+      this.get('activeChannel').bind(this)( channel, user )
     }
   },
 
-  activeChannel(channel){
+  activeChannel(channel, user){
     self = this
     return new EmberPromise(function(resolve, reject) {
       if (self.get(`subscription.${channel}.activated`)){
         return true
       }
-      self.request_token().then((data) => {
+      self.request_token(channel, user).then((data) => {
         self.set(`subscriptions.${channel}.opts`, {})
         self.set(`subscriptions.${channel}.opts.signature`, data[channel].signature)
         self.set(`subscriptions.${channel}.opts.timestamp`, data[channel].timestamp)
         let subscription = self.get('fayeClient')
-        console.log(subscription)
         subscription.subscribe(`/${channel}`, self.get(`subscriptions.${channel}.callback`))
         subscription.callback(function(){ console.log(`connected ${channel}`)})
         subscription.errback(function(error){ console.log(`failed subscription ${error}`)})
@@ -94,31 +94,16 @@ export default Service.extend({
         console.log(reason)
       })
     });
-  /*
-  activeChannel(channel, self){
-    return new EmberPromise(function(resolve, reject) {
-      if (self.get(`subscription.${channel}.activated`)){
-        return true
-      }
-      self.request_token().then((data) => {
-        self.set(`subscriptions.${channel}.opts`, {})
-        self.set(`subscriptions.${channel}.opts.signature`, data[channel].signature)
-        self.set(`subscriptions.${channel}.opts.timestamp`, data[channel].timestamp)
-        let subscription = self.get('fayeClient')
-        console.log(subscription)
-        subscription.subscribe(`/${channel}`, self.get(`subscriptions.${channel}.callback`))
-        subscription.callback(function(){ console.log(`connected ${channel}`)})
-        subscription.errback(function(error){ console.log(`failed subscription ${error}`)})
-        self.set(`subscriptions.${channel}.activated`, true)
-        resolve(data);
-      }, function(reason) {
-        console.log(reason)
-      })
-    });
-    */
   },
 
-  request_token() {
-    return fetch(config.apiScheme + config.apiHost + config.apiPort + '/api/v1/data').then(function(response){ return response.json(); })
+  request_token(channel, user) {
+    let url = new URL( config.apiScheme + config.apiHost + config.apiPort + '/api/v1/subscriptions' )
+    let params = {channel: channel, user: user}
+    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+    return fetch(url,{
+      headers: {
+        Accept: 'application/json',
+      }
+    }).then(function(response){ return response.json(); })
   },
 });
