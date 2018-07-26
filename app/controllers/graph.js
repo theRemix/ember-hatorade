@@ -81,7 +81,7 @@ export default Controller.extend({
   retweet: computed('nodes', function() {
     let tweets = this.get('tweets')
     let tweet_with_retweets = tweets.filter( (tweet) => tweet.get('retweet.id') != null )
-    return tweet_with_retweets .map(function(tweet) { 
+    return tweet_with_retweets.map(function(tweet) {
       let retweet_object = this.get('nodes').find( (node) => node.id == parseInt(tweet.get('retweet.id')) )
       let tweet_object   = this.get('nodes').find( (node) => node.id == parseInt(tweet.get('id')) )
       return { 

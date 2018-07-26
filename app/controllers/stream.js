@@ -87,9 +87,9 @@ export default Controller.extend({
   },
 
   processQuoted(tweet_message) {
-    if (tweet_message.quoted_status) {
-      return this.store.peekRecord('tweet', tweet_message.retweeted_status.id) || this.tweet_from_websocket(tweet_message.quoted_status)
-    }
+    // if (tweet_message.quoted_status) {
+    //   return this.store.peekRecord('tweet', tweet_message.retweeted_status.id) || this.tweet_from_websocket(tweet_message.quoted_status)
+    // }
   },
 
   processRetweet(tweet_message) {
