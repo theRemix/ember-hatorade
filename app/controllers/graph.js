@@ -37,7 +37,7 @@ export default Controller.extend({
       .filter( (tweet) => tweet.get('author.id') != null , this)
       .map(function(tweet){
         try {
-        let  author = this.get('nodes').find( (node) => node.id == tweet.get('author.id') )
+        let author = this.get('nodes').find( (node) => node.id == parseInt(tweet.get('author.id')) )
         let tweet_object =  this.get('nodes').find( (node) => node.id == parseInt(tweet.get('id')) )
         let fun =  {
           source: tweet_object,
@@ -110,7 +110,8 @@ export default Controller.extend({
     tweets_with_hashtags.forEach(function(tweet) {
       let hashtags = tweet.get('hashtags').map( function(hashtag) {
         try {
-          let hashtag_object = this.get('nodes').find((node) => node.id == parseInt(hashtag.id))
+          let hashtag_object = this.get('nodes').find((node) => node.id == parseInt(hashtag.get('id')) || node.text == hashtag.get('text'))
+          if (hashtag_object == null) { debugger }
           let tweet_object = this.get('nodes').find( (node) => node.id == parseInt(tweet.get('id')) )
         let fun =  {
           source: tweet_object,
