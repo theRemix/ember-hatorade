@@ -36,6 +36,7 @@ export default Controller.extend({
     let author_links = this.get('tweets')
       .filter( (tweet) => tweet.get('author.id') != null , this)
       .map(function(tweet){
+        try {
         let  author = this.get('nodes').find( (node) => node.id == tweet.get('author.id') )
         let tweet_object =  this.get('nodes').find( (node) => node.id == parseInt(tweet.get('id')) )
         let fun =  {
@@ -45,6 +46,7 @@ export default Controller.extend({
           width: 5
         }
         return fun
+        } catch(e) { debugger }
     }, this)
     return author_links
   }),
