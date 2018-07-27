@@ -9,20 +9,27 @@ export default Controller.extend({
       .pushObjects(this.get('author'))
       .pushObjects(this.get('mentions'))
       .pushObjects(this.get('quoted'))
+      .pushObjects(this.get('retweet'))
+      .pushObjects(this.get('hashtags'))
   }),
 
-  nodes: computed('tweets.[]', 'users.[]', function(){
+  nodes: computed('tweets.[]', 'users.[]', 'hashtags.[]', function(){
     let tweet_objects =  this.get('tweets').map(function(tweet){
       let tweet_object =  JSON.parse(JSON.stringify(tweet));
-      tweet_object.id = parseInt(tweet.get('id'))
+      tweet_object.id = tweet.get('id')
       return tweet_object
     })
     let user_objects = this.get('users').map(function(user){
       let user_object = JSON.parse(JSON.stringify(user));
-      user_object.id = parseInt(user.get('id'))
+      user_object.id = user.get('id')
       return user_object
     })
-    return tweet_objects.pushObjects(user_objects);
+    let hashtag_objects = this.store.peekAll('hashtag').map(function(hashtag){
+      let hashtag_object = JSON.parse(JSON.stringify(hashtag));
+      hashtag_object.id = hashtag.get('id')
+      return hashtag_object
+    })
+    return tweet_objects.pushObjects(user_objects).pushObjects(hashtag_objects);
   }),
 
   author: computed('nodes', function(){
@@ -48,8 +55,9 @@ export default Controller.extend({
     let moar_fun = []
     mention_links.forEach(function(tweet) {
       let users = tweet.get('mentions').map( function(user) {
-        let user_object = this.get('nodes').find((node) => node.id == parseInt(user.id))
-        let tweet_object = this.get('nodes').find( (node) => node.id == parseInt(tweet.get('id')) )
+        try {
+          let user_object = this.get('nodes').find((node) => node.id == parseInt(user.id))
+          let tweet_object = this.get('nodes').find( (node) => node.id == parseInt(tweet.get('id')) )
         let fun =  {
           source: tweet_object,
           target: user_object,
@@ -57,6 +65,7 @@ export default Controller.extend({
           width: 2
         }
         return fun
+        } catch(e) { debugger }
       }, this)
       moar_fun.pushObjects(users)
     }, this)
@@ -90,6 +99,28 @@ export default Controller.extend({
         color: 'purple',
         width: 4
       }
-    })
+    }, this)
+  }),
+  hashtags: computed('nodes', function(){
+    let tweets = this.get('tweets')
+    let tweets_with_hashtags = tweets.filter( (tweet) => tweet.get('hashtags.length') > 0 )
+    let moar_fun = []
+    tweets_with_hashtags.forEach(function(tweet) {
+      let hashtags = tweet.get('hashtags').map( function(hashtag) {
+        try {
+          let hashtag_object = this.get('nodes').find((node) => node.id == parseInt(hashtag.id))
+          let tweet_object = this.get('nodes').find( (node) => node.id == parseInt(tweet.get('id')) )
+        let fun =  {
+          source: tweet_object,
+          target: hashtag_object,
+          color: 'yellow',
+          width: 1
+        }
+        return fun
+        } catch(e) { debugger }
+      }, this)
+      moar_fun.pushObjects(hashtags)
+    }, this)
+    return moar_fun
   })
 });
