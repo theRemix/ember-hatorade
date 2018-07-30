@@ -9,7 +9,7 @@ var rejectPromise = function() {
 };
 
 export default Ember.Object.extend({
-  store: Ember.inject.service(),
+  store: service(),
   open(auth) {
     if (!auth.code) {
       return rejectPromise();

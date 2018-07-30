@@ -49,7 +49,7 @@ export default Controller.extend({
   hashtags_from_websocket(message){
     let hashtags = []
     message.entities.hashtags.forEach( function(hashtag) {
-      hashtags.push( this.store.createRecord('hashtag', hashtag) )
+      hashtags.push( this.firstOrCreateHashtag(hashtag) )
     }, this)
     return hashtags
   },
@@ -75,6 +75,9 @@ export default Controller.extend({
   },
   firstOrCreateTweet(tweet) {
     return this.store.peekRecord('tweet', tweet.id) || this.tweet_from_websocket(tweet)
+  },
+  firstOrCreateHashtag(hashtag) {
+    return this.store.peekAll('hashtag').find( (h) => h.text == hashtag.text ) || this.store.createRecord("hashtag", hashtag)
   },
 
   processReply(message) {
