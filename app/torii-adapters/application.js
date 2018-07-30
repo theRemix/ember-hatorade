@@ -10,13 +10,15 @@ var rejectPromise = function() {
 
 export default Ember.Object.extend({
   store: service(),
+  cookies: service(),
   open(auth) {
     if (!auth.code) {
       return rejectPromise();
     }
 
     localStorage.token = auth.code;
-
+    let cookieService = this.get('cookies')
+    cookieService.write('auth', auth.code, {domain: '.lvh.me'})
     return this.get('store').find('user', 'me').then(function(user) {
       return {
         currentUser: user
@@ -25,10 +27,14 @@ export default Ember.Object.extend({
   },
 
   fetch() {
+    let cookieService = this.get('cookies')
+    let auth = cookieService.read('auth')
+    if (!localStorage.token && !!auth) {
+      localStorage.token = auth
+    }
     if (!localStorage.token) {
       return rejectPromise();
     }
-
     return this.get('store').find('user', 'me').then(function(user) {
       return {
         currentUser: user
@@ -39,6 +45,8 @@ export default Ember.Object.extend({
   close() {
     var authToken = localStorage.token;
 
+    let cookieService = this.get('cookies')
+    cookieService.clear('currentUser')
     localStorage.token = null;
   }
 });
