@@ -1,0 +1,15 @@
+<div class='col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0'>
+  {{ app-banner
+   toggleStreamModal=attrs.toggleStreamModal
+   authenticateWithTwitter=attrs.authenticateWithTwitter 
+   logOut=attrs.logOut
+   ping=attrs.ping
+   appTitle=appTitle
+   connectToMessages=attrs.connectToMessages
+   connectToNotifications=attrs.connectToNotifications
+   connectToCommands=attrs.connectToCommands
+   session=attrs.session
+  }}
+  {{stream-control-modal}}
+  {{app-navigation ping=attrs.ping}}
+</div>

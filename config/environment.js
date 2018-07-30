@@ -21,7 +21,7 @@ module.exports = function(environment) {
       providers: {
         twitter: {
           appId: 'ehy2oJuRcw3SlUUFJL9CKg',
-          requestTokenUri: 'http://api.hatora.de/users/auth/twitter' /* we don't use this anymore :) */
+          requestTokenUri: 'http://api.hatora.de/users/auth/twitter'
         }
       }
     },

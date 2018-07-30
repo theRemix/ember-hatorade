@@ -8,7 +8,7 @@ export default Controller.extend({
   urlChecker: service(),
   subdomain: Ember.computed.alias('urlChecker.subdomain'),
   showStreamModal: false,
-  isLoggedIn: Ember.computed.alias('appSession.isAuthenticated'),
+  isLoggedIn(){ return this.get('appSession.isAuthenticated') },
   appTitle: Ember.computed('subdomain', function(){
     if (this.get('subdomain')().length > 0)
       return this.get('subdomain')().toUpperCase() + '.HATORA.DE'
@@ -27,13 +27,12 @@ export default Controller.extend({
     toggleStreamModal() { debugger },
     authenticateWithTwitter() {
       this.get('appSession').open('twitter').then(function(data) {
+        return data.currentUser
       }).catch((error) =>  {  debugger; console.log("error: ", error) })
     },
 
     logOut() {
-      this.get('appSession').invalidate('authenticator:torii').then(
-        () => { route.transitionTo('index')  }
-      )
+      this.get('appSession').close()
     },
 
     ping() {

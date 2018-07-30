@@ -1,0 +1,13 @@
+<h2 id='title'> {{appTitle}} </h2>
+{{#if session.isAuthenticated}}
+  <button {{action 'logOut'}}> Log out</button>
+{{else}}
+  {{#if session.isWorking}}
+    <button>working</button>
+  {{else}}
+    <button {{action 'authenticateWithTwitter'}}> Log in </button>
+  {{/if}}
+{{/if}}
+<button{{ action 'toggleStreamModal'}}> stream control</button>
+<button{{action 'ping'}}>ping</button>
+{{ember-notify}}
