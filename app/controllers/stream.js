@@ -25,7 +25,7 @@ export default Controller.extend({
     let profile_image = null
     let screen_name   = null
     if (message.user && message.user.profile_image_url)
-       profile_image = message.user.profile_image_url)
+       profile_image = message.user.profile_image_url
     if (message.user && message.user.screen_name)
       screen_name = message.user.screen_name
     let tweet = {
