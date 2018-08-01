@@ -71,19 +71,25 @@ export default Controller.extend({
 
 
   firstOrCreateUser(user) {
-    return this.store.peekRecord('user', user.id) || this.store.createRecord('user', user)
+    try {
+      return this.store.peekRecord('user', user.id) || this.store.createRecord('user', user)
+    } catch(e) { console.log(e); debugger}
   },
   firstOrCreateTweet(tweet) {
-    return this.store.peekRecord('tweet', tweet.id) || this.tweet_from_websocket(tweet)
+    try {
+      return this.store.peekRecord('tweet', tweet.id) || this.tweet_from_websocket(tweet)
+    } catch(e) { console.log(e); debugger}
   },
   firstOrCreateHashtag(hashtag) {
-    return this.store.peekAll('hashtag').find( (h) => h.text == hashtag.text ) || this.store.createRecord("hashtag", hashtag)
+    try {
+      return this.store.peekAll('hashtag').find( (h) => h.text == hashtag.text ) || this.store.createRecord("hashtag", hashtag)
+    } catch(e) { console.log(e); debugger}
   },
 
   processReply(message) {
     if (message.in_reply_to_screen_name) {
       let replied_user  = this.firstOrCreateUser({id: message.in_reply_to_user_id, screen_name: message.in_reply_to_screen_name,})
-      let replied_tweet = this.firstOrCreateTweet({ id: message.in_reploy_to_status_id })
+      let replied_tweet = this.firstOrCreateTweet({ id: message.in_reply_to_status_id })
       replied_tweet.set('author', replied_user)
       return replied_tweet
     }
