@@ -22,15 +22,21 @@ export default Controller.extend({
   },
 
   tweet_from_websocket(message){
+    let profile_image = null
+    let screen_name   = null
+    if (message.user && message.user.profile_image_url)
+       profile_image = message.user.profile_image_url)
+    if (message.user && message.user.screen_name)
+      screen_name = message.user.screen_name
     let tweet = {
       id: message.id,
       text: message.text,
-      screen_name: message.user.screen_name,
+      screen_name: screen_name,
       favorite_count: message.favorite_count,
       url: message.url,
       created_at: message.created_at,
       entities: message.entities,
-      profile_image: message.user.profile_image_url
+      profile_image: profile_image
     }
     let model_hashtags = this.hashtags_from_websocket(message)
     let model_author   = this.user_from_websocket(message);
