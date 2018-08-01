@@ -38,14 +38,12 @@ export default Controller.extend({
       entities: message.entities,
       profile_image: profile_image
     }
-    try {
-      let model_hashtags = this.hashtags_from_websocket(message)
-      let model_author   = this.user_from_websocket(message);
-      let model_mentions = this.users_from_websocket(message);
-      let model_quote    = this.processQuoted(message)
-      let model_retweet  = this.processRetweet(message)
-      let model_reply    = this.processReply(message)
-    } catch(e) {console.log(e); debugger}
+    let model_hashtags = this.hashtags_from_websocket(message)
+    let model_author   = this.user_from_websocket(message);
+    let model_mentions = this.users_from_websocket(message);
+    let model_quote    = this.processQuoted(message)
+    let model_retweet  = this.processRetweet(message)
+    let model_reply    = this.processReply(message)
     tweet.hashtags       = model_hashtags
     tweet.author         = model_author
     tweet.mentions       = model_mentions
@@ -65,12 +63,14 @@ export default Controller.extend({
     return hashtags
   },
   user_from_websocket(message) {
-    let author = {
-      id: message.user.id,
-      screen_name: message.user.screen_name,
-      profile_image: message.user.profile_image_url
+    if (message.user) {
+      let author = {
+        id: message.user.id,
+        screen_name: message.user.screen_name,
+        profile_image: message.user.profile_image_url
+      }
+      return this.firstOrCreateUser(author)
     }
-    return this.firstOrCreateUser(author)
   },
   users_from_websocket(message) {
     let users = []
