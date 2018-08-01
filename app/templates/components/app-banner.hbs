@@ -1,6 +1,12 @@
 <h2 id='title'> {{appTitle}} </h2>
 {{#if session.isAuthenticated}}
   <button {{action 'logOut'}}> Log out</button>
+  {{#if tweetStream.activated }}
+    <button{{ action 'toggleStreamModal'}}> stream control</button>
+  {{ else }}
+    <button {{action 'activateStream'}}> start streaming</button>
+  {{/if}}
+   
 {{else}}
   {{#if session.isWorking}}
     <button>working</button>
@@ -8,6 +14,5 @@
     <button {{action 'authenticateWithTwitter'}}> Log in </button>
   {{/if}}
 {{/if}}
-<button{{ action 'toggleStreamModal'}}> stream control</button>
 <button{{action 'ping'}}>ping</button>
 {{ember-notify}}

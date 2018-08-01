@@ -41,6 +41,16 @@ export default Controller.extend({
       publication.then(function() {console.log('success')}, function(error) {console.log('error: ' + error.message)})
     },
 
+    activateStream() {
+      let screen_name = this.get('appSession.currentUser.screen_name')
+      let publishUrl  = `/messages/${screen_name}/commands`
+      let publication = this.get('danthes.fayeClient').publish(publishUrl, { 
+        command: "stream:activate",
+        user: this.get('appSession.currentUser.screen_name'),
+        searchTerms: '#derp'
+      })
+      publication.then(function() {console.log('success')}, function(error) {console.log('error: ' + error.message)})
+    },
     make_it_happen(){
     },
     commitStreamChange(term_array) {

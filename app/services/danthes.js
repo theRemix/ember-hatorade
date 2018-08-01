@@ -13,6 +13,7 @@ export default Service.extend({
     this.faye();
     this._super();
   },
+  screen_name: '',
   danthes_token: config.danthes_token,
   server: config.publisherUrl,
   mount: '/faye',
@@ -43,11 +44,13 @@ export default Service.extend({
       outgoing(message, callback) {
         if(!message.ext){ message.ext = {} }
         if (message.channel == '/meta/subscribe') {
-          message.ext.danthes_signature = self.get(`subscriptions.${message.subscription.slice(1)}.opts.signature`)
-          message.ext.danthes_timestamp = self.get(`subscriptions.${message.subscription.slice(1)}.opts.timestamp`)
+          message.ext.danthes_signature   = self.get(`subscriptions.${message.subscription.slice(1)}.opts.signature`)
+          message.ext.danthes_timestamp   = self.get(`subscriptions.${message.subscription.slice(1)}.opts.timestamp`)
+          message.ext.twitter_screen_name = self.get('screen_name')
           callback(message)
         } else {
-          message.ext.danthes_token = self.danthes_token
+          message.ext.danthes_token       = self.danthes_token
+          message.ext.twitter_screen_name = self.get('screen_name')
           callback(message)
         }
       }
@@ -64,13 +67,13 @@ export default Service.extend({
     this.get('debugMessage')('sign into faye')
     this.get('server') || this.set('server', options.server)
     this.get('subscriptions') || this.set('subscriptions', {})
-    let user = options.user
-    let channel = options.channel + '/' + user
+    this.set( 'screen_name' , options.screen_name)
+    let channel = options.channel + '/' + options.screen_name
     if (!this.get('subscription.channel')) {
       this.set(`subscriptions.${channel}`, {})
       this.set(`subscriptions.${channel}.callback`, options.callback)
       //this.get('activeChannel')( channel, this )
-      this.get('activeChannel').bind(this)( channel, user )
+      this.get('activeChannel').bind(this)( channel )
     }
   },
 
@@ -86,7 +89,7 @@ export default Service.extend({
         self.set(`subscriptions.${channel}.opts.timestamp`, data[channel].timestamp)
         let subscription = self.get('fayeClient')
         subscription.subscribe(`/${channel}`, self.get(`subscriptions.${channel}.callback`))
-        subscription.callback(function(){ console.log(`connected ${channel}`)})
+        subscription.callback(function(data){ console.log(data); console.log(`connected ${channel}`)})
         subscription.errback(function(error){ console.log(`failed subscription ${error}`)})
         self.set(`subscriptions.${channel}.activated`, true)
         resolve(data);
@@ -96,9 +99,9 @@ export default Service.extend({
     });
   },
 
-  request_token(channel, user) {
+  request_token(channel) {
     let url = new URL( config.apiScheme + config.apiHost + config.apiPort + '/api/v1/subscriptions' )
-    let params = {channel: channel, user: user}
+    let params = {channel: channel}
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
     return fetch(url,{
       headers: {

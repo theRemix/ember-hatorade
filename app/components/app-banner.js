@@ -8,6 +8,9 @@ export default Component.extend({
     authenticateWithTwitter() {
       this.attrs.authenticateWithTwitter();
     },
+    activateStream(){
+      this.attrs.activateStream();
+    },
     logOut() {
       this.attrs.logOut();
     },

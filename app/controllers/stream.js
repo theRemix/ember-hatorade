@@ -15,7 +15,7 @@ export default Controller.extend({
           this.get('notify').info('got a tweet')
           this.tweet_from_websocket(message)
         }.bind(this),
-        user: 'voodoologic'
+        screen_name: this.get('appSession.currentUser.screen_name') || 'voodoologic'
       }
     );
     this._super(args);
