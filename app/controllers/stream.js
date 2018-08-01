@@ -38,12 +38,14 @@ export default Controller.extend({
       entities: message.entities,
       profile_image: profile_image
     }
-    let model_hashtags = this.hashtags_from_websocket(message)
-    let model_author   = this.user_from_websocket(message);
-    let model_mentions = this.users_from_websocket(message);
-    let model_quote    = this.processQuoted(message)
-    let model_retweet  = this.processRetweet(message)
-    let model_reply    = this.processReply(message)
+    try {
+      let model_hashtags = this.hashtags_from_websocket(message)
+      let model_author   = this.user_from_websocket(message);
+      let model_mentions = this.users_from_websocket(message);
+      let model_quote    = this.processQuoted(message)
+      let model_retweet  = this.processRetweet(message)
+      let model_reply    = this.processReply(message)
+    } catch(e) {console.log(e); debugger}
     tweet.hashtags       = model_hashtags
     tweet.author         = model_author
     tweet.mentions       = model_mentions
@@ -54,9 +56,12 @@ export default Controller.extend({
 
   hashtags_from_websocket(message){
     let hashtags = []
-    message.entities.hashtags.forEach( function(hashtag) {
-      hashtags.push( this.firstOrCreateHashtag(hashtag) )
-    }, this)
+    if (!message.entities) { return [] }
+    try {
+      message.entities.hashtags.forEach( function(hashtag) {
+        hashtags.push( this.firstOrCreateHashtag(hashtag) )
+      }, this)
+    } catch(e) {console.log(e); debugger}
     return hashtags
   },
   user_from_websocket(message) {
@@ -69,9 +74,12 @@ export default Controller.extend({
   },
   users_from_websocket(message) {
     let users = []
-    message.entities.user_mentions.forEach( function(user) {
-      users.push( this.firstOrCreateUser(user) )
-    }, this)
+    if (!message.entities) { return [] }
+    try {
+      message.entities.user_mentions.forEach( function(user) {
+        users.push( this.firstOrCreateUser(user) )
+      }, this)
+    } catch(e) {console.log(e); debugger}
     return users
   },
 
