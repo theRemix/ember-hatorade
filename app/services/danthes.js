@@ -68,11 +68,15 @@ export default Service.extend({
     this.get('server') || this.set('server', options.server)
     this.get('subscriptions') || this.set('subscriptions', {})
     this.set( 'screen_name' , options.screen_name)
-    let channel = options.channel + '/' + options.screen_name
+    let channel = null
+    if (options.admin) {
+      channel = options.channel + '/' + options.screen_name + '/*' 
+    } else {
+      channel = options.channel + '/' + options.screen_name 
+    }
     if (!this.get('subscription.channel')) {
       this.set(`subscriptions.${channel}`, {})
       this.set(`subscriptions.${channel}.callback`, options.callback)
-      //this.get('activeChannel')( channel, this )
       this.get('activeChannel').bind(this)( channel )
     }
   },
@@ -89,7 +93,7 @@ export default Service.extend({
         self.set(`subscriptions.${channel}.opts.timestamp`, data[channel].timestamp)
         let subscription = self.get('fayeClient')
         subscription.subscribe(`/${channel}`, self.get(`subscriptions.${channel}.callback`))
-        subscription.callback(function(data){ console.log(data); console.log(`connected ${channel}`)})
+        subscription.callback(function(data){ console.log(`connected ${channel}`)})
         subscription.errback(function(error){ console.log(`failed subscription ${error}`)})
         self.set(`subscriptions.${channel}.activated`, true)
         resolve(data);

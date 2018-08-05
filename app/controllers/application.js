@@ -10,8 +10,8 @@ export default Controller.extend({
   showStreamModal: false,
   isLoggedIn(){ return this.get('appSession.isAuthenticated') },
   appTitle: Ember.computed('subdomain', function(){
-    if (this.get('subdomain')().length > 0)
-      return this.get('subdomain')().toUpperCase() + '.HATORA.DE'
+    if (this.get('subdomain'))
+      return this.get('subdomain').toUpperCase() + '.HATORA.DE'
     else
       return 'HATORA.DE'
   }),
@@ -23,6 +23,28 @@ export default Controller.extend({
       return `${config.apiScheme}${config.apiHost}${config.apiPort}/users/auth/twitter`
     }
   },
+
+  screenName: Ember.computed.alias('appSession.currentUser.screen_name'),
+
+  searchTerms: '',
+  counter: 1000,
+  changeStreamTerms: Ember.computed('searchTerms', function(){
+    let screen_name = this.get('screenName')
+    let publishUrl  = `/messages/${screen_name}/commands`
+    let publication = this.get('danthes.fayeClient').publish(publishUrl, { 
+      command: "stream:activate",
+      user: this.get('appSession.currentUser.screen_name'),
+      searchTerms: this.get('serchTerms')
+    })
+    publication.then(function() {console.log('success')}, function(error) {console.log('error: ' + error.message)})
+  }),
+
+  isAdmin: Ember.computed.equal('screenName', 'subdomain'),
+
+  decrimentCount(){
+    this.set('counter', this.get('counter') - 1)
+  },
+
   actions: {
     toggleStreamModal() { debugger },
     authenticateWithTwitter() {
@@ -36,57 +58,44 @@ export default Controller.extend({
     },
 
     ping() {
-      debugger
-      let publication = this.get('danthes.fayeClient').publish('/commands', { command: "ping" })
-      publication.then(function() {console.log('success')}, function(error) {console.log('error: ' + error.message)})
+      this.decrimentCount()
     },
+
+    channelName: Ember.computed('screenName', 'subdomain', function(){
+      return this.get('screenName') || this.get('subdomain') || 'voodoologic'
+    }),
 
     activateStream() {
-      let screen_name = this.get('appSession.currentUser.screen_name')
-      let publishUrl  = `/messages/${screen_name}/commands`
-      let publication = this.get('danthes.fayeClient').publish(publishUrl, { 
-        command: "stream:activate",
-        user: this.get('appSession.currentUser.screen_name'),
-        searchTerms: '#derp'
-      })
-      publication.then(function() {console.log('success')}, function(error) {console.log('error: ' + error.message)})
+      this.get('danthes').sign(
+        {
+          channel: 'messages',
+          callback: function(message) {
+            this.get('notify').info('got a tweet')
+            this.tweet_from_websocket(message)
+          }.bind(this),
+          screen_name: this.get('channelName'),
+          admin: this.get('isAdmin')
+        }
+      );
+      let message = this.get('danthes.fayeClient').publish(`/messages/${this.get('channelName')}/commands`,
+        {
+          meta: {
+            channel: `/messages/${this.get('channelName')}/commands`
+          },
+          data: 'stream:initiate'
+        }
+      )
     },
-    make_it_happen(){
-    },
+
     commitStreamChange(term_array) {
-      this.get('danthes.fayeClient').publish( '/commands', {
-        command: "restart_and_search",
-        restart_and_search: term_array
-      })
+      this.get('danthes.fayeClient').publish( '/messages/hatora_de/commands', 
+        {
+          meta: `/messages/${this.get('screenName')}/commands`,
+          command: "channel:",
+          restart_and_search: term_array
+        })
       this.set('showStreamModal',false)
     },
-    connectToMessages(value){
-      this.get('danthes.sign').bind(this.get('danthes'))({
-        channel: 'messages',
-        callback: function(message) {
-          console.log("message", message)
-          this.get('notify').info('got a tweet')
-        }.bind(this),
-        user: 'voodoologic'
-      })
-    },
-    connectToNotifications(){
-      debugger
-      this.get('danthes.sign')({
-        channel: 'notifications',
-        callback(){},
-        user: 'voodoologic'
-      })
-    },
-    connectToCommands(){
-      debugger
-      this.get('danthes.sign')({
-        channel: 'notifications',
-        callback(){},
-        user: 'voodoologic'
-      })
-    }
-
   }
 
 });

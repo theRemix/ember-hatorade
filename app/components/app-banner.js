@@ -15,8 +15,5 @@ export default Component.extend({
       this.attrs.logOut();
     },
     ping(){ this.attrs.ping() },
-    connectToMessages() { this.attrs.connectToMessages() },
-    connectToNotifications() {this.attrs.connectToNotifications() },
-    connectToCommands() { this.attrs.connectToCommands() }
   }
 });

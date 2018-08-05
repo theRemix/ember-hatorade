@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 
 export default Controller.extend({
+  applicationController: Ember.inject.controller('application'),
   sortProperties: ['id:dsc'],
   showStreamControllButton: true,
   notify: service(),
@@ -14,11 +15,16 @@ export default Controller.extend({
         callback: function(message) {
           this.get('notify').info('got a tweet')
           this.tweet_from_websocket(message)
+          this.decrimentCount()
         }.bind(this),
         screen_name: this.get('appSession.currentUser.screen_name') || 'voodoologic'
       }
     );
     this._super(args);
+  },
+
+  decrimentCount(){
+    this.get('applicationController.decrimentCount')()
   },
 
   tweet_from_websocket(message){
