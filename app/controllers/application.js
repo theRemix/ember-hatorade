@@ -39,11 +39,19 @@ export default Controller.extend({
     publication.then(function() {console.log('success')}, function(error) {console.log('error: ' + error.message)})
   }),
 
-  isAdmin: Ember.computed.equal('screenName', 'subdomain'),
+  isAdmin: Ember.computed('screenName', 'subdomain', function(){
+    return this.get('screenName') == this.get('subdomain')
+  }),
 
   decrimentCount(){
     this.set('counter', this.get('counter') - 1)
   },
+
+  channelName: Ember.computed('screenName', 'subdomain', function(){
+    let screenName = this.get('screenName'),
+        subdomain  = this.get('subdomain')
+    return screenName || subdomain || 'voodoologic'
+  }),
 
   actions: {
     toggleStreamModal() { debugger },
@@ -61,11 +69,9 @@ export default Controller.extend({
       this.decrimentCount()
     },
 
-    channelName: Ember.computed('screenName', 'subdomain', function(){
-      return this.get('screenName') || this.get('subdomain') || 'voodoologic'
-    }),
-
     activateStream() {
+      let channelName = this.get('channelName'),
+           screenName = this.get('screenName')
       this.get('danthes').sign(
         {
           channel: 'messages',
@@ -73,18 +79,25 @@ export default Controller.extend({
             this.get('notify').info('got a tweet')
             this.tweet_from_websocket(message)
           }.bind(this),
-          screen_name: this.get('channelName'),
+          screen_name: channelName,
           admin: this.get('isAdmin')
         }
       );
-      let message = this.get('danthes.fayeClient').publish(`/messages/${this.get('channelName')}/commands`,
+      let publication = this.get('danthes.fayeClient').publish(`/messages/${channelName}/commands`,
         {
           meta: {
-            channel: `/messages/${this.get('channelName')}/commands`
+            channel: `/messages/${channelName}/commands`,
+            screen_name: screenName
           },
           data: 'stream:initiate'
         }
       )
+      publication.then(function(){
+        console.log('message done')
+      }, function(error){
+        console.log('error: ', error)
+      })
+
     },
 
     commitStreamChange(term_array) {
