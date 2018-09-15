@@ -32,7 +32,7 @@ export default Controller.extend({
     let screen_name = this.get('screenName')
     let publishUrl  = `/messages/${screen_name}/commands`
     let publication = this.get('danthes.fayeClient').publish(publishUrl, { 
-      command: "stream:activate",
+      command: "stream:search_terms:set",
       user: this.get('appSession.currentUser.screen_name'),
       searchTerms: this.get('serchTerms')
     })
@@ -100,15 +100,58 @@ export default Controller.extend({
 
     },
 
-    commitStreamChange(term_array) {
-      this.get('danthes.fayeClient').publish( '/messages/hatora_de/commands', 
+    stopStream(){
+      let channeName = this.get('channelName'),
+          screenName = this.get('screenName')
+      let publication = this.get('danthes.fayeClient').publish(`/messages/${channelName}/commands`,
         {
-          meta: `/messages/${this.get('screenName')}/commands`,
-          command: "channel:",
-          restart_and_search: term_array
-        })
-      this.set('showStreamModal',false)
+          meta: {
+            channel: `/messages/${channelName}/commands`,
+            screen_name: screenName
+          }
+          data: 'stream:stop'
+        }
+      )
+      publication.then(function(){
+        console.log('message sent')
+      }, function(error){
+        console.log('error: ', error)
+      })
     },
+
+    streamStatusGet(){
+      let channeName = this.get('channelName'),
+          screenName = this.get('screenName')
+      let publication = this.get('danthes.fayeClient').publish(`/messages/${channelName}/commands`,
+        {
+          meta: {
+            channel: `/messages/${channeName}/commands`,
+            screen_name: screenName
+          }
+          data: {
+            command: 'stream:search_terms:get'
+          }
+    }
+
+    streamStatusSet(){
+      let channeName  = this.get('channelName'),
+          screenName  = this.get('screenName'),
+          searchTerms = this.get('searchTerms')
+      let publication = this.get('danthes.fayeClient').publish(`/messages/${channelName}/commands`,
+        {
+          meta: {
+            channel: `/messages/${channeName}/commands`,
+            screen_name: screenName
+          }
+          data: {
+            command: 'stream:search_terms:set',
+            args: {
+              search_terms: searchTerms
+            }
+          }
+        })
+
+    }
   }
 
 });

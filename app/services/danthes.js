@@ -70,9 +70,9 @@ export default Service.extend({
     this.set( 'screen_name' , options.screen_name)
     let channel = null
     if (options.admin) {
-      channel = options.channel + '/' + options.screen_name + '/*' 
+      channel = options.channel + '/' + options.screen_name + '/**' 
     } else {
-      channel = options.channel + '/' + options.screen_name 
+      channel = options.channel + '/' + options.screen_name  + '/public/**'
     }
     if (!this.get('subscription.channel')) {
       this.set(`subscriptions.${channel}`, {})
