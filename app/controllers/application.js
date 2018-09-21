@@ -127,7 +127,7 @@ export default Controller.extend({
           meta: {
             channel: `/messages/${channeName}/commands`,
             screen_name: screenName
-          }
+          },
           data: {
             command: 'stream:search_terms:get'
           }
@@ -142,7 +142,7 @@ export default Controller.extend({
           meta: {
             channel: `/messages/${channeName}/commands`,
             screen_name: screenName
-          }
+          },
           data: {
             command: 'stream:search_terms:set',
             args: {
