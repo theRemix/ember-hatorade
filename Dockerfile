@@ -8,8 +8,8 @@ RUN apt-get install -y build-essential curl zlib1g-dev zlib1g zlibc openssl libs
 
 ENV CONFIGURE_OPTS --disable-install-rdoc
 
-ENV RUBY_VERSION=2.4.2
-RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.4/ruby-${RUBY_VERSION}.tar.gz && \
+ENV RUBY_VERSION=2.5.1
+RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.5/ruby-${RUBY_VERSION}.tar.gz && \
     tar -zxvf ruby-${RUBY_VERSION}.tar.gz && \
     cd ruby-${RUBY_VERSION} && \
     ./configure --disable-install-doc --enable-shared && \
@@ -19,7 +19,7 @@ RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.4/ruby-${RUBY_VERSION}.tar.gz &&
     rm -r ruby-${RUBY_VERSION} ruby-${RUBY_VERSION}.tar.gz && \
     echo 'gem: --no-document' > /usr/local/etc/gemrcdoc
 
-RUN apt-get install -y git libreadline-dev nodejs\
+RUN apt-get update && apt-get install -y git libreadline-dev nodejs\
     npm postgresql-client libpq-dev
 
 RUN apt-get clean
