@@ -121,8 +121,8 @@ export default Controller.extend({
 
     streamStatusGet(){
       let channeName = this.get('channelName'),
-          screenName = this.get('screenName')
-      let publication = this.get('danthes.fayeClient').publish(`/messages/${channelName}/commands`,
+          screenName = this.get('screenName'),
+          publication = this.get('danthes.fayeClient').publish(`/messages/${channelName}/commands`,
         {
           meta: {
             channel: `/messages/${channeName}/commands`,
@@ -131,7 +131,9 @@ export default Controller.extend({
           data: {
             command: 'stream:search_terms:get'
           }
-    }
+        }
+      )
+    },
 
     streamStatusSet(){
       let channeName  = this.get('channelName'),
@@ -149,8 +151,8 @@ export default Controller.extend({
               search_terms: searchTerms
             }
           }
-        })
-
+        }
+      )
     }
   }
 
