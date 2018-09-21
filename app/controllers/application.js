@@ -108,7 +108,7 @@ export default Controller.extend({
           meta: {
             channel: `/messages/${channelName}/commands`,
             screen_name: screenName
-          }
+          },
           data: 'stream:stop'
         }
       )
