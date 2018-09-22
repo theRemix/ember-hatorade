@@ -15,7 +15,9 @@ export default Controller.extend({
     else
       return 'HATORA.DE'
   }),
+
   nodes: [],
+
   url() {
     if (false){//this.get('subdomain')) {
       return `${config.apiScheme}${this.get('subdomain')}.${config.apiHost}${config.apiPort}/users/auth/twitter`
@@ -27,17 +29,8 @@ export default Controller.extend({
   screenName: Ember.computed.alias('appSession.currentUser.screen_name'),
 
   searchTerms: '',
+
   counter: 1000,
-  changeStreamTerms: Ember.computed('searchTerms', function(){
-    let screen_name = this.get('screenName')
-    let publishUrl  = `/messages/${screen_name}/commands`
-    let publication = this.get('danthes.fayeClient').publish(publishUrl, { 
-      command: "stream:search_terms:set",
-      user: this.get('appSession.currentUser.screen_name'),
-      searchTerms: this.get('serchTerms')
-    })
-    publication.then(function() {console.log('success')}, function(error) {console.log('error: ' + error.message)})
-  }),
 
   isAdmin: Ember.computed('screenName', 'subdomain', function(){
     return this.get('screenName') == this.get('subdomain')
@@ -53,8 +46,105 @@ export default Controller.extend({
     return screenName || subdomain || 'voodoologic'
   }),
 
+  decrimentCount(){
+    this.get('applicationController.decrimentCount')()
+  },
+
+  tweet_from_websocket(message){
+    let tweet = {
+      id: message.id,
+      text: message.text,
+      screen_name: message.user.screen_name,
+      favorite_count: message.favorite_count,
+      url: message.url,
+      created_at: message.created_at,
+      entities: message.entities,
+      profile_image: message.user.profile_image_url
+    }
+    let model_hashtags = this.hashtags_from_websocket(message)
+    let model_author   = this.user_from_websocket(message);
+    let model_mentions = this.users_from_websocket(message);
+    let model_quote    = this.processQuoted(message)
+    let model_retweet  = this.processRetweet(message)
+    let model_reply    = this.processReply(message)
+    tweet.hashtags       = model_hashtags
+    tweet.author         = model_author
+    tweet.mentions       = model_mentions
+    tweet.quote          = model_quote
+    let model_tweet      = this.store.createRecord('tweet', tweet)
+    this.set('model', this.store.peekAll('tweet').sortBy('id').reverse())
+  },
+
+  hashtags_from_websocket(message){
+    let hashtags = []
+    message.entities.hashtags.forEach( function(hashtag) {
+      hashtags.push( this.firstOrCreateHashtag(hashtag) )
+    }, this)
+    return hashtags
+  },
+
+  user_from_websocket(message) {
+    let author = {
+      id: message.user.id,
+      screen_name: message.user.screen_name,
+      profile_image: message.user.profile_image_url
+    }
+    return this.firstOrCreateUser(author)
+  },
+
+  users_from_websocket(message) {
+    let users = []
+    message.entities.user_mentions.forEach( function(user) {
+      users.push( this.firstOrCreateUser(user) )
+    }, this)
+    return users
+  },
+
+  firstOrCreateUser(user) {
+    return this.store.peekRecord('user', user.id) || this.store.createRecord('user', user)
+  },
+
+  firstOrCreateTweet(tweet) {
+    return this.store.peekRecord('tweet', tweet.id) || this.tweet_from_websocket(tweet)
+  },
+
+  firstOrCreateHashtag(hashtag) {
+    return this.store.peekAll('hashtag').find( (h) => h.text == hashtag.text ) || this.store.createRecord("hashtag", hashtag)
+  },
+
+  processReply(message) {
+    if (message.in_reply_to_screen_name) {
+      let replied_user  = this.firstOrCreateUser({id: message.in_reply_to_user_id, screen_name: message.in_reply_to_screen_name,})
+      let replied_tweet = this.firstOrCreateTweet({ id: message.in_reploy_to_status_id })
+      replied_tweet.set('author', replied_user)
+      return replied_tweet
+    }
+  },
+
+  processQuoted(tweet_message) {
+    // if (tweet_message.quoted_status) {
+    //   return this.store.peekRecord('tweet', tweet_message.retweeted_status.id) || this.tweet_from_websocket(tweet_message.quoted_status)
+    // }
+  },
+
+  processRetweet(tweet_message) {
+    if ( tweet_message.retweeted_status ) {
+      return this.store.peekRecord('tweet', tweet_message.retweeted_status.id) || this.tweet_from_websocket(tweet_message.retweeted_status)
+    }
+  }
+
   actions: {
-    toggleStreamModal() { debugger },
+    commitStreamChange: Ember.computed('searchTerms', function(){
+      let screen_name = this.get('screenName')
+      let publishUrl  = `/messages/${screen_name}/commands`
+      let publication = this.get('danthes.fayeClient').publish(publishUrl, { 
+        command: "stream:search_terms:set",
+        user: this.get('appSession.currentUser.screen_name'),
+        searchTerms: this.get('serchTerms')
+      })
+      publication.then(function() {console.log('success')}, function(error) {console.log('error: ' + error.message)})
+    }),
+
     authenticateWithTwitter() {
       this.get('appSession').open('twitter').then(function(data) {
         return data.currentUser
@@ -153,7 +243,8 @@ export default Controller.extend({
           }
         }
       )
-    }
+    },
+
   }
 
 });
