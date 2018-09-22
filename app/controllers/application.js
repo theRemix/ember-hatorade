@@ -131,7 +131,7 @@ export default Controller.extend({
     if ( tweet_message.retweeted_status ) {
       return this.store.peekRecord('tweet', tweet_message.retweeted_status.id) || this.tweet_from_websocket(tweet_message.retweeted_status)
     }
-  }
+  },
 
   actions: {
     commitStreamChange: Ember.computed('searchTerms', function(){
